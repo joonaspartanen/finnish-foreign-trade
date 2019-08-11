@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
+const baseUrl = '/values'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const getData = async () => {
+  const res = await axios.get(baseUrl)
+  return res
 }
 
-export default App;
+const App = () => {
+
+  const [values, setValues] = useState([])
+
+  useEffect(() => {
+    getData().then(initialValues => setValues(initialValues))
+  }, [])
+
+
+  return (
+    <h1>Finnish Foreign Trade Visualized</h1>
+  )
+}
+
+export default App
