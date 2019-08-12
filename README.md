@@ -1,4 +1,4 @@
-co# Finnish Foreign Trade Visualized: Full Stack Web Development Project Work
+# Finnish Foreign Trade Visualized: Full Stack Web Development Project Work
 
 ## General info
 This is a project work for the Helsinki University [Full Stack Web Development course](https://fullstackopen.com/en/). 
