@@ -5,3 +5,4 @@
 | 11.8. | 1 | Backendin 1. versio, joka tekee kovakoodatun API-pyynnön ja palauttaa tuloksen JSON-muodossa. |
 | 11.8. | 1 | Frontendin 1. versio. |
 | 12.8. | 1 | Frontendin kehitystä (listaa nyt maa- ja vuosikohtaiset kauppatilastot). |
+| 12.8. | 2 | Tutustuttu amcharts:n dokumentaatioon ja otettu se käyttöön frontendissä. |

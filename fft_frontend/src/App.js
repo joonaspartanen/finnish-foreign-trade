@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
+import Map from './components/Map'
+
 const baseUrl = '/values'
 
 const getData = async () => {
@@ -32,9 +34,12 @@ const Countries = ({ values }) => {
   }
 
   return (
-  values.map(value => <div>{value.keys[1]} - {value.keys[3]} ({value.keys[2]}): {value.vals}</div>)
+    <Map />
+    // values.map(value => <div>{value.keys[1]} - {value.keys[3]} ({value.keys[2]}): {value.vals}</div>)
   )
 
 }
+
+
 
 export default App

@@ -42,7 +42,7 @@ const getData = async (country, year) => {
 }
 
 app.get('/values', async (req, res) => {
-  const testData = await getData('=ALL', '=ALL')
+  const testData = await getData('=ALL', '2018')
   res.send(testData)
 })
 
