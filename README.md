@@ -1,4 +1,4 @@
-# Finnish Foreign Trade Visualized: Full Stack Web Development Project Work
+co# Finnish Foreign Trade Visualized: Full Stack Web Development Project Work
 
 ## General info
 This is a project work for the Helsinki University [Full Stack Web Development course](https://fullstackopen.com/en/). 
@@ -14,3 +14,7 @@ Some JavaScript library or framework will be used for the data visualization pur
 ## Getting Started
 
 The application will be later available on Heroku.
+
+## Information for Course Evaluators
+
+[Projektin tuntikirjanpito](https://github.com/joonaspartanen/finnish-foreign-trade/blob/master/tuntikirjanpito.md)

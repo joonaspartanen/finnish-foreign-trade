@@ -12,13 +12,29 @@ const App = () => {
   const [values, setValues] = useState([])
 
   useEffect(() => {
-    getData().then(initialValues => setValues(initialValues))
+    getData().then(initialValues => setValues(initialValues.data))
   }, [])
+
+  console.log(values)
 
 
   return (
-    <h1>Finnish Foreign Trade Visualized</h1>
+    <div>
+      <h1>Finnish Foreign Trade Visualized</h1>
+      <Countries values={values} />
+    </div>
   )
+}
+
+const Countries = ({ values }) => {
+  if (values.length === 0) {
+    return null
+  }
+
+  return (
+  values.map(value => <div>{value.keys[1]} - {value.keys[3]} ({value.keys[2]}): {value.vals}</div>)
+  )
+
 }
 
 export default App

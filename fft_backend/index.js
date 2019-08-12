@@ -42,8 +42,14 @@ const getData = async (country, year) => {
 }
 
 app.get('/values', async (req, res) => {
-  const testData = await getData('=ALL', '2018')
+  const testData = await getData('=ALL', '=ALL')
   res.send(testData)
+})
+
+app.get('/countries', async (req, res) => {
+  const countries = await axios.get('http://uljas.tulli.fi/uljas/graph/api.aspx?lang=fi&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC')
+  console.log(countries.data)
+  res.send(countries.data)
 })
 
 const PORT = 3003
