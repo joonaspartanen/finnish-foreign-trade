@@ -5,12 +5,16 @@ import dataService from './services/DataService'
 const App = () => {
 
   const [imports, setImports] = useState([])
+  const [exports, setExports] = useState([])
 
   useEffect(() => {
     dataService.getImports().then(initialImports => {
-      //console.log(initialImports)
-      setImports(dataService.mapData(initialImports.data))
-      console.log(dataService.mapData(initialImports.data))
+      console.log(initialImports.data)
+      setImports(initialImports.data)
+    })
+    dataService.getExports().then(initialExports => {
+      console.log(initialExports.data)
+      setExports(initialExports.data)
     })
   }, [])
 
@@ -19,8 +23,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>Finnish Foreign Trade Visualized</h1>
-      <Countries values={imports} />
+      <Countries values={exports} />
     </div>
   )
 }
@@ -32,7 +35,6 @@ const Countries = ({ values }) => {
 
   return (
     <Map values={values} />
-    // values.map(value => <div>{value.keys[1]} - {value.keys[3]} ({value.keys[2]}): {value.vals}</div>)
   )
 
 }
