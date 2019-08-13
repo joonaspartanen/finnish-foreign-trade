@@ -6,3 +6,4 @@
 | 11.8. | 1 | Frontendin 1. versio. |
 | 12.8. | 1 | Frontendin kehitystä (listaa nyt maa- ja vuosikohtaiset kauppatilastot). |
 | 12.8. | 2 | Tutustuttu amcharts:n dokumentaatioon ja otettu se käyttöön frontendissä. |
+| 13.8. | 2 | Frontend hakee backendistä vuoden 2018 tuontitiedot ja visualisoi ne alustavasti koropleettikartalle. |

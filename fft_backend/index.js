@@ -2,8 +2,11 @@ const express = require('express')
 const app = express()
 const axios = require('axios')
 const cors = require('cors')
+const bodyParser = require('body-parser')
+
 
 app.use(cors())
+app.use(bodyParser.json())
 
 // const http = require('http')
 // const config = require('./utils/config')
@@ -23,10 +26,9 @@ app.use(cors())
 
 const getData = async (country, year) => {
   try {
-    const testData = await axios.get(`http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9`, {
+    const response = await axios.get(`http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9`, {
 
       params: {
-        // Classification%of%20Products%20SITC1': '0-9',
         Country: country,
         Year: year,
         Flow: '1',
@@ -34,21 +36,20 @@ const getData = async (country, year) => {
       }
     })
 
-    console.log(testData.data)
-    return testData.data
+    return response.data
   } catch (error) {
     console.log(error)
   }
 }
 
-app.get('/values', async (req, res) => {
-  const testData = await getData('=ALL', '2018')
-  res.send(testData)
+app.get('/imports', async (req, res) => {
+  const imports = await getData("=ALL", "2018")
+  console.log(imports)
+  res.send(imports)
 })
 
 app.get('/countries', async (req, res) => {
   const countries = await axios.get('http://uljas.tulli.fi/uljas/graph/api.aspx?lang=fi&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC')
-  console.log(countries.data)
   res.send(countries.data)
 })
 

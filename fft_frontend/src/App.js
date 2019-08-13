@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
 import Map from './components/Map'
-
-const baseUrl = '/values'
-
-const getData = async () => {
-  const res = await axios.get(baseUrl)
-  return res
-}
+import dataService from './services/DataService'
 
 const App = () => {
 
-  const [values, setValues] = useState([])
+  const [imports, setImports] = useState([])
 
   useEffect(() => {
-    getData().then(initialValues => setValues(initialValues.data))
+    dataService.getImports().then(initialImports => {
+      //console.log(initialImports)
+      setImports(dataService.mapData(initialImports.data))
+      console.log(dataService.mapData(initialImports.data))
+    })
   }, [])
 
-  console.log(values)
+  //console.log(imports)
 
 
   return (
     <div>
       <h1>Finnish Foreign Trade Visualized</h1>
-      <Countries values={values} />
+      <Countries values={imports} />
     </div>
   )
 }
@@ -34,7 +31,7 @@ const Countries = ({ values }) => {
   }
 
   return (
-    <Map />
+    <Map values={values} />
     // values.map(value => <div>{value.keys[1]} - {value.keys[3]} ({value.keys[2]}): {value.vals}</div>)
   )
 
