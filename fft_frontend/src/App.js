@@ -23,7 +23,7 @@ const App = () => {
 
   return (
     <div>
-      <Countries values={exports} />
+      <Countries values={imports} />
     </div>
   )
 }

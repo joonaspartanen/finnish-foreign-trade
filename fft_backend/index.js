@@ -4,6 +4,7 @@ const axios = require('axios')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
+const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9'
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -37,7 +38,7 @@ const getData = async (country, year, flow) => {
   })
 
   try {
-    const response = await axios.get(`http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9`, {
+    const response = await axios.get(baseUrl, {
 
       params: {
         Country: country,
@@ -59,19 +60,40 @@ const mapData = (data) => {
     .filter(a => a.id !== "AA")
 }
 
+const classifyData = (data) => {
+  return data.map(a => {
+
+    let c = 1
+    if (a.value >= 5000000000) {
+      c = 6
+    } else if (a.value >= 1000000000 && a.value < 5000000000) {
+      c = 5
+    } else if (a.value >= 100000000 && a.value < 1000000000) {
+      c = 4
+    } else if (a.value >= 10000000 && a.value < 100000000) {
+      c = 3
+    } else if (a.value >= 1000000 && a.value < 10000000) {
+      c = 2
+    } else if (a.value < 1000000 || a.value === null) {
+      c = 1
+    }
+    return { ...a, value: c }
+  })
+}
+
 app.get('/imports', async (req, res) => {
   const data = await getData('=ALL', '2018', '1')
-  res.send(mapData(data))
+  const mappedData = mapData(data)
+  console.log(mappedData)
+  const classifiedData = classifyData(mappedData)
+  console.log(classifiedData)
+  res.send(classifiedData)
 })
 
 app.get('/exports', async (req, res) => {
   const data = await getData('=ALL', '2018', '2')
-  res.send(mapData(data))
-})
-
-app.get('/countries', async (req, res) => {
-  const countries = await axios.get('http://uljas.tulli.fi/uljas/graph/api.aspx?lang=fi&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC')
-  res.send(countries.data)
+  const classifiedData = classifyData(mapData(data))
+  res.send(classifiedData)
 })
 
 const PORT = 3003
