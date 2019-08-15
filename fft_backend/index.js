@@ -55,8 +55,9 @@ const getData = async (country, year, flow) => {
 }
 
 const mapData = (data) => {
+  console.log(data)
   return data
-    .map(a => ({ id: a.keys[1].substring(0, 2), year: a.keys[2], euros: a.vals[0] }))
+    .map(a => ({ id: a.keys[1].substring(0, 2), year: parseInt(a.keys[2]), euros: a.vals[0] }))
     .filter(a => a.id !== "AA")
     .map(a =>
       // Serbian country code must be changed

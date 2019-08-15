@@ -4,11 +4,11 @@ import * as am4maps from '@amcharts/amcharts4/maps'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 
-const Map = ({ imports, exports, showImports }) => {
+const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
 
-  showImports
+  flow === 'imports'
     ? values = imports
     : values = exports
 
@@ -16,28 +16,28 @@ const Map = ({ imports, exports, showImports }) => {
 
     am4core.useTheme(am4themes_animated)
 
-    const map = am4core.create("chartdiv", am4maps.MapChart)
+    const map = am4core.create('chartdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
-    //map.projection = new am4maps.projections.Miller()
     map.projection = new am4maps.projections.Miller()
-    //map.panBehavior = "rotateLongLat"
+    //map.projection = new am4maps.projections.Orthographic()
+    //map.panBehavior = 'rotateLongLat'
     //map.zoomControl = new am4maps.ZoomControl()
-    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color("#eee")
+    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#eee')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
 
 
     let polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
 
     polygonSeries.heatRules.push({
-      property: "fill",
+      property: 'fill',
       target: polygonSeries.mapPolygons.template,
       min: map.colors.getIndex(2).brighten(0.8),
       max: map.colors.getIndex(2).brighten(-0.6)
     })
 
     polygonSeries.useGeodata = true
-    polygonSeries.exclude = ["AQ"]
+    polygonSeries.exclude = ['AQ']
 
     polygonSeries.data = values
 
@@ -46,19 +46,19 @@ const Map = ({ imports, exports, showImports }) => {
     polygonTemplate.nonScalingStroke = true
     polygonTemplate.strokeWidth = 0.5
 
-    let hs = polygonTemplate.states.create("hover")
-    hs.properties.fill = am4core.color("#800000")
+    let hs = polygonTemplate.states.create('hover')
+    hs.properties.fill = am4core.color('#800000')
 
     /* let heatLegend = map.createChild(am4maps.HeatLegend)
     heatLegend.series = polygonSeries
     heatLegend.width = am4core.percent(100)
-    heatLegend.orientation = "vertical" */
+    heatLegend.orientation = 'vertical' */
 
   }, [values])
 
   return (
     <div>
-      <div id="chartdiv" style={{ width: "100%", height: "90vh" }}></div>
+      <div id='chartdiv' style={{ width: '100%', height: '90vh' }}></div>
     </div>
   )
 }
