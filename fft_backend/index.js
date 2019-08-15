@@ -56,25 +56,30 @@ const getData = async (country, year, flow) => {
 
 const mapData = (data) => {
   return data
-    .map(a => ({ id: a.keys[1].substring(0, 2), value: a.vals[0], year: a.keys[2], euros: a.vals[0] }))
+    .map(a => ({ id: a.keys[1].substring(0, 2), year: a.keys[2], euros: a.vals[0] }))
     .filter(a => a.id !== "AA")
+    .map(a =>
+      // Serbian country code must be changed
+      a.id === "XS"
+        ? { ...a, id: "RS" }
+        : a)
 }
 
 const classifyData = (data) => {
   return data.map(a => {
 
     let c = 1
-    if (a.value >= 5000000000) {
+    if (a.euros >= 5000000000) {
       c = 6
-    } else if (a.value >= 1000000000 && a.value < 5000000000) {
+    } else if (a.euros >= 1000000000 && a.euros < 5000000000) {
       c = 5
-    } else if (a.value >= 100000000 && a.value < 1000000000) {
+    } else if (a.euros >= 100000000 && a.euros < 1000000000) {
       c = 4
-    } else if (a.value >= 10000000 && a.value < 100000000) {
+    } else if (a.euros >= 10000000 && a.euros < 100000000) {
       c = 3
-    } else if (a.value >= 1000000 && a.value < 10000000) {
+    } else if (a.euros >= 1000000 && a.euros < 10000000) {
       c = 2
-    } else if (a.value < 1000000 || a.value === null) {
+    } else if (a.euros < 1000000) {
       c = 1
     }
     return { ...a, value: c }
@@ -84,9 +89,9 @@ const classifyData = (data) => {
 app.get('/imports', async (req, res) => {
   const data = await getData('=ALL', '2018', '1')
   const mappedData = mapData(data)
-  console.log(mappedData)
+  //console.log(mappedData)
   const classifiedData = classifyData(mappedData)
-  console.log(classifiedData)
+  //console.log(classifiedData)
   res.send(classifiedData)
 })
 

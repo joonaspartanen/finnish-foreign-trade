@@ -9,3 +9,4 @@
 | 13.8. | 2 | Frontend hakee backendistä vuoden 2018 tuontitiedot ja visualisoi ne alustavasti koropleettikartalle. |
 | 13.8. | 1 | Frontendiin lähetettävää dataa muokataan backendissä. Selvitetty koropleettikarttojen teoriaa (erilaiset tiedonluokittelutavat). |
 | 14.8. | 1 | Backend luokittelee nyt datan kuuteen eri suuruusluokkaan ennen frontendiin lähettämistä. |
+| 14.8. | 1 | Lisätty frontendiin alustava ratkaisu, jonka avulla voi tarkastella joko tuontia tai vientiä. |

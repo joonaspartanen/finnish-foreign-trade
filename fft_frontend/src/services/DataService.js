@@ -10,10 +10,4 @@ const getExports = async () => {
   return response
 }
 
-const mapData = (data) => {
-  return data
-    .map(a => ({ id: a.keys[1].substring(0, 2), value: a.vals[0] }))
-    .filter(a => a.id !== "AA")
-}
-
-export default { getImports, getExports, mapData }
+export default { getImports, getExports }
