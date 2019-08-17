@@ -3,6 +3,7 @@ const app = express()
 const axios = require('axios')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const _ = require('lodash')
 
 const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9'
 
@@ -87,12 +88,22 @@ const classifyData = (data) => {
   })
 }
 
+const parseTradeBalance = (imports, exports) => {
+
+  const mappedImports = imports
+    .map(a => ({ year: parseInt(a.keys[2]), imports: a.vals[0] }))
+  const mappedExports = exports
+    .map(a => ({ year: parseInt(a.keys[2]), exports: a.vals[0] }))
+  const combinedData = mappedImports
+    .map((a, i) => ({ ...a, exports: mappedExports[i].exports }))
+  const result = combinedData.map(a => ({ ...a, tradeBalance: a.exports - a.imports }))
+  return result.sort((a, b) => a.year - b.year)
+}
+
 app.get('/imports', async (req, res) => {
   const data = await getData('=ALL', '2018', '1')
   const mappedData = mapData(data)
-  //console.log(mappedData)
   const classifiedData = classifyData(mappedData)
-  //console.log(classifiedData)
   res.send(classifiedData)
 })
 
@@ -100,6 +111,12 @@ app.get('/exports', async (req, res) => {
   const data = await getData('=ALL', '2018', '2')
   const classifiedData = classifyData(mapData(data))
   res.send(classifiedData)
+})
+
+app.get('/tradebalance/FI', async (req, res) => {
+  const imports = await getData('AA', '=ALL', '1')
+  const exports = await getData('AA', '=ALL', '2')
+  res.send(parseTradeBalance(imports, exports))
 })
 
 const PORT = 3003

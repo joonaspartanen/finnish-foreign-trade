@@ -10,4 +10,10 @@ const getExports = async () => {
   return response
 }
 
-export default { getImports, getExports }
+const getTradeBalance = async () => {
+  const response = await axios.get('/tradebalance/FI')
+  return response
+}
+
+
+export default { getImports, getExports, getTradeBalance }

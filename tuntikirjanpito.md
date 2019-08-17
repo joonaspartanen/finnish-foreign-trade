@@ -11,3 +11,4 @@
 | 14.8. | 1 | Backend luokittelee nyt datan kuuteen eri suuruusluokkaan ennen frontendiin lähettämistä. |
 | 14.8. | 1 | Lisätty frontendiin alustava ratkaisu, jonka avulla voi tarkastella joko tuontia tai vientiä. |
 | 14.8. | 1 | Tutustuttu Material UI:n dokumentaatioon. Otettu Material UI alustavasti käyttöön frontendissä. |
+| 15.8. | 2 | Tutustuttu amcharts:n kaaviodokumentaatioon. 1. versio kauppataseen 2002–2018 kuvaajasta. Backend muokkaa datan tarvittavaan muotoon. |

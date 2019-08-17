@@ -8,24 +8,23 @@ const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
 
-  flow === 'imports'
-    ? values = imports
-    : values = exports
+  flow === 'exports'
+    ? values = exports
+    : values = imports
 
   useEffect(() => {
 
     am4core.useTheme(am4themes_animated)
 
-    const map = am4core.create('chartdiv', am4maps.MapChart)
+    const map = am4core.create('mapdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
-    map.projection = new am4maps.projections.Miller()
-    //map.projection = new am4maps.projections.Orthographic()
-    //map.panBehavior = 'rotateLongLat'
-    //map.zoomControl = new am4maps.ZoomControl()
+    //map.projection = new am4maps.projections.Miller()
+    map.projection = new am4maps.projections.Orthographic()
+    map.panBehavior = 'rotateLongLat'
+    map.zoomControl = new am4maps.ZoomControl()
     map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#eee')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
-
 
     let polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
 
@@ -58,7 +57,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
   return (
     <div>
-      <div id='chartdiv' style={{ width: '100%', height: '90vh' }}></div>
+      <div id='mapdiv' style={{ width: '100%', height: '90vh' }}></div>
     </div>
   )
 }
