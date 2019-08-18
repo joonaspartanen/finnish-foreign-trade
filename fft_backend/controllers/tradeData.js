@@ -1,4 +1,4 @@
-const countryDataRouter = require('express').Router()
+const tradeDataRouter = require('express').Router()
 
 const axios = require('axios')
 
@@ -14,11 +14,13 @@ const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&k
 const getData = async (country, year, flow) => {
 
   axios.interceptors.response.use(res => {
-    try {
-      const parsedData = JSON.parse(res.data.slice(1))
-      res.data = parsedData
-    } catch (e) {
-      console.log(e)
+    if (typeof res.data !== 'object') {
+      try {
+        const parsedData = JSON.parse(res.data.slice(1))
+        res.data = parsedData
+      } catch (e) {
+        console.log(e)
+      }
     }
     return res
   })
@@ -83,23 +85,23 @@ const parseTradeBalance = (imports, exports) => {
   return result.sort((a, b) => a.year - b.year)
 }
 
-countryDataRouter.get('/imports', async (req, res) => {
+tradeDataRouter.get('/imports', async (req, res) => {
   const data = await getData('=ALL', '2018', '1')
   const mappedData = mapData(data)
   const classifiedData = classifyData(mappedData)
   res.send(classifiedData)
 })
 
-countryDataRouter.get('/exports', async (req, res) => {
+tradeDataRouter.get('/exports', async (req, res) => {
   const data = await getData('=ALL', '2018', '2')
   const classifiedData = classifyData(mapData(data))
   res.send(classifiedData)
 })
 
-countryDataRouter.get('/tradebalance', async (req, res) => {
+tradeDataRouter.get('/tradebalance', async (req, res) => {
   const imports = await getData('AA', '=ALL', '1')
   const exports = await getData('AA', '=ALL', '2')
   res.send(parseTradeBalance(imports, exports))
 })
 
-module.exports = countryDataRouter
+module.exports = tradeDataRouter
