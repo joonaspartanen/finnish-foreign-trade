@@ -13,3 +13,4 @@
 | 14.8. | 1 | Tutustuttu Material UI:n dokumentaatioon. Otettu Material UI alustavasti käyttöön frontendissä. |
 | 15.8. | 2 | Tutustuttu amcharts:n kaaviodokumentaatioon. 1. versio kauppataseen 2002–2018 kuvaajasta. Backend muokkaa datan tarvittavaan muotoon. |
 | 18.8. | 2 | 2. versio kauppataseen kuvaajasta. Refaktoroitu backendiä. Backendiin lisätty ensimmäiset yksikkötestit. |
+| 18.8. | 1 | Lisätty mahdollisuus hakea tuonti- ja vientitietoja tuotekoodeittain. 1. versio tuoteryhmäkuvaajasta. |

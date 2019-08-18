@@ -15,5 +15,21 @@ const getTradeBalance = async () => {
   return response
 }
 
+const getImportsBySITC = async () => {
+  const response = await axios.get('/imports/SITC1')
+  return response
+}
 
-export default { getImports, getExports, getTradeBalance }
+const getExportsBySITC = async () => {
+  const response = await axios.get('/exports/SITC1')
+  return response
+}
+
+
+export default {
+  getImports,
+  getExports,
+  getTradeBalance,
+  getImportsBySITC,
+  getExportsBySITC
+}

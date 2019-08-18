@@ -2,7 +2,7 @@ const tradeDataRouter = require('express').Router()
 
 const axios = require('axios')
 
-const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification+of+Products+SITC1=0-9'
+const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 
 // Palauttaa maat::
 // http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&class=Country
@@ -10,8 +10,10 @@ const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&k
 // Palauttaa indicators:
 // http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&class=Indicators
 
+// Palauttaa 2018 viennin tuotekoodeittain:
+// http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC&Classification%20of%20Products%20SITC3==ALL&Country=AA&Year=2018&Flow=2&Indicators=V1
 
-const getData = async (country, year, flow) => {
+const getData = async (classification, country, year, flow) => {
 
   axios.interceptors.response.use(res => {
     if (typeof res.data !== 'object') {
@@ -29,6 +31,7 @@ const getData = async (country, year, flow) => {
     const response = await axios.get(baseUrl, {
 
       params: {
+        'Classification of Products SITC1': classification,
         Country: country,
         Year: year,
         Flow: flow,
@@ -54,7 +57,6 @@ const mapData = (data) => {
 
 const classifyData = (data) => {
   return data.map(a => {
-
     let c = 1
     if (a.euros >= 5000000000) {
       c = 6
@@ -74,7 +76,6 @@ const classifyData = (data) => {
 }
 
 const parseTradeBalance = (imports, exports) => {
-
   const mappedImports = imports
     .map(a => ({ year: parseInt(a.keys[2]), imports: a.vals[0] }))
   const mappedExports = exports
@@ -86,22 +87,40 @@ const parseTradeBalance = (imports, exports) => {
 }
 
 tradeDataRouter.get('/imports', async (req, res) => {
-  const data = await getData('=ALL', '2018', '1')
+  const data = await getData('0-9', '=ALL', '2018', '1')
   const mappedData = mapData(data)
   const classifiedData = classifyData(mappedData)
-  res.send(classifiedData)
+  res.json(classifiedData)
 })
 
 tradeDataRouter.get('/exports', async (req, res) => {
-  const data = await getData('=ALL', '2018', '2')
+  const data = await getData('0-9', '=ALL', '2018', '2')
   const classifiedData = classifyData(mapData(data))
-  res.send(classifiedData)
+  res.json(classifiedData)
 })
 
 tradeDataRouter.get('/tradebalance', async (req, res) => {
-  const imports = await getData('AA', '=ALL', '1')
-  const exports = await getData('AA', '=ALL', '2')
-  res.send(parseTradeBalance(imports, exports))
+  const imports = await getData('0-9', 'AA', '=ALL', '1')
+  const exports = await getData('0-9', 'AA', '=ALL', '2')
+  res.json(parseTradeBalance(imports, exports))
+})
+
+tradeDataRouter.get('/imports/SITC1', async (req, res) => {
+  const data = await getData('=ALL', 'AA', '2018', '1')
+  const sortedData = data
+    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map(a => ({ year: parseInt(a.keys[2]), class: a.keys[0].substring(12), euros: a.vals[0] }))
+    .sort((a, b) => b.euros - a.euros)
+  res.json(sortedData)
+})
+
+tradeDataRouter.get('/exports/SITC1', async (req, res) => {
+  const data = await getData('=ALL', 'AA', '2018', '2')
+  const sortedData = data
+    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map(a => ({ year: parseInt(a.keys[2]), class: a.keys[0].substring(12), euros: a.vals[0] }))
+    .sort((a, b) => b.euros - a.euros)
+  res.json(sortedData)
 })
 
 module.exports = tradeDataRouter
