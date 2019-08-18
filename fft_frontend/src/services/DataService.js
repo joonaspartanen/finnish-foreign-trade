@@ -11,7 +11,7 @@ const getExports = async () => {
 }
 
 const getTradeBalance = async () => {
-  const response = await axios.get('/tradebalance/FI')
+  const response = await axios.get('/tradebalance')
   return response
 }
 

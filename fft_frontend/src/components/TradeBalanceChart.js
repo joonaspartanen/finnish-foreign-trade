@@ -6,29 +6,55 @@ const TradeBalanceChart = ({ tradeBalance }) => {
 
   useEffect(() => {
 
-    let chart = am4core.create("chartdiv", am4charts.XYChart)
+    let chart = am4core.create('chartdiv', am4charts.XYChart)
     chart.data = tradeBalance
 
     let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
     categoryAxis.dataFields.category = 'year'
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
+    valueAxis.title.text = 'Euros'
 
     let importSeries = chart.series.push(new am4charts.LineSeries())
+    importSeries.name = 'Imports'
     importSeries.stroke = am4core.color('red')
     importSeries.strokeWidth = 3
     importSeries.dataFields.valueY = 'imports'
     importSeries.dataFields.categoryX = 'year'
 
+    let importBullet = importSeries.bullets.push(new am4charts.CircleBullet())
+    importBullet.tooltipText = 'Imports: [bold]{valueY} €[/] ({categoryX})'
+
     let exportSeries = chart.series.push(new am4charts.LineSeries())
+    exportSeries.name = 'Exports'
     exportSeries.stroke = am4core.color('blue')
     exportSeries.strokeWidth = 3
     exportSeries.dataFields.valueY = 'exports'
     exportSeries.dataFields.categoryX = 'year'
 
+    let exportBullet = exportSeries.bullets.push(new am4charts.CircleBullet())
+    exportBullet.tooltipText = 'Exports: [bold]{valueY} €[/] ({categoryX})'
+
     let tradeBalanceSeries = chart.series.push(new am4charts.ColumnSeries())
-    tradeBalanceSeries.fill = am4core.color('teal')
+    tradeBalanceSeries.name = 'Balance of Trade'
+    tradeBalanceSeries.fill = am4core.color('#5a5')
     tradeBalanceSeries.dataFields.valueY = 'tradeBalance'
     tradeBalanceSeries.dataFields.categoryX = 'year'
+    tradeBalanceSeries.columns.template.tooltipText = '{name}: [bold]{valueY}[/] ({categoryX}))'
+
+    tradeBalanceSeries.columns.template.adapter.add('fill', function (fill, target) {
+      if (target.dataItem && (target.dataItem.valueY < 0)) {
+        return am4core.color('#a55');
+      }
+      else {
+        return fill;
+      }
+    })
+
+    return (() => {
+      if (chart) {
+        chart.dispose()
+      }
+    })
 
   }, [tradeBalance])
 

@@ -16,7 +16,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
     am4core.useTheme(am4themes_animated)
 
-    const map = am4core.create('mapdiv', am4maps.MapChart)
+    var map = am4core.create('mapdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
     //map.projection = new am4maps.projections.Miller()
@@ -47,6 +47,12 @@ const Map = ({ imports, exports, flow, year }) => {
 
     let hs = polygonTemplate.states.create('hover')
     hs.properties.fill = am4core.color('#800000')
+
+    return (() => {
+      if (map) {
+        map.dispose()
+      }
+    })
 
     /* let heatLegend = map.createChild(am4maps.HeatLegend)
     heatLegend.series = polygonSeries
