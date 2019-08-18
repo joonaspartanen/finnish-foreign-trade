@@ -7,24 +7,24 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
-  let colorIndex = 2
-  let hoverColor = '#800000'
+  let colorIndex = 0
+  let hoverColor = null
 
   if (flow === 'exports') {
     values = exports
-    colorIndex = 2
+    colorIndex = 0
     hoverColor = '#800000'
   } else {
     values = imports
-    colorIndex = 4
-    hoverColor = 'darkblue'
+    colorIndex = 6
+    hoverColor = '#800000'
   }
 
   useEffect(() => {
 
     am4core.useTheme(am4themes_animated)
 
-    var map = am4core.create('mapdiv', am4maps.MapChart)
+    let map = am4core.create('mapdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
     //map.projection = new am4maps.projections.Miller()
@@ -34,7 +34,7 @@ const Map = ({ imports, exports, flow, year }) => {
     map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#EEE')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
 
-    var graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
+    let graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
     graticuleSeries.mapLines.template.line.stroke = am4core.color("#67b7dc")
     graticuleSeries.mapLines.template.line.strokeOpacity = 0.2
     graticuleSeries.fitExtent = false
@@ -50,6 +50,7 @@ const Map = ({ imports, exports, flow, year }) => {
       max: map.colors.getIndex(colorIndex).brighten(-0.6)
     })
 
+    console.log(colorIndex)
     polygonSeries.useGeodata = true
     polygonSeries.exclude = ['AQ']
 
@@ -78,7 +79,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
   return (
     <div>
-      <div id='mapdiv' style={{ width: '100%', height: '85vh', marginTop: '2em'}}></div>
+      <div id='mapdiv' style={{ width: '100%', height: '85vh', marginTop: '2em' }}></div>
     </div>
   )
 }

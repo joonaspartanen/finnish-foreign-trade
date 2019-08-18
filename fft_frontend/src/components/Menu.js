@@ -9,7 +9,6 @@ const Menu = ({ flow, setFlow }) => {
     <div>
       <ToggleButtonGroup
         toggle='true'
-        //onChange={(event, newFlow) => setFlow(newFlow)}
         name='change-flow'>
         <ToggleButton
           variant='secondary'

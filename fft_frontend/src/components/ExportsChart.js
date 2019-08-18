@@ -22,14 +22,14 @@ const ExportsChart = ({ exports }) => {
     chart.legend = new am4charts.Legend()
     chart.legend.position = "bottom"
 
-    chart.innerRadius = am4core.percent(40)
+    chart.innerRadius = am4core.percent(60)
 
     var label = pieSeries.createChild(am4core.Label)
 
     label.text = "Exports from Finland"
     label.horizontalCenter = "middle"
     label.verticalCenter = "middle"
-    label.fontSize = 20
+    label.fontSize = 15
 
     return (() => {
       if (chart) {

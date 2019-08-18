@@ -8,6 +8,9 @@ import dataService from './services/DataService'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
 
 const App = () => {
 
@@ -48,7 +51,7 @@ const App = () => {
   return (
     <div style={{ backgroundColor: '#FFF' }}>
       <Container>
-        <Navbar bg="dark" variant='dark' expand="lg" sticky="top">
+        <Navbar bg="dark" variant='dark' expand="lg">
           <Navbar.Brand href="#">Finnish Foreign Trade Visualized</Navbar.Brand>
         </Navbar>
 
@@ -58,25 +61,44 @@ const App = () => {
 
         {(imports.length > 0 && exports.length > 0) &&
           <div>
-            <Map
-              imports={imports}
-              exports={exports}
-              flow={flow}
-              year={year}
-            />
-            <Menu
-              setYear={setYear}
-              flow={flow}
-              setFlow={setFlow} />
-            {(tradeBalance.length > 0) &&
-              <TradeBalanceChart tradeBalance={tradeBalance} />
-            }
-            {(exportsSITC.length > 0) &&
-              <ExportsChart exports={exportsSITC} />
-            }
-            {(importsSITC.length > 0) &&
-              <ImportsChart imports={importsSITC} />
-            }
+            <Row>
+              <Col>
+                <Map
+                  imports={imports}
+                  exports={exports}
+                  flow={flow}
+                  year={year}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Menu
+                  setYear={setYear}
+                  flow={flow}
+                  setFlow={setFlow}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                {(tradeBalance.length > 0) &&
+                  <TradeBalanceChart tradeBalance={tradeBalance} />
+                }
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                {(exportsSITC.length > 0) &&
+                  <ExportsChart exports={exportsSITC} />
+                }
+              </Col>
+              <Col sm={6}>
+                {(importsSITC.length > 0) &&
+                  <ImportsChart imports={importsSITC} />
+                }
+              </Col>
+            </Row>
           </div>
         }
       </Container>
