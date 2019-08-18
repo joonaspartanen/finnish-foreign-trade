@@ -7,10 +7,15 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
+  let colorIndex = 2
 
-  flow === 'exports'
-    ? values = exports
-    : values = imports
+  if (flow === 'exports') {
+    values = exports
+    colorIndex = 2
+  } else {
+    values = imports
+    colorIndex = 12
+  }
 
   useEffect(() => {
 
@@ -31,8 +36,8 @@ const Map = ({ imports, exports, flow, year }) => {
     polygonSeries.heatRules.push({
       property: 'fill',
       target: polygonSeries.mapPolygons.template,
-      min: map.colors.getIndex(2).brighten(0.8),
-      max: map.colors.getIndex(2).brighten(-0.6)
+      min: map.colors.getIndex(colorIndex).brighten(0.8),
+      max: map.colors.getIndex(colorIndex).brighten(-0.6)
     })
 
     polygonSeries.useGeodata = true
@@ -59,7 +64,7 @@ const Map = ({ imports, exports, flow, year }) => {
     heatLegend.width = am4core.percent(100)
     heatLegend.orientation = 'vertical' */
 
-  }, [values])
+  }, [values, colorIndex])
 
   return (
     <div>

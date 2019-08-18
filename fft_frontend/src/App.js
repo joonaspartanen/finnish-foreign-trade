@@ -6,6 +6,7 @@ import ExportsChart from './components/ExportsChart'
 import ImportsChart from './components/ImportsChart'
 import dataService from './services/DataService'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Navbar from 'react-bootstrap/Navbar'
 
 const App = () => {
 
@@ -44,6 +45,9 @@ const App = () => {
 
   return (
     <div>
+      <Navbar bg="dark" variant='dark' expand="lg">
+        <Navbar.Brand href="#">Finnish Foreign Trade Visualized</Navbar.Brand>
+      </Navbar>
       <Menu
         setYear={setYear}
         flow={flow}

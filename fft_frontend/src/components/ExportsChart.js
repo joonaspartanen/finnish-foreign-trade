@@ -1,10 +1,16 @@
 import React, { useEffect } from 'react'
 import * as am4core from "@amcharts/amcharts4/core"
 import * as am4charts from "@amcharts/amcharts4/charts"
+import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
 const ExportsChart = ({ exports }) => {
 
   useEffect(() => {
+
+    am4core.useTheme(am4themes_animated)
+    am4core.useTheme(am4themes_spiritedaway)
+
     let chart = am4core.create("exports-chart-div", am4charts.PieChart)
     chart.data = exports
     let pieSeries = chart.series.push(new am4charts.PieSeries())
