@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
-import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
+import am4themes_spriritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
 
 const TradeBalanceChart = ({ tradeBalance }) => {
@@ -10,7 +10,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
   useEffect(() => {
 
     am4core.useTheme(am4themes_animated);
-    am4core.useTheme(am4themes_spiritedaway)
+    am4core.useTheme(am4themes_spriritedaway)
 
     let chart = am4core.create('chartdiv', am4charts.XYChart)
     chart.data = tradeBalance
@@ -42,6 +42,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
 
     let tradeBalanceSeries = chart.series.push(new am4charts.ColumnSeries())
     tradeBalanceSeries.name = 'Balance of Trade'
+    tradeBalanceSeries.stroke = am4core.color('#5a5')
     tradeBalanceSeries.fill = am4core.color('#5a5')
     tradeBalanceSeries.dataFields.valueY = 'tradeBalance'
     tradeBalanceSeries.dataFields.categoryX = 'year'

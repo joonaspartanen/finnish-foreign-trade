@@ -12,7 +12,6 @@ const ImportsChart = ({ imports }) => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
 
-
     let chart = am4core.create('imports-chart-div', am4charts.PieChart)
     chart.data = imports
     let pieSeries = chart.series.push(new am4charts.PieSeries())

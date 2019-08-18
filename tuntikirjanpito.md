@@ -15,3 +15,4 @@
 | 18.8. | 2 | 2. versio kauppataseen kuvaajasta. Refaktoroitu backendiä. Backendiin lisätty ensimmäiset yksikkötestit. |
 | 18.8. | 1 | Lisätty mahdollisuus hakea tuonti- ja vientitietoja tuotekoodeittain. 1. versio tuoteryhmäkuvaajasta. |
 | 18.8. | 1 | Refaktoroitu backendiä. Vaihdettu frontendissä React Bootstrapiin. |
+| 18.8. | 1 | Paranneltu frontendin ulkoasua. |

@@ -1,29 +1,26 @@
 import React from 'react'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
-import { makeStyles } from '@material-ui/core/styles'
+import ToggleButton from 'react-bootstrap/ToggleButton'
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 
-const Menu = ({ flow, setFlow, setYear }) => {
+const Menu = ({ flow, setFlow }) => {
 
-  const useStyles = makeStyles(theme => ({
-    root: {
-      width: 600,
-    },
-    margin: {
-      height: theme.spacing(3),
-    }
-  }))
-
-  const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <div>
       <ToggleButtonGroup
-        value={flow}
-        exclusive
-        onChange={(event, newFlow) => setFlow(newFlow)}>
-        <ToggleButton value='exports'>Exports</ToggleButton>
-        <ToggleButton value='imports'>Imports</ToggleButton>
+        toggle='true'
+        //onChange={(event, newFlow) => setFlow(newFlow)}
+        name='change-flow'>
+        <ToggleButton
+          variant='secondary'
+          onClick={(value) => setFlow('exports')}>
+          Exports
+        </ToggleButton>
+        <ToggleButton
+          variant='secondary'
+          onClick={(value) => setFlow('imports')}>
+          Imports
+        </ToggleButton>
       </ToggleButtonGroup >
     </div >
   )

@@ -8,13 +8,16 @@ const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
   let colorIndex = 2
+  let hoverColor = '#800000'
 
   if (flow === 'exports') {
     values = exports
     colorIndex = 2
+    hoverColor = '#800000'
   } else {
     values = imports
-    colorIndex = 12
+    colorIndex = 4
+    hoverColor = 'darkblue'
   }
 
   useEffect(() => {
@@ -28,8 +31,15 @@ const Map = ({ imports, exports, flow, year }) => {
     map.projection = new am4maps.projections.Orthographic()
     map.panBehavior = 'rotateLongLat'
     map.zoomControl = new am4maps.ZoomControl()
-    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#eee')
+    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#EEE')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
+
+    var graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
+    graticuleSeries.mapLines.template.line.stroke = am4core.color("#67b7dc")
+    graticuleSeries.mapLines.template.line.strokeOpacity = 0.2
+    graticuleSeries.fitExtent = false
+
+    map.homeZoomLevel = 1
 
     let polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
 
@@ -51,7 +61,7 @@ const Map = ({ imports, exports, flow, year }) => {
     polygonTemplate.strokeWidth = 0.5
 
     let hs = polygonTemplate.states.create('hover')
-    hs.properties.fill = am4core.color('#800000')
+    hs.properties.fill = am4core.color(hoverColor)
 
     return (() => {
       if (map) {
@@ -64,11 +74,11 @@ const Map = ({ imports, exports, flow, year }) => {
     heatLegend.width = am4core.percent(100)
     heatLegend.orientation = 'vertical' */
 
-  }, [values, colorIndex])
+  }, [values, colorIndex, hoverColor])
 
   return (
     <div>
-      <div id='mapdiv' style={{ width: '100%', height: '90vh' }}></div>
+      <div id='mapdiv' style={{ width: '100%', height: '85vh', marginTop: '2em'}}></div>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import ImportsChart from './components/ImportsChart'
 import dataService from './services/DataService'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Navbar from 'react-bootstrap/Navbar'
+import Container from 'react-bootstrap/Container'
 
 const App = () => {
 
@@ -43,39 +44,42 @@ const App = () => {
     })
   }, [])
 
+  console.log('Flow: ', flow)
   return (
-    <div>
-      <Navbar bg="dark" variant='dark' expand="lg">
-        <Navbar.Brand href="#">Finnish Foreign Trade Visualized</Navbar.Brand>
-      </Navbar>
-      <Menu
-        setYear={setYear}
-        flow={flow}
-        setFlow={setFlow} />
+    <div style={{ backgroundColor: '#FFF' }}>
+      <Container>
+        <Navbar bg="dark" variant='dark' expand="lg" sticky="top">
+          <Navbar.Brand href="#">Finnish Foreign Trade Visualized</Navbar.Brand>
+        </Navbar>
 
-      {(imports.length === 0 && exports.length === 0)
-        && <CircularProgress></CircularProgress>}
 
-      {(imports.length > 0 && exports.length > 0) &&
-        <Map
-          imports={imports}
-          exports={exports}
-          flow={flow}
-          year={year} />
-      }
-      {(imports.length > 0 && exports.length > 0) &&
-        <div>
-          {(tradeBalance.length > 0) &&
-            <TradeBalanceChart tradeBalance={tradeBalance} />
-          }
-          {(exportsSITC.length > 0) &&
-            <ExportsChart exports={exportsSITC} />
-          }
-          {(importsSITC.length > 0) &&
-            <ImportsChart imports={importsSITC} />
-          }
-        </div>
-      }
+        {(imports.length === 0 && exports.length === 0)
+          && <CircularProgress></CircularProgress>}
+
+        {(imports.length > 0 && exports.length > 0) &&
+          <div>
+            <Map
+              imports={imports}
+              exports={exports}
+              flow={flow}
+              year={year}
+            />
+            <Menu
+              setYear={setYear}
+              flow={flow}
+              setFlow={setFlow} />
+            {(tradeBalance.length > 0) &&
+              <TradeBalanceChart tradeBalance={tradeBalance} />
+            }
+            {(exportsSITC.length > 0) &&
+              <ExportsChart exports={exportsSITC} />
+            }
+            {(importsSITC.length > 0) &&
+              <ImportsChart imports={importsSITC} />
+            }
+          </div>
+        }
+      </Container>
     </div>
   )
 }
