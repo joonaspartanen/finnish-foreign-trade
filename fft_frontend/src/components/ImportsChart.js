@@ -37,10 +37,10 @@ const ImportsChart = ({ imports }) => {
     chart.innerRadius = am4core.percent(40)
 
     var label = pieSeries.createChild(am4core.Label)
-    label.text = "Imports"
-    label.horizontalCenter = "middle"
-    label.verticalCenter = "middle"
-    label.fontSize = 15
+    label.text = 'Imports'
+    label.horizontalCenter = 'middle'
+    label.verticalCenter = 'middle'
+    label.fontSize = 20
 
     return (() => {
       if (chart) {

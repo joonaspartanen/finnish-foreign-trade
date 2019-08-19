@@ -79,7 +79,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
   return (
     <div>
-      <div id='mapdiv' style={{ width: '100%', height: '80vh' }}></div>
+      <div id='mapdiv' style={{ width: '100%', height: '75vh' }}></div>
     </div>
   )
 }
