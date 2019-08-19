@@ -16,3 +16,4 @@
 | 18.8. | 1 | Lisätty mahdollisuus hakea tuonti- ja vientitietoja tuotekoodeittain. 1. versio tuoteryhmäkuvaajasta. |
 | 18.8. | 1 | Refaktoroitu backendiä. Vaihdettu frontendissä React Bootstrapiin. |
 | 18.8. | 2 | Paranneltu frontendin ulkoasua. 3. versio kauppataseen kuvaajasta. |
+| 19.8. | 2 | Ulkoasun parantelua. 1. Heroku-versio. |

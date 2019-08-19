@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4maps from '@amcharts/amcharts4/maps'
-import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+//import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 
 const Map = ({ imports, exports, flow, year }) => {
@@ -22,7 +22,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
   useEffect(() => {
 
-    am4core.useTheme(am4themes_animated)
+    //am4core.useTheme(am4themes_animated)
 
     let map = am4core.create('mapdiv', am4maps.MapChart)
 

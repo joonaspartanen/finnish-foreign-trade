@@ -13,7 +13,7 @@ Some JavaScript library or framework will be used for the data visualization pur
 
 ## Getting Started
 
-The application will be later available on Heroku.
+The application is now available on Heroku: https://finnish-foreign-trade.herokuapp.com/
 
 ## Information for Course Evaluators
 
