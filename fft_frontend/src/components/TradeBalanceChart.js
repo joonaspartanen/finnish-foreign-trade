@@ -86,7 +86,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
 
   return (
     <div>
-      <div id='chartdiv' style={{ width: '%', height: '200vh' }}></div>
+      <div id='chartdiv' style={{ width: '100%', height: '85vh' }}></div>
     </div>
   )
 

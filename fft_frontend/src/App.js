@@ -5,12 +5,12 @@ import TradeBalanceChart from './components/TradeBalanceChart'
 import ExportsChart from './components/ExportsChart'
 import ImportsChart from './components/ImportsChart'
 import dataService from './services/DataService'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
+import Spinner from 'react-bootstrap/Spinner'
+import './App.css'
 
 const App = () => {
 
@@ -49,30 +49,31 @@ const App = () => {
 
   console.log('Flow: ', flow)
   return (
-    <div style={{ backgroundColor: '#FFF' }}>
+    <div style={{ backgroundColor: '#FFF', paddingTop: '50px' }}>
+      <Navbar bg='dark' variant='dark' expand='lg' fixed='top'>
+        <Navbar.Brand href='#'>Finnish Foreign Trade Visualized</Navbar.Brand>
+      </Navbar>
       <Container>
-        <Navbar bg="dark" variant='dark' expand="lg">
-          <Navbar.Brand href="#">Finnish Foreign Trade Visualized</Navbar.Brand>
-        </Navbar>
-
-
-        {(imports.length === 0 && exports.length === 0)
-          && <CircularProgress></CircularProgress>}
-
+        {(imports.length === 0 || exports.length === 0) &&
+          <Row className='justify-content-center align-items-center' style={{ height: '100vh' }}>
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </Row>
+        }
         {(imports.length > 0 && exports.length > 0) &&
           <div>
-            <Row>
+            <Row className='justify-content-center'>
               <Col>
+                <h2 className='text-center display-5' style={{ padding: '0.5em 0 0.5em 0' }}>
+                  Trade Partners (2018)
+                </h2>
                 <Map
                   imports={imports}
                   exports={exports}
                   flow={flow}
                   year={year}
                 />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
                 <Menu
                   setYear={setYear}
                   flow={flow}
@@ -82,12 +83,18 @@ const App = () => {
             </Row>
             <Row>
               <Col>
+                <h2 className='text-center display-5' style={{ padding: '0.5em 0 0 0' }}>
+                  Trade Balance (2009-2018)
+                </h2>
                 {(tradeBalance.length > 0) &&
                   <TradeBalanceChart tradeBalance={tradeBalance} />
                 }
               </Col>
             </Row>
             <Row>
+              <h2 className='text-center display-5' style={{ padding: '0.5em 0 0 0' }}>
+                Imports and Exports by Product Category (2018)
+              </h2>
               <Col sm={6}>
                 {(exportsSITC.length > 0) &&
                   <ExportsChart exports={exportsSITC} />

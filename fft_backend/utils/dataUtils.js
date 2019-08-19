@@ -71,7 +71,7 @@ const parseTradeBalance = (imports, exports) => {
   const combinedData = mappedImports
     .map((a, i) => ({ ...a, exports: mappedExports[i].exports }))
   const result = combinedData.map(a => ({ ...a, tradeBalance: a.exports - a.imports }))
-  return result.sort((a, b) => a.year - b.year)
+  return result.sort((a, b) => b.year - a.year)
 }
 
 module.exports = { getData, mapData, classifyData, parseTradeBalance }

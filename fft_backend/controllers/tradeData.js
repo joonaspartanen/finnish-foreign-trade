@@ -16,8 +16,9 @@ tradeDataRouter.get('/exports', async (req, res) => {
 })
 
 tradeDataRouter.get('/tradebalance', async (req, res) => {
-  const imports = await dataUtils.getData('0-9', 'AA', '=ALL', '1')
-  const exports = await dataUtils.getData('0-9', 'AA', '=ALL', '2')
+  const imports = await dataUtils.getData('0-9', 'AA', '=FIRST*;10', '1')
+  const exports = await dataUtils.getData('0-9', 'AA', '=FIRST*;10', '2')
+  console.log(imports)
   res.json(dataUtils.parseTradeBalance(imports, exports))
 })
 

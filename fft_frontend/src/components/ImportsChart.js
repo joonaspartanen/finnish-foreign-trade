@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
+import * as am4plugins_sliceGrouper from '@amcharts/amcharts4/plugins/sliceGrouper'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
@@ -14,22 +15,31 @@ const ImportsChart = ({ imports }) => {
 
     let chart = am4core.create('imports-chart-div', am4charts.PieChart)
     chart.data = imports
+
+   /* let title = chart.titles.create()
+    title.text = 'Imports to Finland'
+    title.fontSize = 25 */
+
     let pieSeries = chart.series.push(new am4charts.PieSeries())
     pieSeries.dataFields.value = 'euros'
     pieSeries.dataFields.category = 'class'
     pieSeries.labels.template.disabled = true
     pieSeries.ticks.template.disabled = true
 
-    chart.legend = new am4charts.Legend()
-    chart.legend.position = 'bottom'
+    let grouper = pieSeries.plugins.push(new am4plugins_sliceGrouper.SliceGrouper())
+    grouper.threshold = 5
+    grouper.groupName = 'Other'
+    grouper.clickBehavior = 'break'
 
-    chart.innerRadius = am4core.percent(60)
+    //chart.legend = new am4charts.Legend()
+    //chart.legend.position = 'bottom'
+
+    chart.innerRadius = am4core.percent(40)
 
     var label = pieSeries.createChild(am4core.Label)
-
-    label.text = 'Imports to Finland'
-    label.horizontalCenter = 'middle'
-    label.verticalCenter = 'middle'
+    label.text = "Imports"
+    label.horizontalCenter = "middle"
+    label.verticalCenter = "middle"
     label.fontSize = 15
 
     return (() => {
@@ -42,7 +52,7 @@ const ImportsChart = ({ imports }) => {
 
   return (
     <div>
-      <div id='imports-chart-div' style={{ width: '100%', height: '100vh' }}></div>
+      <div id='imports-chart-div' style={{ width: '100%', height: '60vh' }}></div>
     </div >
   )
 

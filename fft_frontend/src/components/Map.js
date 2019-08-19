@@ -35,7 +35,7 @@ const Map = ({ imports, exports, flow, year }) => {
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
 
     let graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
-    graticuleSeries.mapLines.template.line.stroke = am4core.color("#67b7dc")
+    graticuleSeries.mapLines.template.line.stroke = am4core.color('#67b7dc')
     graticuleSeries.mapLines.template.line.strokeOpacity = 0.2
     graticuleSeries.fitExtent = false
 
@@ -79,7 +79,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
   return (
     <div>
-      <div id='mapdiv' style={{ width: '100%', height: '85vh', marginTop: '2em' }}></div>
+      <div id='mapdiv' style={{ width: '100%', height: '80vh' }}></div>
     </div>
   )
 }

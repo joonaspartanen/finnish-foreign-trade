@@ -11,7 +11,8 @@ const Menu = ({ flow, setFlow }) => {
         toggle='true'
         name='change-flow'>
         <ToggleButton
-          variant='secondary'
+          variant='primary'
+          active
           onClick={(value) => setFlow('exports')}>
           Exports
         </ToggleButton>
