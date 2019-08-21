@@ -22,16 +22,7 @@ tradeDataRouter.get('/tradebalance', async (req, res) => {
   res.json(dataUtils.parseTradeBalance(imports, exports))
 })
 
-tradeDataRouter.get('/imports/SITC1', async (req, res) => {
-  const data = await dataUtils.getData('=ALL', 'AA', '2018', '1')
-  const sortedData = data
-    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map(a => ({ year: parseInt(a.keys[2]), class: a.keys[0].substring(12), euros: a.vals[0] }))
-    .sort((a, b) => b.euros - a.euros)
-  res.json(sortedData)
-})
-
-tradeDataRouter.get('/exports/SITC1', async (req, res) => {
+tradeDataRouter.get('/SITC1', async (req, res) => {
   const imports = await dataUtils.getData('=ALL', 'AA', '2018', '1')
   const exports = await dataUtils.getData('=ALL', 'AA', '2018', '2')
   const mappedImports = imports
@@ -41,14 +32,12 @@ tradeDataRouter.get('/exports/SITC1', async (req, res) => {
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
     .map(a => ({ [a.keys[0].substring(12)]: a.vals[0] }))
 
-
   const finalImports = Object.assign({ flow: 'Imports' }, ...mappedImports)
   const finalExports = Object.assign({ flow: 'Exports' }, ...mappedExports)
 
   const result = []
   result.push(finalImports, finalExports)
   res.json(result)
-
 })
 
 module.exports = tradeDataRouter

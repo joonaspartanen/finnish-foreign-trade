@@ -24,8 +24,7 @@ const App = () => {
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
 
-  const [importsSITC, setImportsSITC] = useState([])
-  const [exportsSITC, setExportsSITC] = useState([])
+  const [productData, setProductData] = useState([])
 
   const [flow, setFlow] = useState('exports')
 
@@ -42,13 +41,9 @@ const App = () => {
       console.log(res.data)
       setTradeBalance(res.data)
     })
-    dataService.getImportsBySITC().then(res => {
+    dataService.getProductData().then(res => {
       console.log(res.data)
-      setImportsSITC(res.data)
-    })
-    dataService.getExportsBySITC().then(res => {
-      console.log(res.data)
-      setExportsSITC(res.data)
+      setProductData(res.data)
     })
   }, [])
 
@@ -83,7 +78,7 @@ const App = () => {
 
             <ScrollableAnchor id={'by-product'}>
               <div className='section' style={{ height: '100vh', backgroundColor: '#333', position: 'relative', padding: '0 0 3em 0' }}>
-                <ExportsBarChart exports={exportsSITC} />
+                <ExportsBarChart productData={productData} />
               </div>
             </ScrollableAnchor>
           </div>

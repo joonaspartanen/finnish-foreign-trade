@@ -34,18 +34,18 @@
 
 .arrow-down {
   box-sizing: border-box;
-  height: 3em;
-  width: 3em;
+  height: 2em;
+  width: 2em;
   border-style: solid;
-  border-color: #5F6F88;
-  border-width: 0px 2px 2px 0px;
+  border-color: #FFF;
+  border-width: 0px 3px 3px 0px;
   transform: rotate(45deg);
   transition: border-width 150ms ease-in-out;
 }
 
 .arrow-down:hover {
-  border-bottom-width: 4px;
-  border-right-width: 4px;
+  border-bottom-width: 5px;
+  border-right-width: 5px;
 }
 
 .section {
