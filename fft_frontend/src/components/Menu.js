@@ -6,7 +6,7 @@ const Menu = ({ flow, setFlow }) => {
 
 
   return (
-    <div>
+    <div style={{ marginTop: '1em' }}>
       <ToggleButtonGroup
         toggle='true'
         name='change-flow'>
@@ -21,7 +21,7 @@ const Menu = ({ flow, setFlow }) => {
           onClick={(value) => setFlow('imports')}>
           Imports
         </ToggleButton>
-      </ToggleButtonGroup >
+      </ToggleButtonGroup>
     </div >
   )
 }

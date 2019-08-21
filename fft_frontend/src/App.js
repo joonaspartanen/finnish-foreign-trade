@@ -4,6 +4,7 @@ import Menu from './components/Menu'
 import TradeBalanceChart from './components/TradeBalanceChart'
 import ExportsChart from './components/ExportsChart'
 import ImportsChart from './components/ImportsChart'
+import ExportsBarChart from './components/ExportsBarChart'
 import dataService from './services/DataService'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -15,7 +16,7 @@ import ScrollableAnchor from 'react-scrollable-anchor'
 import { configureAnchors } from 'react-scrollable-anchor'
 import './App.css'
 
-configureAnchors({ offset: -50 })
+//configureAnchors({ offset: -50 })
 
 const App = () => {
 
@@ -27,7 +28,6 @@ const App = () => {
   const [exportsSITC, setExportsSITC] = useState([])
 
   const [flow, setFlow] = useState('exports')
-  const [year, setYear] = useState(2018)
 
   useEffect(() => {
     dataService.getImports().then(res => {
@@ -54,86 +54,48 @@ const App = () => {
 
   console.log('Flow: ', flow)
   return (
-    <div style={{ backgroundColor: '#FFF' }}>
-      <Navbar bg='dark' variant='dark' expand='lg' fixed='top'>
-        <Navbar.Brand href='#'>Finnish Foreign Trade Visualized</Navbar.Brand>
-      </Navbar>
-      <Container>
-        {(imports.length === 0 || exports.length === 0) &&
-          <Row className='justify-content-center align-items-center' style={{ height: '100vh' }}>
-            <Spinner animation='border' role='status'>
-              <span className='sr-only'>Loading...</span>
-            </Spinner>
-          </Row>
-        }
+    <div style={{ backgroundColor: '#343A40' }}>
+      <Container fluid={'true'} style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <Navbar bg='dark' variant='dark' expand='lg' style={{ marginLeft: 0, marginRight: 0 }} >
+          <Navbar.Brand href='#'>Finnish Foreign Trade Visualized</Navbar.Brand>
+        </Navbar>
         {(imports.length > 0 && exports.length > 0) &&
           <div>
-            <Row className='justify-content-center' style={{ height: '100vh' }}>
-              <Col>
-                <h2 className='text-center display-5' style={{ padding: '0.5em 0 0.5em 0' }}>
-                  Trade Partners (2018)
-                </h2>
-                <Map
-                  imports={imports}
-                  exports={exports}
-                  flow={flow}
-                  year={year}
-                />
-                <Menu
-                  setYear={setYear}
-                  flow={flow}
-                  setFlow={setFlow}
-                />
-                <Row className='justify-content-center'>
-                  <a href='#trade-balance'>
-                    <div className='arrow-down'></div>
-                  </a>
-                </Row>
-              </Col>
-            </Row>
-            <ScrollableAnchor id={'trade-balance'}>
-              <Row>
-                <Col>
-                  <h2 className='text-center display-5' style={{ padding: '0.5em 0 0 0' }}>
-                    Trade Balance (2009-2018)
-                </h2>
-                  {(tradeBalance.length > 0) &&
-                    <TradeBalanceChart tradeBalance={tradeBalance} />
-                  }
-                </Col>
-              </Row>
-            </ScrollableAnchor>
-            <Row className='justify-content-center'>
-              <a href='#by-product'>
-                <div className='arrow-down'></div>
+            <div className='section' style={{ position: 'relative', height: 'calc(100vh - 50px)' }}>
+              <Map
+                imports={imports}
+                exports={exports}
+                flow={flow}
+              />
+              <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
+                <div className='arrow-down' ></div>
               </a>
-            </Row>
+            </div>
+
+            <ScrollableAnchor id={'trade-balance'}>
+              <div className='section' style={{ height: '100vh', backgroundColor: '#555', position: 'relative', padding: '0 0 3em 0' }}>
+                <TradeBalanceChart tradeBalance={tradeBalance} />
+                <a href='#by-product' style={{ position: 'absolute', bottom: '2em' }}>
+                  <div className='arrow-down'></div>
+                </a>
+              </div>
+            </ScrollableAnchor>
+
             <ScrollableAnchor id={'by-product'}>
-              <Row style={{ height: '100vh' }}>
-                <h2 className='text-center display-5' style={{ padding: '1em 0 0 0' }}>
-                  Imports and Exports by Product Category (2018)
-                </h2>
-                <Col sm={6}>
-                  {(exportsSITC.length > 0) &&
-                    <ExportsChart exports={exportsSITC} />
-                  }
-                </Col>
-                <Col sm={6}>
-                  {(importsSITC.length > 0) &&
-                    <ImportsChart imports={importsSITC} />
-                  }
-                </Col>
-              </Row>
+              <div className='section' style={{ height: '100vh', backgroundColor: '#333', position: 'relative', padding: '0 0 3em 0' }}>
+                <ExportsBarChart exports={exportsSITC} />
+              </div>
             </ScrollableAnchor>
           </div>
         }
+        <Navbar bg='dark' variant='dark' expand='lg'>
+          <Nav className='mr-auto'>
+            <Nav.Link href='#'>About</Nav.Link>
+          </Nav>
+        </Navbar>
       </Container>
-      <Navbar bg='dark' variant='dark' expand='lg'>
-        <Nav className='mr-auto'>
-          <Nav.Link href='#'>About</Nav.Link>
-        </Nav>
-      </Navbar>
-    </div>
+
+    </div >
   )
 }
 

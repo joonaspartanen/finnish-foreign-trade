@@ -18,3 +18,4 @@
 | 18.8. | 2 | Paranneltu frontendin ulkoasua. 3. versio kauppataseen kuvaajasta. |
 | 19.8. | 2 | Ulkoasun parantelua. 1. Heroku-versio. |
 | 19.8. | 1 | Lisätty nuolet, joilla skrollata näkymästä toiseen. |
+| 20.-21.8. | 4 | Refaktoroitu frontendiä. Lisätty omaa CSS:ää. Lisää datan käsittelyä backendissä. |

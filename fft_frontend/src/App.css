@@ -34,8 +34,8 @@
 
 .arrow-down {
   box-sizing: border-box;
-  height: 2vw;
-  width: 2vw;
+  height: 3em;
+  width: 3em;
   border-style: solid;
   border-color: #5F6F88;
   border-width: 0px 2px 2px 0px;
@@ -46,4 +46,9 @@
 .arrow-down:hover {
   border-bottom-width: 4px;
   border-right-width: 4px;
+}
+
+.section {
+  display: flex;
+  justify-content: center
 }
