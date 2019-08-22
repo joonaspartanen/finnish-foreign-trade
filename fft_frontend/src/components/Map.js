@@ -8,17 +8,17 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 const Map = ({ imports, exports, flow, year }) => {
 
   let values = null
-  let colorIndex = 1
-  let hoverColor = null
+  let color = '#5E5B78'
+  let hoverColor = '#4B0000'
 
   if (flow === 'exports') {
     values = exports
-    colorIndex = 1
-    hoverColor = '#800000'
+    color = '#5E5B78'
+    hoverColor = '#4B0000'
   } else {
     values = imports
-    colorIndex = 8
-    hoverColor = '#800000'
+    color = '#C17D80'
+    hoverColor = '#161331'
   }
 
   useEffect(() => {
@@ -26,11 +26,10 @@ const Map = ({ imports, exports, flow, year }) => {
     //am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_dark)
 
-
     let map = am4core.create('mapdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
-    map.projection = new am4maps.projections.Miller()
+    map.projection = new am4maps.projections.Mercator()
     //map.projection = new am4maps.projections.Orthographic()
     //map.panBehavior = 'rotateLongLat'
     map.zoomControl = new am4maps.ZoomControl()
@@ -64,26 +63,28 @@ const Map = ({ imports, exports, flow, year }) => {
     polygonSeries.heatRules.push({
       property: 'fill',
       target: polygonSeries.mapPolygons.template,
-      min: map.colors.getIndex(colorIndex).brighten(2.0),
-      max: map.colors.getIndex(colorIndex).brighten(-0.8)
+      min: am4core.color(color).brighten(1.4),
+      max: am4core.color(color).brighten(-0.6)
+
+      //      min: map.colors.getIndex(colorIndex).brighten(2.0),
+      //      max: map.colors.getIndex(colorIndex).brighten(-0.8)
     })
 
-    console.log(colorIndex)
     polygonSeries.useGeodata = true
     polygonSeries.exclude = ['AQ', 'SJ']
 
     polygonSeries.data = values
 
-    map.events.on("ready", () => {
-      let finland = polygonSeries.getPolygonById("FI")
-      finland.fill = am4core.color('#FFF')
-    })
-
-
     let polygonTemplate = polygonSeries.mapPolygons.template
     polygonTemplate.tooltipText = `{name}: {euros} €`
     polygonTemplate.nonScalingStroke = true
     polygonTemplate.strokeWidth = 0.5
+
+    map.events.on("ready", () => {
+      let finland = polygonSeries.getPolygonById("FI")
+      finland.fill = am4core.color('#FFF')
+      finland.tooltipText = ''
+    })
 
     let hs = polygonTemplate.states.create('hover')
     hs.properties.fill = am4core.color(hoverColor)
@@ -93,13 +94,7 @@ const Map = ({ imports, exports, flow, year }) => {
         map.dispose()
       }
     })
-
-    /* let heatLegend = map.createChild(am4maps.HeatLegend)
-    heatLegend.series = polygonSeries
-    heatLegend.width = am4core.percent(100)
-    heatLegend.orientation = 'vertical' */
-
-  }, [values, colorIndex, hoverColor])
+  }, [values, color, hoverColor])
 
   return (
     <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>

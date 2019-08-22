@@ -50,5 +50,15 @@
 
 .section {
   display: flex;
-  justify-content: center
+  justify-content: center;
+  align-items: center;
+  flex-direction: column
+}
+
+.btn-primary {
+  background-color: #161330 !important;
+}
+
+.btn-secondary {
+  background-color: #4D090C !important;
 }

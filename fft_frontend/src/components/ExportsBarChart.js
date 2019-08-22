@@ -23,6 +23,11 @@ const ExportsChart = ({ productData }) => {
     valueAxis.renderer.inside = true
     valueAxis.min = 0
     valueAxis.title.text = "Euros"
+    valueAxis.numberFormatter.numberFormat = '##.##a'
+    valueAxis.numberFormatter.bigNumberPrefixes = [
+      { 'number': 1e+9, 'suffix': 'B' }
+    ]
+
 
     const createSeries = (field) => {
       let series = chart.series.push(new am4charts.ColumnSeries())
@@ -33,7 +38,7 @@ const ExportsChart = ({ productData }) => {
       series.stacked = true
       series.columns.template.height = am4core.percent(100)
       series.columns.template.width = am4core.percent(30)
-      series.columns.template.tooltipText = '[bold]{name}[/]\n{valueY} €'
+      series.columns.template.tooltipText = '{name}\n€ {valueY}'
 
       return series
     }
@@ -55,6 +60,7 @@ const ExportsChart = ({ productData }) => {
       chart.legend = new am4charts.Legend()
       chart.legend.position = 'right'
       chart.legend.width = am4core.percent(40)
+      chart.legend.paddingLeft = '20px'
     } else {
       valueAxis.renderer.disabled = true
     }
@@ -68,7 +74,7 @@ const ExportsChart = ({ productData }) => {
   }, [productData])
 
   return (
-    <div id='products-barchart-div' style={{ width: '100%', height: '100vh' }}></div>
+    <div id='products-barchart-div' style={{ width: '100%', height: '100vh', paddingTop: '2em' }}></div>
   )
 
 }
