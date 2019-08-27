@@ -26,7 +26,8 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       categoryAxis.renderer.cellEndLocation = 0.9
 
       let valueAxis = chart.xAxes.push(new am4charts.ValueAxis())
-      // valueAxis.min = 0
+      valueAxis.min = -1000000000
+      valueAxis.strictMinMax = true
       valueAxis.numberFormatter.numberFormat = '##.##a'
       valueAxis.numberFormatter.bigNumberPrefixes = [
         { 'number': 1e+9, 'suffix': 'B' }
@@ -36,17 +37,17 @@ const TradeBalanceChart = ({ tradeBalance }) => {
 
       let tradeBalanceSeries = chart.series.push(new am4charts.ColumnSeries())
       tradeBalanceSeries.name = 'Trade Balance'
-      tradeBalanceSeries.fill = am4core.color('#56a963')
+      tradeBalanceSeries.fill = am4core.color('#2E8B57')
       tradeBalanceSeries.strokeWidth = 0
       tradeBalanceSeries.dataFields.valueX = 'tradeBalance'
       tradeBalanceSeries.dataFields.categoryY = 'year'
       tradeBalanceSeries.columns.template.height = am4core.percent(100)
       tradeBalanceSeries.sequencedInterpolation = true
-      tradeBalanceSeries.columns.template.tooltipText = '{name}: €{valueX}'
+      tradeBalanceSeries.columns.template.tooltipText = '{name}:\n€{valueX}'
 
       tradeBalanceSeries.columns.template.adapter.add('fill', (fill, target) => {
         if (target.dataItem && (target.dataItem.valueX < 0)) {
-          return am4core.color('#56a963')
+          return am4core.color('#800000')
         }
         else {
           return fill
@@ -54,24 +55,24 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       })
 
       let importSeries = chart.series.push(new am4charts.ColumnSeries())
-      importSeries.name = 'Imports'
+      importSeries.name = 'Imports to Finland (2018)'
       importSeries.fill = am4core.color('#63718B')
       importSeries.strokeWidth = 0
       importSeries.dataFields.valueX = 'imports'
       importSeries.dataFields.categoryY = 'year'
       importSeries.columns.template.height = am4core.percent(100)
       importSeries.sequencedInterpolation = true
-      importSeries.columns.template.tooltipText = '{name}: €{valueX}'
+      importSeries.columns.template.tooltipText = '{name}:\n€{valueX}'
 
       let exportSeries = chart.series.push(new am4charts.ColumnSeries())
-      exportSeries.name = 'Exports'
+      exportSeries.name = 'Exports from Finland (2018)'
       exportSeries.fill = am4core.color('#EBA05C')
       exportSeries.strokeWidth = 0
       exportSeries.dataFields.valueX = 'exports'
       exportSeries.dataFields.categoryY = 'year'
       exportSeries.columns.template.height = am4core.percent(100)
       exportSeries.sequencedInterpolation = true
-      exportSeries.columns.template.tooltipText = '{name}: €{valueX}'
+      exportSeries.columns.template.tooltipText = '{name}:\n€{valueX}'
     } else {
       let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
       categoryAxis.dataFields.category = 'year'
@@ -96,7 +97,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       tradeBalanceSeries.dataFields.categoryX = 'year'
       tradeBalanceSeries.columns.template.height = am4core.percent(100)
       tradeBalanceSeries.sequencedInterpolation = true
-      tradeBalanceSeries.columns.template.tooltipText = '{name}: €{valueY}'
+      tradeBalanceSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
 
       tradeBalanceSeries.columns.template.adapter.add('fill', (fill, target) => {
         if (target.dataItem && (target.dataItem.valueY < 0)) {
@@ -108,24 +109,24 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       })
 
       let importSeries = chart.series.push(new am4charts.ColumnSeries())
-      importSeries.name = 'Imports'
+      importSeries.name = 'Imports to Finland (2018)'
       importSeries.fill = am4core.color('#63718B')
       importSeries.strokeWidth = 0
       importSeries.dataFields.valueY = 'imports'
       importSeries.dataFields.categoryX = 'year'
       importSeries.columns.template.height = am4core.percent(100)
       importSeries.sequencedInterpolation = true
-      importSeries.columns.template.tooltipText = '{name}: €{valueY}'
+      importSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
 
       let exportSeries = chart.series.push(new am4charts.ColumnSeries())
-      exportSeries.name = 'Exports'
+      exportSeries.name = 'Exports from Finland (2018)'
       exportSeries.fill = am4core.color('#EBA05C')
       exportSeries.strokeWidth = 0
       exportSeries.dataFields.valueY = 'exports'
       exportSeries.dataFields.categoryX = 'year'
       exportSeries.columns.template.height = am4core.percent(100)
       exportSeries.sequencedInterpolation = true
-      exportSeries.columns.template.tooltipText = '{name}: €{valueY}'
+      exportSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
     }
 
     return (() => {

@@ -1,8 +1,7 @@
 const axios = require('axios')
 const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 
-const getData = async (classification, country, year, flow) => {
-
+const getData = async (SITC, classification, country, year, flow) => {
   axios.interceptors.response.use(res => {
     if (typeof res.data !== 'object') {
       try {
@@ -15,20 +14,37 @@ const getData = async (classification, country, year, flow) => {
     return res
   })
 
-  try {
-    const response = await axios.get(baseUrl, {
-
-      params: {
-        'Classification of Products SITC1': classification,
-        Country: country,
-        Year: year,
-        Flow: flow,
-        Indicators: 'V1'
-      }
-    })
-    return response.data
-  } catch (e) {
-    console.log(e)
+  if (SITC === 1) {
+    try {
+      const response = await axios.get(baseUrl, {
+        params: {
+          'Classification of Products SITC1': classification,
+          Country: country,
+          Year: year,
+          Flow: flow,
+          Indicators: 'V1'
+        }
+      })
+      return response.data
+    } catch (e) {
+      console.log(e)
+    }
+  } else if (SITC === 2) {
+    try {
+      const response = await axios.get(baseUrl, {
+        params: {
+          'Classification of Products SITC2': classification,
+          Country: country,
+          Year: year,
+          Flow: flow,
+          Indicators: 'V1',
+          Exclude: 'ZAN'
+        }
+      })
+      return response.data
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 

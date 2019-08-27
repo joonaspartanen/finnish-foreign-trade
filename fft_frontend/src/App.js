@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Map from './components/Map'
 import Menu from './components/Menu'
 import TradeBalanceChart from './components/TradeBalanceChart'
-import ExportsBarChart from './components/ExportsBarChart'
+import ProductsBarChart from './components/ProductsBarChart'
 import dataService from './services/DataService'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -90,14 +90,14 @@ const App = () => {
 
             <ScrollableAnchor id={'by-product'}>
               <div className='section' style={{ height: '100vh', backgroundColor: '#333', position: 'relative', padding: '0 0 3em 0' }}>
-                <ExportsBarChart productData={productData} />
+                <ProductsBarChart productData={productData} />
               </div>
             </ScrollableAnchor>
           </div>
         }
         <Navbar bg='dark' variant='dark' expand='lg'>
           <Nav className='mr-auto'>
-            <Nav.Link href='#'>About</Nav.Link>
+            <Nav.Link href='https://github.com/joonaspartanen/finnish-foreign-trade/blob/master/README.md'>About</Nav.Link>
           </Nav>
         </Navbar>
       </Container>

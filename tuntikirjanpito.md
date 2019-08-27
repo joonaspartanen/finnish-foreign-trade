@@ -20,3 +20,4 @@
 | 19.8. | 1 | Lisätty nuolet, joilla skrollata näkymästä toiseen. |
 | 20.-21.8. | 4 | Refaktoroitu frontendiä. Lisätty omaa CSS:ää. Lisää datan käsittelyä backendissä. |
 | 22.8. | 2 | Lisätty valikko. Kauppatasekuvaajaan lisätty varsinainen kauppatase (vienti-tuonti). Ulkoasun ja värien säätöä. |
+| 26.8. | 2 | Lisätty backendiin mahdollisuus hakea maakohtaisia tullitietoja. |

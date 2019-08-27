@@ -4,7 +4,7 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
-const ExportsChart = ({ productData }) => {
+const ProductsBarChart = ({ productData }) => {
 
   useEffect(() => {
 
@@ -79,4 +79,5 @@ const ExportsChart = ({ productData }) => {
 
 }
 
-export default ExportsChart
+export default ProductsBarChart
+
