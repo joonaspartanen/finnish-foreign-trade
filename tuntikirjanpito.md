@@ -1,3 +1,5 @@
+# Tuntikirjanpito
+
 | pvm | tuntia | kuvaus |
 | --- | ------ | ------ |
 | 10.8. | 2 | Suunnittelua, Uljas API:in ja datavisualisointiin tarkoitettuihin JavaScript-kirjastoihin tutustumista. |
@@ -22,3 +24,5 @@
 | 22.8. | 2 | Lisätty valikko. Kauppatasekuvaajaan lisätty varsinainen kauppatase (vienti-tuonti). Ulkoasun ja värien säätöä. |
 | 26.8. | 2 | Lisätty backendiin mahdollisuus hakea maakohtaisia tullitietoja. |
 | 20.12. | 1 | Tutustuttu amchart:n TreeMap-dokumentaatioon.
+| 10.2. | 2 | Backendin refaktorointia. Uusia testejä. Testeihin apumetodeja.
+| Yhteensä | 36 | |
