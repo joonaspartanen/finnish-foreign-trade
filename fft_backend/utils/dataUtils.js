@@ -1,5 +1,6 @@
 const axios = require('axios')
-const baseUrl = 'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
+const baseUrl =
+  'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 
 const getData = async (SITC, classification, country, year, flow) => {
   axios.interceptors.response.use(res => {
@@ -48,18 +49,21 @@ const getData = async (SITC, classification, country, year, flow) => {
   }
 }
 
-const mapData = (data) => {
+const mapData = data => {
   return data
-    .map(a => ({ id: a.keys[1].substring(0, 2), year: parseInt(a.keys[2]), euros: a.vals[0] }))
-    .filter(a => a.id !== "AA")
+    .map(a => ({
+      id: a.keys[1].substring(0, 2),
+      year: parseInt(a.keys[2]),
+      euros: a.vals[0]
+    }))
+    .filter(a => a.id !== 'AA')
     .map(a =>
       // Serbian country code must be changed
-      a.id === "XS"
-        ? { ...a, id: "RS" }
-        : a)
+      a.id === 'XS' ? { ...a, id: 'RS' } : a
+    )
 }
 
-const classifyData = (data) => {
+const classifyData = data => {
   return data.map(a => {
     let c = 1
     if (a.euros >= 5000000000) {
@@ -80,13 +84,22 @@ const classifyData = (data) => {
 }
 
 const parseTradeBalance = (imports, exports) => {
-  const mappedImports = imports
-    .map(a => ({ year: parseInt(a.keys[2]), imports: a.vals[0] }))
-  const mappedExports = exports
-    .map(a => ({ year: parseInt(a.keys[2]), exports: a.vals[0] }))
-  const combinedData = mappedImports
-    .map((a, i) => ({ ...a, exports: mappedExports[i].exports }))
-  const result = combinedData.map(a => ({ ...a, tradeBalance: a.exports - a.imports }))
+  const mappedImports = imports.map(a => ({
+    year: parseInt(a.keys[2]),
+    imports: a.vals[0]
+  }))
+  const mappedExports = exports.map(a => ({
+    year: parseInt(a.keys[2]),
+    exports: a.vals[0]
+  }))
+  const combinedData = mappedImports.map((a, i) => ({
+    ...a,
+    exports: mappedExports[i].exports
+  }))
+  const result = combinedData.map(a => ({
+    ...a,
+    tradeBalance: a.exports - a.imports
+  }))
   return result.sort((a, b) => b.year - a.year)
 }
 
