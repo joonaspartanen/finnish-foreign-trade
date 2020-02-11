@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
+import { React, useEffect } from 'react'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
 const ProductsBarChart = ({ productData }) => {
-
   useEffect(() => {
-
+    console.log(productData)
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
 
-    let chart = am4core.create('products-barchart-div', am4charts.XYChart);
+    let chart = am4core.create('products-barchart-div', am4charts.XYChart)
 
     chart.data = productData
 
@@ -22,14 +21,11 @@ const ProductsBarChart = ({ productData }) => {
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
     valueAxis.renderer.inside = true
     valueAxis.min = 0
-    valueAxis.title.text = "Euros"
+    valueAxis.title.text = 'Euros'
     valueAxis.numberFormatter.numberFormat = '##.##a'
-    valueAxis.numberFormatter.bigNumberPrefixes = [
-      { 'number': 1e+9, 'suffix': 'B' }
-    ]
+    valueAxis.numberFormatter.bigNumberPrefixes = [{ number: 1e9, suffix: 'B' }]
 
-
-    const createSeries = (field) => {
+    const createSeries = field => {
       let series = chart.series.push(new am4charts.ColumnSeries())
       series.name = field
       series.dataFields.valueY = field
@@ -54,7 +50,6 @@ const ProductsBarChart = ({ productData }) => {
     createSeries('Miscellaneous manufactured articles')
     createSeries('Goods not classified elsewhere')
 
-
     // Show legend only in landscape view
     if (window.innerHeight < window.innerWidth) {
       chart.legend = new am4charts.Legend()
@@ -65,19 +60,19 @@ const ProductsBarChart = ({ productData }) => {
       valueAxis.renderer.disabled = true
     }
 
-    return (() => {
+    return () => {
       if (chart) {
         chart.dispose()
       }
-    })
-
+    }
   }, [productData])
 
   return (
-    <div id='products-barchart-div' style={{ width: '100%', height: '100vh', paddingTop: '2em' }}></div>
+    <div
+      id='products-barchart-div'
+      style={{ width: '100%', height: '100vh', paddingTop: '2em' }}
+    ></div>
   )
-
 }
 
 export default ProductsBarChart
-
