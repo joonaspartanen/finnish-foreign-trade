@@ -44,22 +44,44 @@ tradeDataRouter.get('/SITC1', async (req, res) => {
 tradeDataRouter.get('/SITC2', async (req, res) => {
   const imports = await dataUtils.getData(2, '=ALL', 'AA', '2018', '1')
   const exports = await dataUtils.getData(2, '=ALL', 'AA', '2018', '2')
+  console.log(imports)
   const mappedImports = imports
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
     .map(a => ({
-      class: a.keys[0].substring(13),
+      group: a.keys[0].substring(13),
       value: a.vals[0],
       SITC1: parseInt(a.keys[0].substring(0, 1))
     }))
     .sort((a, b) => a.SITC1 - b.SITC1)
   console.log(mappedImports)
-  const groupedImports = _.groupBy(mappedImports, 'SITC1')
-  const finalImports = groupedImports
+  //const groupedImports = _.groupBy(mappedImports, 'SITC1')
+  const result = [
+    { group: 'Food and live animals', children: [] },
+    { group: 'Beverages and tobacco', children: [] },
+    { group: 'Crude materials, inedible, except fuels', children: [] },
+    { group: 'Mineral fuels, lubricants and related materials', children: [] },
+    { group: 'Animal and vegetable oils, fats and waxes', children: [] },
+    { group: 'Chemicals and related products', children: [] },
+    {
+      group: 'Manufactured goods classified chiefly by material',
+      children: []
+    },
+    { group: 'Machinery and transport equipment', children: [] },
+    { group: 'Miscellaneous manufactured articles', children: [] },
+    {
+      group: 'Commodities and transactions not classified elsewhere',
+      children: []
+    }
+  ]
+  mappedImports.map(a => {
+    result[a.SITC1].children.push(a)
+  })
+  console.log(result)
   // .map(a => {('children': a[0]}))
   const mappedExports = exports
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
     .map(a => ({
-      class: a.keys[0].substring(13),
+      group: a.keys[0].substring(13),
       value: a.vals[0],
       SITC1: parseInt(a.keys[0].substring(0, 1))
     }))
@@ -67,8 +89,6 @@ tradeDataRouter.get('/SITC2', async (req, res) => {
   //const finalImports = Object.assign({ flow: 'Imports' }, ...mappedImports)
   //const finalExports = Object.assign({ flow: 'Exports' }, ...mappedExports)
 
-  const result = []
-  result.push(finalImports, mappedExports)
   res.json(result)
 })
 
