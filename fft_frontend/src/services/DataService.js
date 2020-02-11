@@ -20,10 +20,15 @@ const getProductData = async () => {
   return response
 }
 
+const getImportsSITC2 = async () => {
+  const response = await axios.get('/SITC2')
+  return response
+}
 
 export default {
   getImports,
   getExports,
   getTradeBalance,
-  getProductData
+  getProductData,
+  getImportsSITC2
 }
