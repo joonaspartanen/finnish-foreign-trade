@@ -26,4 +26,5 @@
 | 20.12. | 1 | Tutustuttu amchart:n TreeMap-dokumentaatioon.
 | 10.2. | 2 | Backendin refaktorointia. Uusia testejä. Testeihin apumetodeja.
 | 11.2. | 2 | TreeMap-komponentin 1. versio. Backendin kontrolleri muokattu mappaamaan (tuonti)datan tarvittavaan muotoon.
-| Yhteensä | 38 | |
+| 12.2. | 2 | TreeMap-komponentin 2. versio oikealla datalla. Backendissä sovelluslogiikkaa siirretty service-tasolle ja funktioita pilkottu.
+| Yhteensä | 40 | |
