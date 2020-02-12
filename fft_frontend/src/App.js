@@ -4,7 +4,7 @@ import Menu from './components/Menu'
 import TradeBalanceChart from './components/TradeBalanceChart'
 import ProductsBarChart from './components/ProductsBarChart'
 import ProductsTreeMap from './components/ProductsTreeMap'
-import dataService from './services/DataService'
+import dataService from './services/dataService'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
@@ -22,6 +22,7 @@ const App = () => {
 
   const [productData, setProductData] = useState([])
   const [importsSITC2, setImportsSITC2] = useState([])
+  const [exportsSITC2, setExportsSITC2] = useState([])
 
   const [flow, setFlow] = useState('exports')
 
@@ -38,9 +39,11 @@ const App = () => {
     dataService.getProductData().then(res => {
       setProductData(res.data)
     })
-    dataService.getImportsSITC2().then(res => {
-      console.log(res.data)
+    dataService.getSITC2Data('imports').then(res => {
       setImportsSITC2(res.data)
+    })
+    dataService.getSITC2Data('exports').then(res => {
+      setExportsSITC2(res.data)
     })
   }, [])
 
@@ -112,7 +115,7 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}
               >
-                <ProductsTreeMap importsSITC2={importsSITC2} />
+                <ProductsTreeMap SITC2Data={importsSITC2} />
               </div>
             </ScrollableAnchor>
           </div>
