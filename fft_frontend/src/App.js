@@ -19,11 +19,9 @@ const App = () => {
   const [imports, setImports] = useState([])
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
-
   const [productData, setProductData] = useState([])
   const [importsSITC2, setImportsSITC2] = useState([])
   const [exportsSITC2, setExportsSITC2] = useState([])
-
   const [flow, setFlow] = useState('exports')
 
   useEffect(() => {
