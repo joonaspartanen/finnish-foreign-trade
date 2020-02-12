@@ -1,18 +1,26 @@
 const tradeDataRouter = require('express').Router()
-const dataUtils = require('../utils/dataUtils')
+const dataUtils = require('../services/dataUtils')
 var _ = require('lodash')
 
 tradeDataRouter.get('/imports', async (req, res) => {
-  const data = await dataUtils.getData(1, '0-9', '=ALL', '2018', '1')
-  const mappedData = dataUtils.mapData(data)
-  const classifiedData = dataUtils.classifyData(mappedData)
+  const classifiedData = await dataUtils.getClassifiedTradeData(
+    1,
+    '0-9',
+    '=ALL',
+    '2018',
+    '1'
+  )
   res.json(classifiedData)
 })
 
 tradeDataRouter.get('/exports', async (req, res) => {
-  const data = await dataUtils.getData(1, '0-9', '=ALL', '2018', '2')
-  const mappedData = dataUtils.mapData(data)
-  const classifiedData = dataUtils.classifyData(mappedData)
+  const classifiedData = await dataUtils.getClassifiedTradeData(
+    1,
+    '0-9',
+    '=ALL',
+    '2018',
+    '2'
+  )
   res.json(classifiedData)
 })
 
@@ -23,6 +31,7 @@ tradeDataRouter.get('/tradebalance', async (req, res) => {
 })
 
 tradeDataRouter.get('/SITC1', async (req, res) => {
+  // TODO: Extract business logic
   const imports = await dataUtils.getData(1, '=ALL', 'AA', '2018', '1')
   const exports = await dataUtils.getData(1, '=ALL', 'AA', '2018', '2')
   const mappedImports = imports
@@ -42,6 +51,7 @@ tradeDataRouter.get('/SITC1', async (req, res) => {
 })
 
 tradeDataRouter.get('/SITC2', async (req, res) => {
+  // TODO: Extract business logic
   const imports = await dataUtils.getData(2, '=ALL', 'AA', '2018', '1')
   const exports = await dataUtils.getData(2, '=ALL', 'AA', '2018', '2')
   console.log(imports)
