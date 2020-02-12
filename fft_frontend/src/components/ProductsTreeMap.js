@@ -4,15 +4,14 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
-const ProductsTreeMap = ({ importsSITC2 }) => {
+const ProductsTreeMap = ({ SITC2Data }) => {
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
     let chart = am4core.create('products-treemap-div', am4charts.TreeMap)
     chart.legend = new am4charts.Legend()
-    chart.layoutAlgorithm = chart.binaryTree
 
-    chart.data = importsSITC2
+    chart.data = SITC2Data
     chart.dataFields.value = 'value'
     chart.dataFields.name = 'group'
     chart.dataFields.children = 'children'
@@ -27,7 +26,7 @@ const ProductsTreeMap = ({ importsSITC2 }) => {
         chart.dispose()
       }
     }
-  }, [importsSITC2])
+  }, [SITC2Data])
 
   return (
     <div
