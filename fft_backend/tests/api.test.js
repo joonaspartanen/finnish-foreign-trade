@@ -6,15 +6,17 @@ const api = supertest(app)
 describe('imports', () => {
   let response
 
-  beforeAll(async () => {
+  beforeAll(async done => {
     response = await api.get('/imports')
+    done()
   })
 
-  test('are returned as json', async () => {
+  test('are returned as json', async done => {
     await api
       .get('/imports')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+    done()
   })
 
   test('have correct properties', () => {
@@ -33,15 +35,17 @@ describe('imports', () => {
 describe('exports', () => {
   let response
 
-  beforeAll(async () => {
+  beforeAll(async done => {
     response = await api.get('/exports')
+    done()
   })
 
-  test('are returned as json', async () => {
+  test('are returned as json', async done => {
     await api
       .get('/exports')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+    done()
   })
 
   test('have correct properties', () => {
@@ -58,11 +62,12 @@ describe('exports', () => {
 })
 
 describe('trade balance', () => {
-  test('is returned as json', async () => {
+  test('is returned as json', async done => {
     await api
       .get('/tradebalance')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+    done()
   })
 
   test('has correct properties', async () => {
@@ -74,15 +79,17 @@ describe('trade balance', () => {
 describe('SITC1 data', () => {
   let response
 
-  beforeAll(async () => {
+  beforeAll(async done => {
     response = await api.get('/SITC1')
+    done()
   })
 
-  test('is returned as json', async () => {
+  test('is returned as json', async done => {
     await api
       .get('/SITC1')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+    done()
   })
 
   test('has correct properties', () => {
