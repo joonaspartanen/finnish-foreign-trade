@@ -1,5 +1,7 @@
 # Finnish Foreign Trade Visualized: Full Stack Web Development Project Work
 
+![CI](https://github.com/joonaspartanen/finnish-foreign-trade/workflows/CI/badge.svg)
+
 ## General info
 
 This is a project work for the Helsinki University [Full Stack Web Development course](https://fullstackopen.com/en/).
