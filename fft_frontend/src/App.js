@@ -39,9 +39,13 @@ const App = () => {
     })
     dataService.getSITC2Data('imports').then(res => {
       setImportsSITC2(res.data)
+      console.log('imports')
+      console.log(res.data)
     })
     dataService.getSITC2Data('exports').then(res => {
       setExportsSITC2(res.data)
+      console.log('exports')
+      console.log(res.data)
     })
   }, [])
 
@@ -102,7 +106,6 @@ const App = () => {
                 </a>
               </div>
             </ScrollableAnchor>
-
             <ScrollableAnchor id={'by-product2'}>
               <div
                 className='section'
@@ -113,7 +116,20 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}
               >
-                <ProductsTreeMap SITC2Data={importsSITC2} />
+                <ProductsTreeMap SITC2Data={importsSITC2} flow={'imports'} />
+              </div>
+            </ScrollableAnchor>
+            <ScrollableAnchor id={'by-product2'}>
+              <div
+                className='section'
+                style={{
+                  height: '100vh',
+                  backgroundColor: '#333',
+                  position: 'relative',
+                  padding: '0 0 3em 0'
+                }}
+              >
+                <ProductsTreeMap SITC2Data={exportsSITC2} flow={'exports'} />
               </div>
             </ScrollableAnchor>
           </div>
