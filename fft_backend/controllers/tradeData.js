@@ -23,12 +23,12 @@ tradeDataRouter.get('/SITC1', cache(3600), async (req, res) => {
 })
 
 tradeDataRouter.get('/SITC2/imports', cache(3600), async (req, res) => {
-  const SITC2Data = await dataService.getSITC2Data(1)
+  const SITC2Data = await dataService.getSITC2Data('1')
   res.json(SITC2Data)
 })
 
 tradeDataRouter.get('/SITC2/exports', cache(3600), async (req, res) => {
-  const SITC2Data = dataService.getSITC2Data(2)
+  const SITC2Data = await dataService.getSITC2Data('2')
   res.json(SITC2Data)
 })
 

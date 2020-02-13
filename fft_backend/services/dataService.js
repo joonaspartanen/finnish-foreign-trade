@@ -132,7 +132,7 @@ const getSITC1Data = async () => {
 }
 
 const getSITC2Data = async flow => {
-  const SITC2Array = [
+  let SITC2Array = [
     { group: 'Food and live animals', children: [] },
     { group: 'Beverages and tobacco', children: [] },
     { group: 'Crude materials, inedible, except fuels', children: [] },
@@ -159,10 +159,10 @@ const getSITC2Data = async flow => {
       SITC1: parseInt(a.keys[0].substring(0, 1))
     }))
     .sort((a, b) => a.SITC1 - b.SITC1)
-
   mappedData.map(a => {
     SITC2Array[a.SITC1].children.push(a)
   })
+  console.log(SITC2Array[0])
   return SITC2Array
 }
 

@@ -20,4 +20,4 @@ const cache = duration => {
   }
 }
 
-module.exports = { cache: cache }
+module.exports = { cache:cache }
