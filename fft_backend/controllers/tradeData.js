@@ -1,37 +1,38 @@
 const tradeDataRouter = require('express').Router()
 const dataService = require('../services/dataService')
+const { cache } = require('../utils/middleware')
 
-tradeDataRouter.get('/imports', async (req, res) => {
+tradeDataRouter.get('/imports', cache(3600), async (req, res) => {
   const classifiedImports = await dataService.getClassifiedTradeData()
   res.json(classifiedImports)
 })
 
-tradeDataRouter.get('/exports', async (req, res) => {
+tradeDataRouter.get('/exports', cache(3600), async (req, res) => {
   const classifiedExports = await dataService.getClassifiedTradeData()
   res.json(classifiedExports)
 })
 
-tradeDataRouter.get('/tradebalance', async (req, res) => {
+tradeDataRouter.get('/tradebalance', cache(3600), async (req, res) => {
   const tradeBalanceData = await dataService.getTradeBalanceData()
   res.json(tradeBalanceData)
 })
 
-tradeDataRouter.get('/SITC1', async (req, res) => {
+tradeDataRouter.get('/SITC1', cache(3600), async (req, res) => {
   const SITC1Data = await dataService.getSITC1Data()
   res.json(SITC1Data)
 })
 
-tradeDataRouter.get('/SITC2/imports', async (req, res) => {
+tradeDataRouter.get('/SITC2/imports', cache(3600), async (req, res) => {
   const SITC2Data = await dataService.getSITC2Data(1)
   res.json(SITC2Data)
 })
 
-tradeDataRouter.get('/SITC2/exports', async (req, res) => {
+tradeDataRouter.get('/SITC2/exports', cache(3600), async (req, res) => {
   const SITC2Data = dataService.getSITC2Data(2)
   res.json(SITC2Data)
 })
 
-tradeDataRouter.get('/SITC2/:country', async (req, res) => {
+tradeDataRouter.get('/SITC2/:country', cache(3600), async (req, res) => {
   // TODO: Extract business logic
   const country = req.params.country
   const imports = await dataService.getData(
