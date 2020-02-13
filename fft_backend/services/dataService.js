@@ -1,6 +1,7 @@
 const axios = require('axios')
 const baseUrl =
   'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
+const utils = require('../utils/utils')
 
 const getData = async (SITC, classification, country, year, flow) => {
   axios.interceptors.response.use(res => {
@@ -132,26 +133,17 @@ const getSITC1Data = async () => {
 }
 
 const getSITC2Data = async flow => {
-  let SITC2Array = [
-    { group: 'Food and live animals', children: [] },
-    { group: 'Beverages and tobacco', children: [] },
-    { group: 'Crude materials, inedible, except fuels', children: [] },
-    { group: 'Mineral fuels, lubricants and related materials', children: [] },
-    { group: 'Animal and vegetable oils, fats and waxes', children: [] },
-    { group: 'Chemicals and related products', children: [] },
-    {
-      group: 'Manufactured goods classified chiefly by material',
-      children: []
-    },
-    { group: 'Machinery and transport equipment', children: [] },
-    { group: 'Miscellaneous manufactured articles', children: [] },
-    {
-      group: 'Commodities and transactions not classified elsewhere',
-      children: []
-    }
-  ]
+  const SITC2Array = utils.initializeSITC2Array()
   const data = await getData('SITC2', '=ALL', 'AA', '2018', flow)
-  const mappedData = data
+  const mappedData = mapDataForSITC2(data)
+  mappedData.map(a => {
+    SITC2Array[a.SITC1].children.push(a)
+  })
+  return SITC2Array
+}
+
+const mapDataForSITC2 = data => {
+  return data
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
     .map(a => ({
       group: a.keys[0].substring(13),
@@ -159,11 +151,6 @@ const getSITC2Data = async flow => {
       SITC1: parseInt(a.keys[0].substring(0, 1))
     }))
     .sort((a, b) => a.SITC1 - b.SITC1)
-  mappedData.map(a => {
-    SITC2Array[a.SITC1].children.push(a)
-  })
-  console.log(SITC2Array[0])
-  return SITC2Array
 }
 
 module.exports = {

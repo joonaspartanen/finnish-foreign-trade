@@ -6,7 +6,7 @@ const cache = duration => {
     const cacheContent = memorycache.get(key)
     if (cacheContent) {
       console.log('fetching from cache')
-      res.send(cacheContent)
+      res.send(JSON.parse(cacheContent))
       return
     } else {
       console.log('fetching from uljas api')
@@ -20,4 +20,4 @@ const cache = duration => {
   }
 }
 
-module.exports = { cache:cache }
+module.exports = { cache: cache }
