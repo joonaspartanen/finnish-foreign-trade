@@ -37,7 +37,7 @@
   height: 2em;
   width: 2em;
   border-style: solid;
-  border-color: #FFF;
+  border-color: #fff;
   border-width: 0px 3px 3px 0px;
   transform: rotate(45deg);
   transition: border-width 150ms ease-in-out;
@@ -52,7 +52,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column
+  flex-direction: column;
 }
 
 .btn-primary {
@@ -60,5 +60,13 @@
 }
 
 .btn-secondary {
-  background-color: #4D090C !important;
+  background-color: #4d090c !important;
+}
+
+h2 {
+  color: #fff;
+}
+
+h3 {
+  color: #fff;
 }

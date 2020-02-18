@@ -4,11 +4,8 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
-
 const TradeBalanceChart = ({ tradeBalance }) => {
-
   useEffect(() => {
-
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
 
@@ -29,9 +26,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       valueAxis.min = -1000000000
       valueAxis.strictMinMax = true
       valueAxis.numberFormatter.numberFormat = '##.##a'
-      valueAxis.numberFormatter.bigNumberPrefixes = [
-        { 'number': 1e+9, 'suffix': 'B' }
-      ]
+      valueAxis.numberFormatter.bigNumberPrefixes = [{ number: 1e9, suffix: 'B' }]
 
       valueAxis.renderer.opposite = true
 
@@ -46,10 +41,9 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       tradeBalanceSeries.columns.template.tooltipText = '{name}:\n€{valueX}'
 
       tradeBalanceSeries.columns.template.adapter.add('fill', (fill, target) => {
-        if (target.dataItem && (target.dataItem.valueX < 0)) {
+        if (target.dataItem && target.dataItem.valueX < 0) {
           return am4core.color('#800000')
-        }
-        else {
+        } else {
           return fill
         }
       })
@@ -85,9 +79,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       let valueAxis = chart.yAxes.push(new am4charts.ValueAxis())
       // valueAxis.min = 0
       valueAxis.numberFormatter.numberFormat = '##.##a'
-      valueAxis.numberFormatter.bigNumberPrefixes = [
-        { 'number': 1e+9, 'suffix': 'B' }
-      ]
+      valueAxis.numberFormatter.bigNumberPrefixes = [{ number: 1e9, suffix: 'B' }]
 
       let tradeBalanceSeries = chart.series.push(new am4charts.ColumnSeries())
       tradeBalanceSeries.name = 'Trade Balance'
@@ -100,10 +92,9 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       tradeBalanceSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
 
       tradeBalanceSeries.columns.template.adapter.add('fill', (fill, target) => {
-        if (target.dataItem && (target.dataItem.valueY < 0)) {
+        if (target.dataItem && target.dataItem.valueY < 0) {
           return am4core.color('#800000')
-        }
-        else {
+        } else {
           return fill
         }
       })
@@ -129,18 +120,14 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       exportSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
     }
 
-    return (() => {
+    return () => {
       if (chart) {
         chart.dispose()
       }
-    })
-
+    }
   }, [tradeBalance])
 
-  return (
-    <div id='chartdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
-  )
-
+  return <div id='chartdiv' style={{ width: '100%', height: '100%', overflow: 'hidden', paddingTop: '3em' }}></div>
 }
 
 export default TradeBalanceChart

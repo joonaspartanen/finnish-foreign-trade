@@ -10,11 +10,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
-    let chart = am4core.create(
-      `products-treemap-div-${flow}`,
-      am4charts.TreeMap
-    )
-    chart.legend = new am4charts.Legend()
+    let chart = am4core.create(`products-treemap-div-${flow}`, am4charts.TreeMap)
 
     chart.data = SITC2Data
     chart.dataFields.value = 'value'
@@ -26,6 +22,13 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
 
     level1_column.tooltipText = '{group}: {value} €'
 
+    // Show legend only in landscape view
+    if (window.innerHeight < window.innerWidth) {
+      chart.legend = new am4charts.Legend()
+      chart.legend.position = 'bottom'
+      chart.legend.paddingTop = 20
+    }
+
     return () => {
       if (chart) {
         chart.dispose()
@@ -35,9 +38,17 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
 
   return (
     <div
-      {...attributes}
-      style={{ width: '100%', height: '100vh', paddingTop: '2em' }}
-    ></div>
+      style={{
+        width: '100%',
+        height: '100vh',
+        paddingTop: '3em',
+        paddingRight: '2em',
+        paddingLeft: '2em',
+        textAlign: 'center'
+      }}>
+      <h3>Finnish {flow} by product category (2018)</h3>
+      <div {...attributes} style={{ width: '100%', height: '95%' }}></div>
+    </div>
   )
 }
 

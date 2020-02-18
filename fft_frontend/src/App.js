@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Map from './components/Map'
 import Menu from './components/Menu'
 import TradeBalanceChart from './components/TradeBalanceChart'
-import ProductsBarChart from './components/ProductsBarChart'
 import ProductsTreeMap from './components/ProductsTreeMap'
 import dataService from './services/dataService'
 import Navbar from 'react-bootstrap/Navbar'
@@ -10,7 +9,6 @@ import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
-import { configureAnchors } from 'react-scrollable-anchor'
 import './App.css'
 
 //configureAnchors({ offset: -50 })
@@ -19,7 +17,6 @@ const App = () => {
   const [imports, setImports] = useState([])
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
-  const [productData, setProductData] = useState([])
   const [importsSITC2, setImportsSITC2] = useState([])
   const [exportsSITC2, setExportsSITC2] = useState([])
   const [flow, setFlow] = useState('exports')
@@ -34,18 +31,11 @@ const App = () => {
     dataService.getTradeBalance().then(res => {
       setTradeBalance(res.data)
     })
-    dataService.getProductData().then(res => {
-      setProductData(res.data)
-    })
     dataService.getSITC2Data('imports').then(res => {
       setImportsSITC2(res.data)
-      console.log('imports')
-      console.log(res.data)
     })
     dataService.getSITC2Data('exports').then(res => {
       setExportsSITC2(res.data)
-      console.log('exports')
-      console.log(res.data)
     })
   }, [])
 
@@ -74,19 +64,14 @@ const App = () => {
             <ScrollableAnchor id={'trade-partners'}>
               <div
                 className='section'
-                style={{ position: 'relative', height: 'calc(100vh - 50px)' }}
-              >
+                style={{ position: 'relative', height: 'calc(100vh - 50px)' }}>
                 <Map imports={imports} exports={exports} flow={flow} />
                 <Menu setFlow={setFlow} />
-                <a
-                  href='#trade-balance'
-                  style={{ position: 'absolute', bottom: '2em' }}
-                >
+                <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
               </div>
             </ScrollableAnchor>
-
             <ScrollableAnchor id={'trade-balance'}>
               <div
                 className='section'
@@ -95,13 +80,9 @@ const App = () => {
                   backgroundColor: '#555',
                   position: 'relative',
                   padding: '0 0 3em 0'
-                }}
-              >
+                }}>
                 <TradeBalanceChart tradeBalance={tradeBalance} />
-                <a
-                  href='#by-product'
-                  style={{ position: 'absolute', bottom: '2em' }}
-                >
+                <a href='#by-product' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
               </div>
@@ -114,8 +95,7 @@ const App = () => {
                   backgroundColor: '#333',
                   position: 'relative',
                   padding: '0 0 3em 0'
-                }}
-              >
+                }}>
                 <ProductsTreeMap SITC2Data={importsSITC2} flow={'imports'} />
               </div>
             </ScrollableAnchor>
@@ -127,8 +107,7 @@ const App = () => {
                   backgroundColor: '#333',
                   position: 'relative',
                   padding: '0 0 3em 0'
-                }}
-              >
+                }}>
                 <ProductsTreeMap SITC2Data={exportsSITC2} flow={'exports'} />
               </div>
             </ScrollableAnchor>
