@@ -28,4 +28,5 @@
 | 11.2. | 2 | TreeMap-komponentin 1. versio. Backendin kontrolleri muokattu mappaamaan (tuonti)datan tarvittavaan muotoon.
 | 12.2. | 2 | TreeMap-komponentin 2. versio oikealla datalla. Backendissä sovelluslogiikkaa siirretty service-tasolle ja funktioita pilkottu.
 | 13.2. | 3 | Otettu cache käyttöön backendissä. Refaktorointia. Frontendissä pienellä kikkailulla saatu React-komponentti luomaan useita amcharts-kaavioita eri id-attribuuteilla. CI pipelinen 1. versio.
-| Yhteensä | 43 | |
+| 18.2. | 2 | Frontendin siistimistä. Ensimmäiset yksikkötestit backendin service-funktioille.
+| Yhteensä | 45 | |
