@@ -15,11 +15,6 @@ const getTradeBalance = async () => {
   return response
 }
 
-const getProductData = async () => {
-  const response = await axios.get('/SITC1')
-  return response
-}
-
 const getSITC2Data = async flow => {
   const response = await axios.get(`/SITC2/${flow}`)
   return response
@@ -29,6 +24,5 @@ export default {
   getImports,
   getExports,
   getTradeBalance,
-  getProductData,
   getSITC2Data
 }
