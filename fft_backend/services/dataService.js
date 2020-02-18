@@ -84,8 +84,8 @@ const classifyData = data => {
   })
 }
 
-const getClassifiedTradeData = async () => {
-  const data = await getData('SITC1', '0-9', '=ALL', '2018', '2')
+const getClassifiedTradeData = async flow => {
+  const data = await getData('SITC1', '0-9', '=ALL', '2018', flow)
   const mappedData = mapData(data)
   const classifiedData = classifyData(mappedData)
   return classifiedData

@@ -3,12 +3,12 @@ const dataService = require('../services/dataService')
 const { cache } = require('../utils/middleware')
 
 tradeDataRouter.get('/imports', cache(3600), async (req, res) => {
-  const classifiedImports = await dataService.getClassifiedTradeData()
+  const classifiedImports = await dataService.getClassifiedTradeData('1')
   res.json(classifiedImports)
 })
 
 tradeDataRouter.get('/exports', cache(3600), async (req, res) => {
-  const classifiedExports = await dataService.getClassifiedTradeData()
+  const classifiedExports = await dataService.getClassifiedTradeData('2')
   res.json(classifiedExports)
 })
 
@@ -35,13 +35,7 @@ tradeDataRouter.get('/SITC2/exports', cache(3600), async (req, res) => {
 tradeDataRouter.get('/SITC2/:country', cache(3600), async (req, res) => {
   // TODO: Extract business logic
   const country = req.params.country
-  const imports = await dataService.getData(
-    'SITC2',
-    '=ALL',
-    country,
-    '2018',
-    '1'
-  )
+  const imports = await dataService.getData('SITC2', '=ALL', country, '2018', '1')
   const sortedData = imports
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
     .sort((a, b) => b.vals - a.vals)
