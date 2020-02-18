@@ -1,6 +1,6 @@
-const checkProperties = (response, properties) => {
+const checkProperties = (object, properties) => {
   properties.forEach(p => {
-    expect(response.body[0]).toHaveProperty(p)
+    expect(object).toHaveProperty(p)
   })
 }
 

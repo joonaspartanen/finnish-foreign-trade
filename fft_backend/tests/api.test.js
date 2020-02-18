@@ -20,7 +20,7 @@ describe('imports', () => {
   })
 
   test('have correct properties', () => {
-    checkProperties(response, ['id', 'year', 'euros'])
+    checkProperties(response.body[0], ['id', 'year', 'euros'])
   })
 
   test('are classified correctly', () => {
@@ -49,7 +49,7 @@ describe('exports', () => {
   })
 
   test('have correct properties', () => {
-    checkProperties(response, ['id', 'year', 'euros'])
+    checkProperties(response.body[0], ['id', 'year', 'euros'])
   })
 
   test('are classified correctly', () => {
@@ -72,7 +72,7 @@ describe('trade balance', () => {
 
   test('has correct properties', async () => {
     const response = await api.get('/tradebalance')
-    checkProperties(response, ['year', 'imports', 'exports', 'tradeBalance'])
+    checkProperties(response.body[0], ['year', 'imports', 'exports', 'tradeBalance'])
   })
 })
 
@@ -93,7 +93,7 @@ describe('SITC1 data', () => {
   })
 
   test('has correct properties', () => {
-    checkProperties(response, ['flow'])
+    checkProperties(response.body[0], ['flow'])
   })
 
   test('contains right number of product groups', () => {
