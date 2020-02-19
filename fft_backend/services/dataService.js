@@ -113,6 +113,7 @@ const getTradeBalanceData = async () => {
   return result.sort((a, b) => b.year - a.year)
 }
 
+// I don't really need SITC1 data now...
 const getSITC1Data = async () => {
   const imports = await getData('SITC1', '=ALL', 'AA', '2018', '1')
   const exports = await getData('SITC1', '=ALL', 'AA', '2018', '2')
@@ -134,9 +135,9 @@ const getSITC1Data = async () => {
 
 const getSITC2Data = async flow => {
   const SITC2Array = utils.initializeSITC2Array()
-  const data = await getData('SITC2', '=ALL', 'AA', '2018', flow)
-  const mappedData = mapDataForSITC2(data)
-  mappedData.map(a => {
+  let data = await getData('SITC2', '=ALL', 'AA', '2018', flow)
+  data = mapDataForSITC2(data)
+  data.forEach(a => {
     SITC2Array[a.SITC1].children.push(a)
   })
   return SITC2Array
@@ -153,6 +154,22 @@ const mapDataForSITC2 = data => {
     .sort((a, b) => a.SITC1 - b.SITC1)
 }
 
+const getSITC2CountryData = async (country, flow) => {
+  let data = await getData('SITC2', '=ALL', country, '2018', flow)
+  data = removeAllGroupsItem(data)
+  data = data
+    .sort((a, b) => b.vals - a.vals)
+    .map(a => ({
+      group: a.keys[0].substring(13),
+      value: a.vals[0]
+    }))
+  return data
+}
+
+const removeAllGroupsItem = data => {
+  return data.filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+}
+
 module.exports = {
   getData,
   mapData,
@@ -160,5 +177,6 @@ module.exports = {
   getTradeBalanceData,
   getClassifiedTradeData,
   getSITC1Data,
-  getSITC2Data
+  getSITC2Data,
+  getSITC2CountryData
 }
