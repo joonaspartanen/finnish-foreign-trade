@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
 import './App.css'
+import CountryData from './components/CountryData'
 
 //configureAnchors({ offset: -50 })
 
@@ -82,12 +83,12 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}>
                 <TradeBalanceChart tradeBalance={tradeBalance} />
-                <a href='#by-product' style={{ position: 'absolute', bottom: '2em' }}>
+                <a href='#imports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
               </div>
             </ScrollableAnchor>
-            <ScrollableAnchor id={'by-product2'}>
+            <ScrollableAnchor id={'imports-by-product'}>
               <div
                 className='section'
                 style={{
@@ -97,9 +98,12 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}>
                 <ProductsTreeMap SITC2Data={importsSITC2} flow={'imports'} />
+                <a href='#exports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
+                  <div className='arrow-down'></div>
+                </a>
               </div>
             </ScrollableAnchor>
-            <ScrollableAnchor id={'by-product2'}>
+            <ScrollableAnchor id={'exports-by-product2'}>
               <div
                 className='section'
                 style={{
@@ -109,6 +113,21 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}>
                 <ProductsTreeMap SITC2Data={exportsSITC2} flow={'exports'} />
+                <a href='#country-data' style={{ position: 'absolute', bottom: '2em' }}>
+                  <div className='arrow-down'></div>
+                </a>
+              </div>
+            </ScrollableAnchor>
+
+            <ScrollableAnchor id={'country-data'}>
+              <div
+                className='section'
+                style={{
+                  backgroundColor: '#333',
+                  position: 'relative',
+                  padding: '0 0 3em 0'
+                }}>
+                <CountryData country={'MX'}></CountryData>
               </div>
             </ScrollableAnchor>
           </div>
