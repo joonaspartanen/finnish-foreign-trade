@@ -29,4 +29,5 @@
 | 12.2. | 2 | TreeMap-komponentin 2. versio oikealla datalla. Backendissä sovelluslogiikkaa siirretty service-tasolle ja funktioita pilkottu.
 | 13.2. | 3 | Otettu cache käyttöön backendissä. Refaktorointia. Frontendissä pienellä kikkailulla saatu React-komponentti luomaan useita amcharts-kaavioita eri id-attribuuteilla. CI pipelinen 1. versio.
 | 18.2. | 2 | Frontendin siistimistä. Ensimmäiset yksikkötestit backendin service-funktioille.
-| Yhteensä | 45 | |
+| 19.2. | 2 | Backendin sovelluslogiikkaa siirretty service-tasolla. Endpointit sekä maakohtaisten tuonti- että vientitilastojen hakua varten. Frontendiin lisätty alustava komponentti näiden näyttämiseksi.
+| Yhteensä | 47 | |
