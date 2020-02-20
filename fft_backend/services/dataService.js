@@ -3,7 +3,7 @@ const baseUrl =
   'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 const utils = require('../utils/utils')
 
-const getData = async (SITC, classification, country, year, flow) => {
+const fetchData = async (SITC, classification, country, year, flow) => {
   axios.interceptors.response.use(res => {
     if (typeof res.data !== 'object') {
       try {
@@ -50,6 +50,44 @@ const getData = async (SITC, classification, country, year, flow) => {
   }
 }
 
+const fetchCountryCodes = async () => {
+  axios.interceptors.response.use(res => {
+    if (typeof res.data !== 'object') {
+      try {
+        const parsedData = JSON.parse(res.data.slice(1))
+        res.data = parsedData
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    return res
+  })
+  const url =
+    'https://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
+  try {
+    const response = await axios.get(url)
+    const countryCodes = extractCountryCodes(response.data)
+    return countryCodes
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+const extractCountryCodes = data => {
+  const countryCodes = data.classification.filter(a => a.id === 'D3')
+  return mapCountryCodes(countryCodes[0].class)
+}
+
+const mapCountryCodes = data => {
+  data = removeAllCountriesItem(data)
+  const parenthesesRegex = / *\([^)]*\) */g
+  return data.map(a => ({ code: a.code, name: a.text.replace(parenthesesRegex, '') }))
+}
+
+const removeAllCountriesItem = data => {
+  return data.filter(a => a.code !== 'AA')
+}
+
 const mapData = data => {
   return data
     .map(a => ({
@@ -85,15 +123,15 @@ const classifyData = data => {
 }
 
 const getClassifiedTradeData = async flow => {
-  const data = await getData('SITC1', '0-9', '=ALL', '2018', flow)
+  const data = await fetchData('SITC1', '0-9', '=ALL', '2018', flow)
   const mappedData = mapData(data)
   const classifiedData = classifyData(mappedData)
   return classifiedData
 }
 
 const getTradeBalanceData = async () => {
-  const imports = await getData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
-  const exports = await getData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
+  const imports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
+  const exports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
   const mappedImports = imports.map(a => ({
     year: parseInt(a.keys[2]),
     imports: a.vals[0]
@@ -115,8 +153,8 @@ const getTradeBalanceData = async () => {
 
 // I don't really need SITC1 data now...
 const getSITC1Data = async () => {
-  const imports = await getData('SITC1', '=ALL', 'AA', '2018', '1')
-  const exports = await getData('SITC1', '=ALL', 'AA', '2018', '2')
+  const imports = await fetchData('SITC1', '=ALL', 'AA', '2018', '1')
+  const exports = await fetchData('SITC1', '=ALL', 'AA', '2018', '2')
   const mappedImports = imports
     .sort((a, b) => b.vals - a.vals)
     .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
@@ -135,7 +173,7 @@ const getSITC1Data = async () => {
 
 const getSITC2Data = async flow => {
   const SITC2Array = utils.initializeSITC2Array()
-  let data = await getData('SITC2', '=ALL', 'AA', '2018', flow)
+  let data = await fetchData('SITC2', '=ALL', 'AA', '2018', flow)
   data = mapDataForSITC2(data)
   data.forEach(a => {
     SITC2Array[a.SITC1].children.push(a)
@@ -155,7 +193,7 @@ const mapDataForSITC2 = data => {
 }
 
 const getSITC2CountryData = async (country, flow) => {
-  let data = await getData('SITC2', '=ALL', country, '2018', flow)
+  let data = await fetchData('SITC2', '=ALL', country, '2018', flow)
   data = removeAllGroupsItem(data)
   data = data
     .sort((a, b) => b.vals - a.vals)
@@ -171,12 +209,12 @@ const removeAllGroupsItem = data => {
 }
 
 module.exports = {
-  getData,
   mapData,
   classifyData,
   getTradeBalanceData,
   getClassifiedTradeData,
   getSITC1Data,
   getSITC2Data,
-  getSITC2CountryData
+  getSITC2CountryData,
+  fetchCountryCodes
 }
