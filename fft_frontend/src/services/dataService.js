@@ -21,7 +21,18 @@ const getSITC2Data = async flow => {
 }
 
 const getSITC2CountryData = async (flow, country) => {
-  const response = await axios.get(`/SITC2/${flow}/${country}`)
+  if (country.length === 0) {
+    console.log('ei maata')
+    return {data: []}
+  }
+  console.log('!!!')
+  console.log(country)
+  const response = await axios.get(`/SITC2/${flow}/${country[0].code}`)
+  return response
+}
+
+const getCountryCodes = async () => {
+  const response = await axios.get('/countries')
   return response
 }
 
@@ -30,5 +41,6 @@ export default {
   getExports,
   getTradeBalance,
   getSITC2Data,
-  getSITC2CountryData
+  getSITC2CountryData,
+  getCountryCodes
 }
