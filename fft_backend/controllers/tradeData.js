@@ -47,7 +47,6 @@ tradeDataRouter.get('/SITC2/exports/:country', cache(HOUR), async (req, res) => 
 
 tradeDataRouter.get('/countries', cache(HOUR), async (req, res) => {
   const countries = await dataService.fetchCountryCodes()
-  console.log(typeof countries)
   res.json(countries)
 })
 
