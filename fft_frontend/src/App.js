@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import './App.css'
 import Map from './components/Map'
 import Menu from './components/Menu'
 import TradeBalanceChart from './components/TradeBalanceChart'
 import ProductsTreeMap from './components/ProductsTreeMap'
+import CountryData from './components/CountryData'
+import CountrySearch from './components/CountrySearch'
 import dataService from './services/dataService'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
 import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
-import './App.css'
-import CountryData from './components/CountryData'
 
 //configureAnchors({ offset: -50 })
 
@@ -21,6 +22,10 @@ const App = () => {
   const [importsSITC2, setImportsSITC2] = useState([])
   const [exportsSITC2, setExportsSITC2] = useState([])
   const [flow, setFlow] = useState('exports')
+  const [country, setCountry] = useState('')
+  const [countryFilter, setCountryFilter] = useState('')
+
+  const [countryCodes, setCountryCodes] = useState([])
 
   useEffect(() => {
     dataService.getImports().then(res => {
@@ -37,6 +42,9 @@ const App = () => {
     })
     dataService.getSITC2Data('exports').then(res => {
       setExportsSITC2(res.data)
+    })
+    dataService.getCountryCodes().then(res => {
+      setCountryCodes(res.data)
     })
   }, [])
 
@@ -118,7 +126,6 @@ const App = () => {
                 </a>
               </div>
             </ScrollableAnchor>
-
             <ScrollableAnchor id={'country-data'}>
               <div
                 className='section'
@@ -127,7 +134,11 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
-                <CountryData country={'MX'}></CountryData>
+                <CountrySearch
+                  countryFilter={countryFilter}
+                  setCountryFilter={setCountryFilter}></CountrySearch>
+                <CountryData
+                  country={countryCodes.filter(c => c.name === countryFilter)}></CountryData>
               </div>
             </ScrollableAnchor>
           </div>
