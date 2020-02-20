@@ -15,13 +15,18 @@ const CountryData = ({ country }) => {
     })
   }, [country])
 
+  if (country.length === 0) {
+    return null
+  }
+
   if (countryImports.length === 0 || countryExports.length === 0) {
     return null
   }
 
+  console.log(country[0])
   return (
     <>
-      <h2>Finland imported from {country}</h2>
+      <h2>Finland imported from {country[0].name} </h2>
       <table>
         <tbody>
           {countryImports.slice(0, 10).map(a => (
@@ -33,7 +38,7 @@ const CountryData = ({ country }) => {
           ))}
         </tbody>
       </table>
-      <h2>Finland exported to {country}</h2>
+      <h2>Finland exported to {country[0].name} </h2>
       <table>
         <tbody>
           {countryExports.slice(0, 10).map(a => (
