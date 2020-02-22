@@ -21,12 +21,6 @@ const getSITC2Data = async flow => {
 }
 
 const getSITC2CountryData = async (flow, country) => {
-  if (country.length === 0) {
-    console.log('ei maata')
-    return {data: []}
-  }
-  console.log('!!!')
-  console.log(country)
   const response = await axios.get(`/SITC2/${flow}/${country[0].code}`)
   return response
 }
