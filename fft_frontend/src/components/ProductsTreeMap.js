@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Header } from 'semantic-ui-react'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
@@ -46,7 +47,9 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
         paddingLeft: '2em',
         textAlign: 'center'
       }}>
-      <h3>Finnish {flow} by product category (2018)</h3>
+      <Header inverted as='h3'>
+        Finnish {flow} by product category (2018)
+      </Header>
       <div {...attributes} style={{ width: '100%', height: '95%' }}></div>
     </div>
   )
