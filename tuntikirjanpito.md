@@ -30,6 +30,7 @@
 | 13.2. | 3 | Otettu cache käyttöön backendissä. Refaktorointia. Frontendissä pienellä kikkailulla saatu React-komponentti luomaan useita amcharts-kaavioita eri id-attribuuteilla. CI pipelinen 1. versio.
 | 18.2. | 2 | Frontendin siistimistä. Ensimmäiset yksikkötestit backendin service-funktioille.
 | 19.2. | 2 | Backendin sovelluslogiikkaa siirretty service-tasolla. Endpointit sekä maakohtaisten tuonti- että vientitilastojen hakua varten. Frontendiin lisätty alustava komponentti näiden näyttämiseksi.
-| 19.2. | 1.5 | Tutkittu Uljas apin dokumentaatiosta, miten haetaan lista maakoodeista. Lisätty backendiin endpoint maakoodien hakemiseksi sekä pilkottu funktioita.
-| 19.2. | 1.5 | Frontendiin lisätty servicefunktio ja alustava komponentti maakohtaisen tiedon hakemiseksi. Pienen debuggauksen jälkeen hakee ja näyttääkin jo oikeat tiedot.
-| Yhteensä | 50 | |
+| 20.2. | 1.5 | Tutkittu Uljas apin dokumentaatiosta, miten haetaan lista maakoodeista. Lisätty backendiin endpoint maakoodien hakemiseksi sekä pilkottu funktioita.
+| 20.2. | 1.5 | Frontendiin lisätty servicefunktio ja alustava komponentti maakohtaisen tiedon hakemiseksi. Pienen debuggauksen jälkeen hakee ja näyttääkin jo oikeat tiedot.
+| 22.2. | 2 | Refaktoiroitu maakohtaisen tiedon haku frontendissä järkevämmäksi. Vaihdettu tyylikirjasto semantic-ui:hin. Lisättty uudet valikko- ja footer-komponentit.
+| Yhteensä | 52 | |
