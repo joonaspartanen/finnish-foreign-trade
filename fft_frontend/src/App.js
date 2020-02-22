@@ -6,10 +6,14 @@ import TradeBalanceChart from './components/TradeBalanceChart'
 import ProductsTreeMap from './components/ProductsTreeMap'
 import CountryData from './components/CountryData'
 import CountrySearch from './components/CountrySearch'
+import NavBar from './components/NavBar'
+import Footer from './components/Footer'
+
 import dataService from './services/dataService'
-import Navbar from 'react-bootstrap/Navbar'
+import { Container } from 'semantic-ui-react'
+
 import Nav from 'react-bootstrap/Nav'
-import Container from 'react-bootstrap/Container'
+
 import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
 
@@ -22,10 +26,16 @@ const App = () => {
   const [importsSITC2, setImportsSITC2] = useState([])
   const [exportsSITC2, setExportsSITC2] = useState([])
   const [flow, setFlow] = useState('exports')
-  const [country, setCountry] = useState('')
+  const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
 
   const [countryCodes, setCountryCodes] = useState([])
+
+  const handleCountryFilterChange = countryName => {
+    setCountryFilter(countryName)
+    const country = countryCodes.filter(c => c.name === countryName)
+    setCountry(country)
+  }
 
   useEffect(() => {
     dataService.getImports().then(res => {
@@ -51,18 +61,8 @@ const App = () => {
   console.log('Flow: ', flow)
   return (
     <div style={{ backgroundColor: '#343A40' }}>
-      <Container fluid={'true'} style={{ paddingLeft: 0, paddingRight: 0 }}>
-        <Navbar bg='dark' variant='dark' expand='md'>
-          <Navbar.Brand href='/'>Finnish Foreign Trade Visualized</Navbar.Brand>
-          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-          <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav className='mr-auto'>
-              <Nav.Link href='#trade-partners'>Trade Partners</Nav.Link>
-              <Nav.Link href='#trade-balance'>Trade Balance</Nav.Link>
-              <Nav.Link href='#by-product'>Products</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+      <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <NavBar></NavBar>
         {(imports.length === 0 || exports.length === 0) && (
           <div className='section' style={{ height: '100vh' }}>
             <Spinner animation='border' variant='light' />
@@ -73,7 +73,7 @@ const App = () => {
             <ScrollableAnchor id={'trade-partners'}>
               <div
                 className='section'
-                style={{ position: 'relative', height: 'calc(100vh - 50px)' }}>
+                style={{ position: 'relative', height: 'calc(100vh - 60px)' }}>
                 <Map imports={imports} exports={exports} flow={flow} />
                 <Menu setFlow={setFlow} />
                 <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
@@ -86,7 +86,7 @@ const App = () => {
                 className='section'
                 style={{
                   height: '100vh',
-                  backgroundColor: '#555',
+                  backgroundColor: '#333',
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
@@ -101,7 +101,7 @@ const App = () => {
                 className='section'
                 style={{
                   height: '100vh',
-                  backgroundColor: '#333',
+                  backgroundColor: '#222',
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
@@ -111,7 +111,7 @@ const App = () => {
                 </a>
               </div>
             </ScrollableAnchor>
-            <ScrollableAnchor id={'exports-by-product2'}>
+            <ScrollableAnchor id={'exports-by-product'}>
               <div
                 className='section'
                 style={{
@@ -130,26 +130,20 @@ const App = () => {
               <div
                 className='section'
                 style={{
-                  backgroundColor: '#333',
+                  height: '100vh',
+                  backgroundColor: '#222',
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
                 <CountrySearch
                   countryFilter={countryFilter}
-                  setCountryFilter={setCountryFilter}></CountrySearch>
-                <CountryData
-                  country={countryCodes.filter(c => c.name === countryFilter)}></CountryData>
+                  handleCountryFilterChange={handleCountryFilterChange}></CountrySearch>
+                {country.length !== 0 && <CountryData country={country}></CountryData>}
               </div>
             </ScrollableAnchor>
           </div>
         )}
-        <Navbar bg='dark' variant='dark' expand='lg'>
-          <Nav className='mr-auto'>
-            <Nav.Link href='https://github.com/joonaspartanen/finnish-foreign-trade/blob/master/README.md'>
-              About
-            </Nav.Link>
-          </Nav>
-        </Navbar>
+        <Footer></Footer>
       </Container>
     </div>
   )
