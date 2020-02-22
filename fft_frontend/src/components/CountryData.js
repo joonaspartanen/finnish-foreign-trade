@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import dataService from '../services/dataService'
-import { color } from '@amcharts/amcharts4/core'
+import { Container, Row, Col } from 'react-bootstrap'
 
 const CountryData = ({ country }) => {
   const [countryImports, setCountryImports] = useState([])
@@ -25,32 +25,38 @@ const CountryData = ({ country }) => {
 
   console.log(country[0])
   return (
-    <>
-      <h2>Finland imported from {country[0].name} </h2>
-      <table>
-        <tbody>
-          {countryImports.slice(0, 10).map(a => (
-            <tr key={a.group}>
-              <td style={{ color: '#fff' }}>
-                {a.group}: {a.value}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <h2>Finland exported to {country[0].name} </h2>
-      <table>
-        <tbody>
-          {countryExports.slice(0, 10).map(a => (
-            <tr key={a.group}>
-              <td style={{ color: '#fff' }}>
-                {a.group}: {a.value}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+    <Container>
+      <Row>
+        <Col md>
+          <h2>Finland imported from {country[0].name} </h2>
+          <table>
+            <tbody>
+              {countryImports.slice(0, 10).map(a => (
+                <tr key={a.group}>
+                  <td style={{ color: '#fff' }}>
+                    {a.group}: {a.value}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Col>
+        <Col md>
+          <h2>Finland exported to {country[0].name} </h2>
+          <table>
+            <tbody>
+              {countryExports.slice(0, 10).map(a => (
+                <tr key={a.group}>
+                  <td style={{ color: '#fff' }}>
+                    {a.group}: {a.value}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
