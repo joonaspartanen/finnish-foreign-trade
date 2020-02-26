@@ -47,6 +47,7 @@ The frontend is now running on port 3000 and you can head to http://localhost:30
 ## Demo
 
 There is a demo version available on Heroku: https://finnish-foreign-trade.herokuapp.com/
+![Finnish Foreign Trade Visualized screenshot](https://github.com/joonaspartanen/finnish-foreign-trade/blob/master/screenshot.png)
 
 ## Information for Course Evaluators
 
