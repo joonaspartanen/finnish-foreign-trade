@@ -133,10 +133,17 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
-                <CountrySearch
-                  countryFilter={countryFilter}
-                  handleCountryFilterChange={handleCountryFilterChange}></CountrySearch>
-                {country.length !== 0 && <CountryData country={country}></CountryData>}
+                {country.length === 0 && (
+                  <CountrySearch
+                    countryFilter={countryFilter}
+                    handleCountryFilterChange={handleCountryFilterChange}></CountrySearch>
+                )}
+                {country.length !== 0 && (
+                  <CountryData
+                    country={country}
+                    setCountry={setCountry}
+                    setCountryFilter={setCountryFilter}></CountryData>
+                )}
               </div>
             </ScrollableAnchor>
           </div>
