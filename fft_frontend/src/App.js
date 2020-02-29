@@ -68,7 +68,7 @@ const App = () => {
         )}
         {imports.length > 0 && exports.length > 0 && (
           <div>
-            <ScrollableAnchor id={'trade-partners'}>
+            <ScrollableAnchor id={'trade-map'}>
               <div
                 className='section'
                 style={{ position: 'relative', height: 'calc(100vh - 60px)' }}>
@@ -124,7 +124,7 @@ const App = () => {
                 </a>
               </div>
             </ScrollableAnchor>
-            <ScrollableAnchor id={'country-data'}>
+            <ScrollableAnchor id={'trade-partners'}>
               <div
                 className='section'
                 style={{
