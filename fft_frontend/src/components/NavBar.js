@@ -17,6 +17,9 @@ const NavBar = () => {
         <Menu.Item link as='a' href='#imports-by-product'>
           By product group
         </Menu.Item>
+        <Menu.Item link as='a' href='#trade-partners'>
+          By trade partners
+        </Menu.Item>
       </Container>
     </Menu>
   )
