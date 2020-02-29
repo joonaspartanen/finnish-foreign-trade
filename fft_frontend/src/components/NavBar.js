@@ -18,7 +18,7 @@ const NavBar = () => {
           By product group
         </Menu.Item>
         <Menu.Item link as='a' href='#trade-partners'>
-          By trade partners
+          By trade partner
         </Menu.Item>
       </Container>
     </Menu>
