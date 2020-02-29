@@ -128,7 +128,7 @@ const App = () => {
               <div
                 className='section'
                 style={{
-                  height: '100vh',
+                  minHeight: 'calc(100vh - 40px)',
                   backgroundColor: '#222',
                   position: 'relative',
                   padding: '0 0 3em 0'
