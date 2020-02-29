@@ -4,7 +4,7 @@ import dataService from '../services/dataService'
 import { Grid, Button, Icon, Dimmer, Loader, Table, Header } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 
-const CountryData = ({ country }) => {
+const CountryData = ({ country, setCountry, setCountryFilter }) => {
   const [countryImports, setCountryImports] = useState([])
   const [countryExports, setCountryExports] = useState([])
 
