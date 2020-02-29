@@ -8,8 +8,8 @@ const NavBar = () => {
         <Menu.Item header>
           <Icon name='euro sign' size='large'></Icon>
           Finnish Foreign Trade Visualized</Menu.Item>
-          <Menu.Item link as='a' href='#trade-partners'>
-          Trade Partners
+          <Menu.Item link as='a' href='#trade-map'>
+          Trade Map
         </Menu.Item>
         <Menu.Item link as='a' href='#trade-balance'>
           Trade Balance
