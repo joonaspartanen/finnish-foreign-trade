@@ -30,38 +30,25 @@ const CountryData = ({ country, setCountry, setCountryFilter }) => {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col md>
-          <h2>Finland imported from {country[0].name} </h2>
-          <table>
-            <tbody>
-              {countryImports.slice(0, 10).map(a => (
-                <tr key={a.group}>
-                  <td style={{ color: '#fff' }}>
-                    {a.group}: {a.value}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Col>
-        <Col md>
-          <h2>Finland exported to {country[0].name} </h2>
-          <table>
-            <tbody>
-              {countryExports.slice(0, 10).map(a => (
-                <tr key={a.group}>
-                  <td style={{ color: '#fff' }}>
-                    {a.group}: {a.value}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </Col>
-      </Row>
-    </Container>
+    <Grid container stackable relaxed>
+      <Button
+        icon
+        onClick={() => {
+          setCountryFilter('')
+          setCountry([])
+        }}
+        style={{ position: 'absolute', top: '1em', left: '1em' }}>
+        <Icon name='angle left' size='large' />
+      </Button>
+      <Grid.Row columns={2}>
+        <Grid.Column>
+          <CountryDataTable country={country} tradeData={countryImports} flow={'imported from'} />
+        </Grid.Column>
+        <Grid.Column>
+          <CountryDataTable country={country} tradeData={countryExports} flow={'exported to'} />
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
   )
 }
 
