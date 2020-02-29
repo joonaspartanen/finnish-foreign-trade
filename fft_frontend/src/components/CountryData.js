@@ -22,10 +22,13 @@ const CountryData = ({ country, setCountry, setCountryFilter }) => {
   }
 
   if (countryImports.length === 0 || countryExports.length === 0) {
-    return null
+    return (
+      <Dimmer active>
+        <Loader />
+      </Dimmer>
+    )
   }
 
-  console.log(country[0])
   return (
     <Container>
       <Row>
