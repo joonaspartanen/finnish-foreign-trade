@@ -12,8 +12,6 @@ import Footer from './components/Footer'
 import dataService from './services/dataService'
 import { Container } from 'semantic-ui-react'
 
-import Nav from 'react-bootstrap/Nav'
-
 import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
 
