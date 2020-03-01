@@ -79,13 +79,15 @@ const extractCountryCodes = data => {
 }
 
 const mapCountryCodes = data => {
-  data = removeAllCountriesItem(data)
+  data = removeUnwantedCountryCodes(data)
   const parenthesesRegex = / *\([^)]*\) */g
   return data.map(a => ({ code: a.code, name: a.text.replace(parenthesesRegex, '') }))
 }
 
-const removeAllCountriesItem = data => {
-  return data.filter(a => a.code !== 'AA')
+// TODO: It might be better to exclude these already when fetching data
+const removeUnwantedCountryCodes = data => {
+  const unwantedCountryCodes = ['AA', 'QR', 'QS', 'QU', 'QV', 'QY', 'QZ']
+  return data.filter(a => !unwantedCountryCodes.includes(a.code))
 }
 
 const mapData = data => {
