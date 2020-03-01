@@ -119,7 +119,7 @@ const App = () => {
                   padding: '0 0 3em 0'
                 }}>
                 <ProductsTreeMap SITC2Data={exportsSITC2} flow={'exports'} />
-                <a href='#country-data' style={{ position: 'absolute', bottom: '2em' }}>
+                <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
               </div>
