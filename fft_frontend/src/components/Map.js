@@ -82,8 +82,8 @@ const Map = ({ imports, exports, flow, year }) => {
     polygonTemplate.nonScalingStroke = true
     polygonTemplate.strokeWidth = 0.5
 
-    map.events.on("ready", () => {
-      let finland = polygonSeries.getPolygonById("FI")
+    map.events.on('ready', () => {
+      let finland = polygonSeries.getPolygonById('FI')
       finland.fill = am4core.color('#FFF')
       finland.tooltipText = ''
     })
