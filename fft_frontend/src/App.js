@@ -57,7 +57,7 @@ const App = () => {
 
   console.log('Flow: ', flow)
   return (
-    <div style={{ backgroundColor: '#343A40' }}>
+    <div style={{ backgroundColor: '#333' }}>
       <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
         <NavBar />
         {(imports.length === 0 || exports.length === 0) && (
