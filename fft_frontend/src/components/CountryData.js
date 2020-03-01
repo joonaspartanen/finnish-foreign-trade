@@ -21,7 +21,7 @@ const CountryData = ({ country, setCountry, setCountryFilter }) => {
     return null
   }
 
-  if (countryImports.length === 0 || countryExports.length === 0) {
+  if (countryImports.length === 0 && countryExports.length === 0) {
     return (
       <Dimmer active>
         <Loader />
