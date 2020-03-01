@@ -50,6 +50,16 @@ The frontend is now running on port 3000 and you can head to http://localhost:30
 
 There is a demo version available on Heroku: https://finnish-foreign-trade.herokuapp.com/
 
+## Todos
+
+- Mobile view is quite broken at the moment.
+
+- Add option to select year.
+
+- Implement Redux store?
+
+- Create own color scheme.
+
 ## Information for Course Evaluators
 
 [Projektin tuntikirjanpito](https://github.com/joonaspartanen/finnish-foreign-trade/blob/master/tuntikirjanpito.md)
