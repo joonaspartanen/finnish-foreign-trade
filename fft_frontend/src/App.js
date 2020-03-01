@@ -10,9 +10,8 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 
 import dataService from './services/dataService'
-import { Container } from 'semantic-ui-react'
+import { Container, Dimmer, Loader } from 'semantic-ui-react'
 
-import Spinner from 'react-bootstrap/Spinner'
 import ScrollableAnchor from 'react-scrollable-anchor'
 
 //configureAnchors({ offset: -50 })
