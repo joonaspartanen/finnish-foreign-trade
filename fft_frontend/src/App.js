@@ -139,7 +139,11 @@ const App = () => {
                 {country.length === 0 && (
                   <CountrySearch
                     countryFilter={countryFilter}
-                    handleCountryFilterChange={handleCountryFilterChange}></CountrySearch>
+                    handleCountryFilterChange={handleCountryFilterChange}
+                    countryNames={countryCodes.map(c => ({
+                      title: c.name,
+                      key: c.code
+                    }))}></CountrySearch>
                 )}
                 {country.length !== 0 && (
                   <CountryData
