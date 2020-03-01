@@ -3,6 +3,7 @@ import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
+import { Header } from 'semantic-ui-react'
 
 const TradeBalanceChart = ({ tradeBalance }) => {
   useEffect(() => {
@@ -127,7 +128,21 @@ const TradeBalanceChart = ({ tradeBalance }) => {
     }
   }, [tradeBalance])
 
-  return <div id='chartdiv' style={{ width: '100%', height: '100%', overflow: 'hidden', paddingTop: '3em' }}></div>
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+        paddingTop: '3em',
+        textAlign: 'center'
+      }}>
+      <Header inverted as='h3'>
+        Finnish Trade Balance
+      </Header>
+      <div id='chartdiv' style={{ width: '100%', height: '95%' }}></div>
+    </div>
+  )
 }
 
 export default TradeBalanceChart
