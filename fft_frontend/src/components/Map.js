@@ -91,16 +91,14 @@ const Map = ({ imports, exports, flow, year }) => {
     let hs = polygonTemplate.states.create('hover')
     hs.properties.fill = am4core.color(hoverColor)
 
-    return (() => {
+    return () => {
       if (map) {
         map.dispose()
       }
-    })
-  }, [values, color, hoverColor])
+    }
+  }, [values, color, hoverColor, exports, imports, flow])
 
-  return (
-    <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
-  )
+  return <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
 }
 
 export default Map
