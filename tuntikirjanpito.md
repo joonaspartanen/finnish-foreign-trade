@@ -34,4 +34,5 @@
 | 20.2. | 1.5 | Frontendiin lisätty servicefunktio ja alustava komponentti maakohtaisen tiedon hakemiseksi. Pienen debuggauksen jälkeen hakee ja näyttääkin jo oikeat tiedot.
 | 22.2. | 2 | Refaktoiroitu maakohtaisen tiedon haku frontendissä järkevämmäksi. Vaihdettu tyylikirjasto semantic-ui:hin. Lisättty uudet valikko- ja footer-komponentit.
 | 29.2. | 2 | Uusi siistimpi komponentti maakohtaisen tiedon hakuun. Lisätty komponentin ehdollinen renderöinti ja loading-spinneri. UI-parannuksia. Bootstrap viittauksia vaihdettu Semantic UI:hin.
-| Yhteensä | 54 | |
+| 1.3. | 3 | Päivitetty hakukomponentti niin, että se tarjoaa maiden nimiä listasta. UI:ta siistitty edelleen. Backendissä pieni muutos apufunktiossa.
+| Yhteensä | 57 | |
