@@ -101,7 +101,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       })
 
       let importSeries = chart.series.push(new am4charts.ColumnSeries())
-      importSeries.name = 'Imports to Finland (2018)'
+      importSeries.name = 'Imports to Finland'
       importSeries.fill = am4core.color('#63718B')
       importSeries.strokeWidth = 0
       importSeries.dataFields.valueY = 'imports'
@@ -111,7 +111,7 @@ const TradeBalanceChart = ({ tradeBalance }) => {
       importSeries.columns.template.tooltipText = '{name}:\n€{valueY}'
 
       let exportSeries = chart.series.push(new am4charts.ColumnSeries())
-      exportSeries.name = 'Exports from Finland (2018)'
+      exportSeries.name = 'Exports from Finland'
       exportSeries.fill = am4core.color('#EBA05C')
       exportSeries.strokeWidth = 0
       exportSeries.dataFields.valueY = 'exports'
