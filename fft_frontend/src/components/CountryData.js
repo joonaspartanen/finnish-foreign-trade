@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import dataService from '../services/dataService'
 //import { Container, Row, Col, Button } from 'react-bootstrap'
-import { Grid, Button, Icon, Dimmer, Loader, Table, Header } from 'semantic-ui-react'
+import { Grid, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 
 const CountryData = ({ country, setCountry, setCountryFilter }) => {
