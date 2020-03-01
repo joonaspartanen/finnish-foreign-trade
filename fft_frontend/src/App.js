@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import Map from './components/Map'
-import Menu from './components/Menu'
+import FlowButtons from './components/FlowButtons'
 import TradeBalanceChart from './components/TradeBalanceChart'
 import ProductsTreeMap from './components/ProductsTreeMap'
 import CountryData from './components/CountryData'
@@ -73,7 +73,7 @@ const App = () => {
                 className='section'
                 style={{ position: 'relative', height: 'calc(100vh - 60px)' }}>
                 <Map imports={imports} exports={exports} flow={flow} />
-                <Menu setFlow={setFlow} />
+                <FlowButtons setFlow={setFlow} />
                 <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
