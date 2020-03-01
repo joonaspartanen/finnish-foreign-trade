@@ -33,6 +33,7 @@ const CountryData = ({ country, setCountry, setCountryFilter }) => {
     <Grid container stackable relaxed>
       <Button
         icon
+        circular
         onClick={() => {
           setCountryFilter('')
           setCountry([])
