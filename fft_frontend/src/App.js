@@ -70,7 +70,11 @@ const App = () => {
             <ScrollableAnchor id={'trade-map'}>
               <div
                 className='section'
-                style={{ position: 'relative', height: 'calc(100vh - 60px)' }}>
+                style={{
+                  position: 'relative',
+                  height: 'calc(100vh - 60px)',
+                  backgroundColor: '#333'
+                }}>
                 <Map imports={imports} exports={exports} flow={flow} />
                 <FlowButtons setFlow={setFlow} />
                 <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
