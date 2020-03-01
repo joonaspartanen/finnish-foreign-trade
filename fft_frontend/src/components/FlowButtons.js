@@ -13,7 +13,7 @@ const FlowButtons = ({ setFlow }) => {
           content='Exports'
           onClick={value => {
             if (!exportsActive) {
-              setExportsActive(!exportsActive)
+              setExportsActive(true)
               setFlow('exports')
             }
           }}
@@ -24,7 +24,7 @@ const FlowButtons = ({ setFlow }) => {
           content='Imports'
           onClick={value => {
             if (exportsActive) {
-              setExportsActive(!exportsActive)
+              setExportsActive(false)
               setFlow('imports')
             }
           }}
