@@ -61,9 +61,9 @@ const App = () => {
       <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
         <NavBar />
         {(imports.length === 0 || exports.length === 0) && (
-          <div className='section' style={{ height: '100vh' }}>
-            <Spinner animation='border' variant='light' />
-          </div>
+          <Dimmer active>
+            <Loader />
+          </Dimmer>
         )}
         {imports.length > 0 && exports.length > 0 && (
           <div>
