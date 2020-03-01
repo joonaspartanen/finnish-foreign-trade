@@ -6,7 +6,6 @@ import am4themes_dark from '@amcharts/amcharts4/themes/dark'
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 
 const Map = ({ imports, exports, flow, year }) => {
-
   let values = null
   let color = '#5E5B78'
   let hoverColor = '#4B0000'
@@ -22,6 +21,9 @@ const Map = ({ imports, exports, flow, year }) => {
   }
 
   useEffect(() => {
+    console.log(flow)
+    console.log(exports)
+    console.log(imports)
 
     //am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_dark)
