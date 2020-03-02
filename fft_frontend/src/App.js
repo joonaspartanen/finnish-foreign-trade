@@ -10,7 +10,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 
 import dataService from './services/dataService'
-import { Container, Dimmer, Loader } from 'semantic-ui-react'
+import { Container, Loader } from 'semantic-ui-react'
 
 import ScrollableAnchor from 'react-scrollable-anchor'
 
