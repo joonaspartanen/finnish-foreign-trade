@@ -23,6 +23,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
     let level1_column = level1.columns.template
 
     level1_column.tooltipText = '{group}: {value} €'
+    level1.tooltip.pointerOrientation = 'down'
 
     // Show legend only in landscape view
     if (window.innerHeight < window.innerWidth) {
