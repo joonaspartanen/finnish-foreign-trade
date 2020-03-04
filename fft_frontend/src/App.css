@@ -70,3 +70,8 @@ h2 {
 h3 {
   color: #fff;
 }
+
+.ui.container {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
