@@ -36,4 +36,5 @@
 | 29.2. | 2 | Uusi siistimpi komponentti maakohtaisen tiedon hakuun. Lisätty komponentin ehdollinen renderöinti ja loading-spinneri. UI-parannuksia. Bootstrap viittauksia vaihdettu Semantic UI:hin.
 | 1.3. | 3 | Päivitetty hakukomponentti niin, että se tarjoaa maiden nimiä listasta. UI:ta siistitty edelleen. Backendissä pieni muutos apufunktiossa.
 | 2.3. | 1 | Pieniä UI-muutoksia. Ensimmäiset testit frontendiin.
-| Yhteensä | 58 | |
+| 4.3. | 3 | AmChartsin responsiivisuus-ominaisuuksiin tutustumista. Mobiilinäkymän parantamista. Frontendiin selkeämpi hakemistorakenne.
+| Yhteensä | 61 | |
