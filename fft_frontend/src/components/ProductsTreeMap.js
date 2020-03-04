@@ -48,7 +48,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
         textAlign: 'center'
       }}>
       <Header inverted as='h3'>
-        Finnish {flow} by product category (2018)
+        Finnish {flow} by product category
       </Header>
       <div {...attributes} style={{ width: '100%', height: '95%' }}></div>
     </div>
