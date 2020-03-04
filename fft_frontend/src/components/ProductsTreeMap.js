@@ -43,8 +43,8 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
         width: '100%',
         height: '100vh',
         paddingTop: '3em',
-        paddingRight: '2em',
-        paddingLeft: '2em',
+        paddingRight: '1em',
+        paddingLeft: '1em',
         textAlign: 'center'
       }}>
       <Header inverted as='h3'>
