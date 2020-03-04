@@ -25,12 +25,25 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
     level1_column.tooltipText = '{group}: {value} €'
     level1.tooltip.pointerOrientation = 'down'
 
-    // Show legend only in landscape view
-    if (window.innerHeight < window.innerWidth) {
-      chart.legend = new am4charts.Legend()
-      chart.legend.position = 'bottom'
-      chart.legend.paddingTop = 20
-    }
+    chart.legend = new am4charts.Legend()
+    chart.legend.position = 'bottom'
+    chart.legend.paddingTop = 20
+    chart.legend.itemContainers.template.tooltipText = '{group}'
+    chart.legend.labels.template.text = ''
+
+    chart.responsive.rules.push({
+      relevant: am4core.ResponsiveBreakpoints.widthXL,
+      state: (target, stateId) => {
+        if (target instanceof am4charts.Legend) {
+          let state = target.states.create(stateId)
+          console.log(state)
+          state.sprite.itemContainers.template.clickable = false
+          state.sprite.itemContainers.template.focusable = false
+          return state
+        }
+        return null
+      }
+    })
 
     return () => {
       if (chart) {
