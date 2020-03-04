@@ -89,7 +89,7 @@ const App = () => {
                   height: '100vh',
                   backgroundColor: '#333',
                   position: 'relative',
-                  padding: '0 0 3em 0'
+                  padding: '0 0 4em 0'
                 }}>
                 <TradeBalanceChart tradeBalance={tradeBalance} />
                 <a href='#imports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
@@ -104,7 +104,7 @@ const App = () => {
                   height: '100vh',
                   backgroundColor: '#222',
                   position: 'relative',
-                  padding: '0 0 3em 0'
+                  padding: '0 0 6em 0'
                 }}>
                 <ProductsTreeMap SITC2Data={importsSITC2} flow={'imports'} />
                 <a href='#exports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
