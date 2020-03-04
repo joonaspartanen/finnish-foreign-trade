@@ -3,7 +3,7 @@ import { Table, Header } from 'semantic-ui-react'
 
 const CountryDataTable = ({ country, tradeData, flow }) => {
   return (
-    <Table inverted basic celled selectable singleLine>
+    <Table inverted basic compact celled selectable singleLine>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell colSpan='2' textAlign='center'>
