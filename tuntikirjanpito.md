@@ -37,4 +37,5 @@
 | 1.3. | 3 | Päivitetty hakukomponentti niin, että se tarjoaa maiden nimiä listasta. UI:ta siistitty edelleen. Backendissä pieni muutos apufunktiossa.
 | 2.3. | 1 | Pieniä UI-muutoksia. Ensimmäiset testit frontendiin.
 | 4.3. | 3 | AmChartsin responsiivisuus-ominaisuuksiin tutustumista. Mobiilinäkymän parantamista. Frontendiin selkeämpi hakemistorakenne.
-| Yhteensä | 61 | |
+| 5.3. | 2 | Lisää testejä frontendiin.
+| Yhteensä | 63 | |
