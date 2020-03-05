@@ -52,7 +52,7 @@ There is a demo version available on Heroku: https://finnish-foreign-trade.herok
 
 ## Todos
 
-- Mobile view is quite broken at the moment.
+- Mobile view needs some work.
 
 - Add option to select year.
 
