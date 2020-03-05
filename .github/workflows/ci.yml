@@ -19,3 +19,10 @@ jobs:
           npm test
         env:
           CI: true
+      - name: npm install and test frontend
+        run: |
+          cd fft_frontend
+          npm ci
+          npm test
+        env:
+          CI: true
