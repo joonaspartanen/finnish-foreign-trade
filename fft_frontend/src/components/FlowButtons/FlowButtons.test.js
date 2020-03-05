@@ -3,8 +3,6 @@ import { render, cleanup, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import FlowButtons from './FlowButtons'
 
-afterEach(cleanup)
-
 const setFlowMock = jest.fn()
 
 let component
@@ -18,6 +16,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
+  cleanup()
   jest.clearAllMocks()
 })
 
