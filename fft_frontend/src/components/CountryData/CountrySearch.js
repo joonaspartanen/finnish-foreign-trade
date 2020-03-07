@@ -43,7 +43,6 @@ const CountrySearch = ({ handleCountryFilterChange, countryNames }) => {
     if (results.length === 1) {
       handleCountryFilterChange(results[0].title)
     }
-    console.log(results)
   }
 
   return (
