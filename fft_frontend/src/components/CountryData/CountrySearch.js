@@ -55,7 +55,8 @@ const CountrySearch = ({ handleCountryFilterChange, countryNames }) => {
       })}
       results={results}
       resultRenderer={resultRenderer}
-      value={value}></Search>
+      value={value}
+    />
   )
 }
 
