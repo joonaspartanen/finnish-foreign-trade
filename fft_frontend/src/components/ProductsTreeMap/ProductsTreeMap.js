@@ -9,7 +9,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
-    let chart = am4core.create(`products-treemap-div-${flow}`, am4charts.TreeMap)
+    let chart = am4core.create(`products-treemap-div`, am4charts.TreeMap)
     chart.responsive.enabled = true
 
     chart.data = SITC2Data
