@@ -12,7 +12,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
     let chart = am4core.create(`products-treemap-div`, am4charts.TreeMap)
     chart.responsive.enabled = true
 
-    chart.data = SITC2Data
+    chart.data = SITC2Data[flow]
     chart.dataFields.value = 'value'
     chart.dataFields.name = 'group'
     chart.dataFields.children = 'children'
@@ -34,7 +34,6 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
       state: (target, stateId) => {
         if (target instanceof am4charts.Legend) {
           let state = target.states.create(stateId)
-          console.log(state)
           state.sprite.itemContainers.template.clickable = false
           state.sprite.itemContainers.template.focusable = false
           return state
