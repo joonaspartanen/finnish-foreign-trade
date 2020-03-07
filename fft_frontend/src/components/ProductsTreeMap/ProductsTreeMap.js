@@ -6,8 +6,6 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
 const ProductsTreeMap = ({ SITC2Data, flow }) => {
-  const attributes = { id: `products-treemap-div-${flow}` }
-
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
@@ -65,7 +63,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
       <Header inverted as='h3'>
         Finnish {flow} by product category
       </Header>
-      <div {...attributes} style={{ width: '100%', height: '90%' }}></div>
+      <div id='products-treemap-div' style={{ width: '100%', height: '90%' }}></div>
     </div>
   )
 }
