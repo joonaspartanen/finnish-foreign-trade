@@ -125,19 +125,21 @@ const App = () => {
                     countryNames={countryCodes.map(c => ({
                       title: c.name,
                       key: c.code
-                    }))}></CountrySearch>
+                    }))}
+                  />
                 )}
                 {country.length !== 0 && (
                   <CountryData
                     country={country}
                     setCountry={setCountry}
-                    setCountryFilter={setCountryFilter}></CountryData>
+                    setCountryFilter={setCountryFilter}
+                  />
                 )}
               </div>
             </ScrollableAnchor>
           </div>
         )}
-        <Footer></Footer>
+        <Footer />
       </Container>
     </div>
   )
