@@ -21,8 +21,7 @@ const App = () => {
   const [imports, setImports] = useState([])
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
-  const [importsSITC2, setImportsSITC2] = useState([])
-  const [exportsSITC2, setExportsSITC2] = useState([])
+  const [SITC2Data, setSITC2Data] = useState({})
   const [flow, setFlow] = useState('exports')
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
@@ -45,11 +44,8 @@ const App = () => {
     dataService.getTradeBalance().then(res => {
       setTradeBalance(res.data)
     })
-    dataService.getSITC2Data('imports').then(res => {
-      setImportsSITC2(res.data)
-    })
-    dataService.getSITC2Data('exports').then(res => {
-      setExportsSITC2(res.data)
+    dataService.getSITC2Data('total').then(res => {
+      setSITC2Data(res.data)
     })
     dataService.getCountryCodes().then(res => {
       setCountryCodes(res.data)
