@@ -33,6 +33,16 @@ tradeDataRouter.get('/SITC2/exports', cache(HOUR), async (req, res) => {
   res.json(SITC2Data)
 })
 
+tradeDataRouter.get('/SITC2/total', cache(HOUR), async (req, res) => {
+  const SITC2imports = await dataService.getSITC2Data('1')
+  const SITC2exports = await dataService.getSITC2Data('2')
+  const result = {
+    imports: SITC2imports,
+    exports: SITC2exports
+  }
+  res.json(result)
+})
+
 tradeDataRouter.get('/SITC2/imports/:country', cache(HOUR), async (req, res) => {
   const country = req.params.country
   const data = await dataService.getSITC2CountryData(country, '1')
