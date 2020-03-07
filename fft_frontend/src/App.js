@@ -13,6 +13,7 @@ import dataService from './services/dataService'
 import { Container, Loader } from 'semantic-ui-react'
 
 import ScrollableAnchor from 'react-scrollable-anchor'
+import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 
 //configureAnchors({ offset: -50 })
 
@@ -106,22 +107,7 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
-                <ProductsTreeMap SITC2Data={importsSITC2} flow={'imports'} />
-                <a href='#exports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
-                  <div className='arrow-down'></div>
-                </a>
-              </div>
-            </ScrollableAnchor>
-            <ScrollableAnchor id={'exports-by-product'}>
-              <div
-                className='section'
-                style={{
-                  height: '100vh',
-                  backgroundColor: '#333',
-                  position: 'relative',
-                  padding: '0 0 3em 0'
-                }}>
-                <ProductsTreeMap SITC2Data={exportsSITC2} flow={'exports'} />
+                <TreeMapWrapper SITC2Data={SITC2Data} />
                 <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
