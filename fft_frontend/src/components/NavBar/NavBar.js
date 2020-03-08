@@ -28,6 +28,15 @@ const NavBar = ({ year, setYear }) => {
       <Menu.Item link as='a' href='#trade-partners'>
         By trade partner
       </Menu.Item>
+      <Menu.Item>
+        <Dropdown
+          onChange={(event, { value }) => setYear(value)}
+          options={years}
+          placeholder='Year'
+          selection
+          value={year}
+        />
+      </Menu.Item>
     </Menu>
   )
 }
