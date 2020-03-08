@@ -194,8 +194,8 @@ const mapDataForSITC2 = data => {
     .sort((a, b) => a.SITC1 - b.SITC1)
 }
 
-const getSITC2CountryData = async (country, flow) => {
-  let data = await fetchData('SITC2', '=ALL', country, '2018', flow)
+const getSITC2CountryData = async (country, year, flow) => {
+  let data = await fetchData('SITC2', '=ALL', country, year, flow)
   data = removeAllGroupsItem(data)
   data = data
     .sort((a, b) => b.vals - a.vals)
