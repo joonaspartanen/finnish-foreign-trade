@@ -2,15 +2,16 @@ const tradeDataRouter = require('express').Router()
 const dataService = require('../services/dataService')
 const { cache } = require('../utils/middleware')
 const HOUR = 3600
+const LASTYEAR = 2019
 
 tradeDataRouter.get('/imports/:year?', cache(HOUR), async (req, res) => {
-  const year = req.params.year || 2019
+  const year = req.params.year || LASTYEAR
   const classifiedImports = await dataService.getClassifiedTradeData(year, '1')
   res.json(classifiedImports)
 })
 
 tradeDataRouter.get('/exports/:year?', cache(HOUR), async (req, res) => {
-  const year = req.params.year || 2019
+  const year = req.params.year || LASTYEAR
   const classifiedExports = await dataService.getClassifiedTradeData(year, '2')
   res.json(classifiedExports)
 })
@@ -26,19 +27,19 @@ tradeDataRouter.get('/SITC1', cache(HOUR), async (req, res) => {
 })
 
 tradeDataRouter.get('/SITC2/imports/:year?', cache(HOUR), async (req, res) => {
-  const year = req.params.year || 2019
+  const year = req.params.year || LASTYEAR
   const SITC2Data = await dataService.getSITC2Data(year, '1')
   res.json(SITC2Data)
 })
 
 tradeDataRouter.get('/SITC2/exports/:year?', cache(HOUR), async (req, res) => {
-  const year = req.params.year || 2019
+  const year = req.params.year || LASTYEAR
   const SITC2Data = await dataService.getSITC2Data(year, '2')
   res.json(SITC2Data)
 })
 
 tradeDataRouter.get('/SITC2/total/:year?', cache(HOUR), async (req, res) => {
-  const year = req.params.year || 2019
+  const year = req.params.year || LASTYEAR
   const SITC2imports = await dataService.getSITC2Data(year, '1')
   const SITC2exports = await dataService.getSITC2Data(year, '2')
   const result = {
@@ -48,15 +49,17 @@ tradeDataRouter.get('/SITC2/total/:year?', cache(HOUR), async (req, res) => {
   res.json(result)
 })
 
-tradeDataRouter.get('/SITC2/imports/:country', cache(HOUR), async (req, res) => {
+tradeDataRouter.get('/SITC2/imports/:year?/:country', cache(HOUR), async (req, res) => {
+  const year = req.params.year || LASTYEAR
   const country = req.params.country
-  const data = await dataService.getSITC2CountryData(country, '1')
+  const data = await dataService.getSITC2CountryData(country, year, '1')
   res.json(data)
 })
 
-tradeDataRouter.get('/SITC2/exports/:country', cache(HOUR), async (req, res) => {
+tradeDataRouter.get('/SITC2/exports/:year?/:country', cache(HOUR), async (req, res) => {
+  const year = req.params.year || LASTYEAR
   const country = req.params.country
-  const data = await dataService.getSITC2CountryData(country, '2')
+  const data = await dataService.getSITC2CountryData(country, year, '2')
   res.json(data)
 })
 
