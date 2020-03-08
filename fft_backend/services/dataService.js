@@ -124,8 +124,8 @@ const classifyData = data => {
   })
 }
 
-const getClassifiedTradeData = async flow => {
-  const data = await fetchData('SITC1', '0-9', '=ALL', '2018', flow)
+const getClassifiedTradeData = async (year, flow) => {
+  const data = await fetchData('SITC1', '0-9', '=ALL', year, flow)
   const mappedData = mapData(data)
   const classifiedData = classifyData(mappedData)
   return classifiedData
@@ -173,9 +173,9 @@ const getSITC1Data = async () => {
   return result
 }
 
-const getSITC2Data = async flow => {
+const getSITC2Data = async (year,flow) => {
   const SITC2Array = utils.initializeSITC2Array()
-  let data = await fetchData('SITC2', '=ALL', 'AA', '2018', flow)
+  let data = await fetchData('SITC2', '=ALL', 'AA', year, flow)
   data = mapDataForSITC2(data)
   data.forEach(a => {
     SITC2Array[a.SITC1].children.push(a)
