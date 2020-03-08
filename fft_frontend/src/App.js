@@ -82,7 +82,7 @@ const App = () => {
                 className='section'
                 style={{
                   height: '100vh',
-                  backgroundColor: '#333',
+                  backgroundColor: '#222',
                   position: 'relative',
                   padding: '0 0 4em 0'
                 }}>
@@ -97,7 +97,7 @@ const App = () => {
                 className='section'
                 style={{
                   height: '100vh',
-                  backgroundColor: '#222',
+                  backgroundColor: '#333',
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
