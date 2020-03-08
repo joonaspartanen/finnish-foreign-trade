@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Menu, Icon } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react'
 
 const NavBar = () => {
   return (
