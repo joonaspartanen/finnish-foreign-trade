@@ -17,6 +17,7 @@ import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 //configureAnchors({ offset: -50 })
 
 const App = () => {
+  const [year, setYear] = useState(2019)
   const [imports, setImports] = useState([])
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
@@ -24,7 +25,6 @@ const App = () => {
   const [flow, setFlow] = useState('exports')
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
-
   const [countryCodes, setCountryCodes] = useState([])
 
   const handleCountryFilterChange = countryName => {
@@ -34,28 +34,28 @@ const App = () => {
   }
 
   useEffect(() => {
-    dataService.getImports().then(res => {
+    dataService.getImports(year).then(res => {
       setImports(res.data)
     })
-    dataService.getExports().then(res => {
+    dataService.getExports(year).then(res => {
       setExports(res.data)
     })
     dataService.getTradeBalance().then(res => {
       setTradeBalance(res.data)
     })
-    dataService.getSITC2Data('total').then(res => {
+    dataService.getSITC2Data(year, 'total').then(res => {
       setSITC2Data(res.data)
     })
     dataService.getCountryCodes().then(res => {
       setCountryCodes(res.data)
     })
-  }, [])
+  }, [year])
 
   console.log('Flow: ', flow)
   return (
     <div style={{ backgroundColor: '#333', paddingLeft: 0, paddingRight: 0 }}>
       <Container fluid>
-        <NavBar />
+        <NavBar year={year} setYear={setYear} />
         {(imports.length === 0 || exports.length === 0) && (
           <div style={{ height: '100vh' }}>
             <Loader active />
