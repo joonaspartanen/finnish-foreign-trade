@@ -173,7 +173,7 @@ const getSITC1Data = async () => {
   return result
 }
 
-const getSITC2Data = async (year,flow) => {
+const getSITC2Data = async (year, flow) => {
   const SITC2Array = utils.initializeSITC2Array()
   let data = await fetchData('SITC2', '=ALL', 'AA', year, flow)
   data = mapDataForSITC2(data)
