@@ -3,13 +3,15 @@ const dataService = require('../services/dataService')
 const { cache } = require('../utils/middleware')
 const HOUR = 3600
 
-tradeDataRouter.get('/imports', cache(HOUR), async (req, res) => {
-  const classifiedImports = await dataService.getClassifiedTradeData('1')
+tradeDataRouter.get('/imports/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || 2019
+  const classifiedImports = await dataService.getClassifiedTradeData(year, '1')
   res.json(classifiedImports)
 })
 
-tradeDataRouter.get('/exports', cache(HOUR), async (req, res) => {
-  const classifiedExports = await dataService.getClassifiedTradeData('2')
+tradeDataRouter.get('/exports/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || 2019
+  const classifiedExports = await dataService.getClassifiedTradeData(year, '2')
   res.json(classifiedExports)
 })
 
@@ -23,19 +25,22 @@ tradeDataRouter.get('/SITC1', cache(HOUR), async (req, res) => {
   res.json(SITC1Data)
 })
 
-tradeDataRouter.get('/SITC2/imports', cache(HOUR), async (req, res) => {
-  const SITC2Data = await dataService.getSITC2Data('1')
+tradeDataRouter.get('/SITC2/imports/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || 2019
+  const SITC2Data = await dataService.getSITC2Data(year, '1')
   res.json(SITC2Data)
 })
 
-tradeDataRouter.get('/SITC2/exports', cache(HOUR), async (req, res) => {
-  const SITC2Data = await dataService.getSITC2Data('2')
+tradeDataRouter.get('/SITC2/exports/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || 2019
+  const SITC2Data = await dataService.getSITC2Data(year, '2')
   res.json(SITC2Data)
 })
 
-tradeDataRouter.get('/SITC2/total', cache(HOUR), async (req, res) => {
-  const SITC2imports = await dataService.getSITC2Data('1')
-  const SITC2exports = await dataService.getSITC2Data('2')
+tradeDataRouter.get('/SITC2/total/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || 2019
+  const SITC2imports = await dataService.getSITC2Data(year, '1')
+  const SITC2exports = await dataService.getSITC2Data(year, '2')
   const result = {
     imports: SITC2imports,
     exports: SITC2exports
