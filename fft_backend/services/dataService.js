@@ -81,7 +81,7 @@ const extractCountryCodes = data => {
 const mapCountryCodes = data => {
   data = removeUnwantedCountryCodes(data)
   const parenthesesRegex = / *\([^)]*\) */g
-  return data.map(a => ({ code: a.code, name: a.text.replace(parenthesesRegex, '') }))
+  return data.map(a => ({ code: a.code.toLowerCase(), name: a.text.replace(parenthesesRegex, '') }))
 }
 
 // TODO: It might be better to exclude these already when fetching data
