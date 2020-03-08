@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import dataService from '../../services/dataService'
-//import { Container, Row, Col, Button } from 'react-bootstrap'
 import { Grid, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 
-const CountryData = ({ country, setCountry, setCountryFilter }) => {
+const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => {
   const [countryImports, setCountryImports] = useState([])
   const [countryExports, setCountryExports] = useState([])
 
   useEffect(() => {
-    dataService.getSITC2CountryData('imports', country).then(res => {
+    dataService.getSITC2CountryData('imports', year, country).then(res => {
       setCountryImports(res.data)
     })
-    dataService.getSITC2CountryData('exports', country).then(res => {
+    dataService.getSITC2CountryData('exports', year, country).then(res => {
       setCountryExports(res.data)
     })
   }, [country])
@@ -53,4 +52,4 @@ const CountryData = ({ country, setCountry, setCountryFilter }) => {
   )
 }
 
-export default CountryData
+export default CountryDataWrapper

@@ -3,7 +3,7 @@ import './App.css'
 import Map from './components/Map/Map'
 import FlowButtons from './components/FlowButtons/FlowButtons'
 import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
-import CountryData from './components/CountryData/CountryData'
+import CountryDataWrapper from './components/CountryData/CountryDataWrapper'
 import CountrySearch from './components/CountryData/CountrySearch'
 import NavBar from './components/NavBar/NavBar'
 import Footer from './components/Footer/Footer'
@@ -128,10 +128,11 @@ const App = () => {
                   />
                 )}
                 {country.length !== 0 && (
-                  <CountryData
+                  <CountryDataWrapper
                     country={country}
                     setCountry={setCountry}
                     setCountryFilter={setCountryFilter}
+                    year={year}
                   />
                 )}
               </div>
