@@ -39,4 +39,5 @@
 | 4.3. | 3 | AmChartsin responsiivisuus-ominaisuuksiin tutustumista. Mobiilinäkymän parantamista. Frontendiin selkeämpi hakemistorakenne.
 | 5.3. | 2 | Lisää testejä frontendiin. Frontend-testien suoritus lisätty CI-pipelineen.
 | 7.-8.3. | 3 | Lisätty backendiin endpoint, josta voi hakea SITC2-vienti- ja tuontitiedot yhdessä. Frontendiin lisätty mahdollisuus valita kummat näytetään treemapissa. Valmisteltu vuoden valintaa frontendissä.
-| Yhteensä | 66 | |
+| 8.3. | 2 | Lisätty mahdollisuus valita vuosi, jonka data haetaan. Tätä varten lisätty valikko frontendiin ja backendissä tehty tarvittavat muutokset routereihin.
+| Yhteensä | 68 | |
