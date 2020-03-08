@@ -38,4 +38,5 @@
 | 2.3. | 1 | Pieniä UI-muutoksia. Ensimmäiset testit frontendiin.
 | 4.3. | 3 | AmChartsin responsiivisuus-ominaisuuksiin tutustumista. Mobiilinäkymän parantamista. Frontendiin selkeämpi hakemistorakenne.
 | 5.3. | 2 | Lisää testejä frontendiin. Frontend-testien suoritus lisätty CI-pipelineen.
-| Yhteensä | 63 | |
+| 7.-8.3. | 3 | Lisätty backendiin endpoint, josta voi hakea SITC2-vienti- ja tuontitiedot yhdessä. Frontendiin lisätty mahdollisuus valita kummat näytetään treemapissa. Valmisteltu vuoden valintaa frontendissä.
+| Yhteensä | 66 | |
