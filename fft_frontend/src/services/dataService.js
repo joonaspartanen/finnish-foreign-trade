@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-const getImports = async () => {
-  const response = await axios.get('/imports')
+const getImports = async year => {
+  const response = await axios.get(`/imports/${year}`)
   return response
 }
 
-const getExports = async () => {
-  const response = await axios.get('/exports')
+const getExports = async year => {
+  const response = await axios.get(`/exports/${year}`)
   return response
 }
 
@@ -15,8 +15,8 @@ const getTradeBalance = async () => {
   return response
 }
 
-const getSITC2Data = async flow => {
-  const response = await axios.get(`/SITC2/${flow}`)
+const getSITC2Data = async (year, flow) => {
+  const response = await axios.get(`/SITC2/${flow}/${year}`)
   return response
 }
 
