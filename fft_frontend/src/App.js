@@ -51,7 +51,6 @@ const App = () => {
     })
   }, [year])
 
-  console.log('Flow: ', flow)
   return (
     <div style={{ backgroundColor: '#333', paddingLeft: 0, paddingRight: 0 }}>
       <Container fluid>
