@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ProductsTreeMap from './ProductsTreeMap'
-import Controls from './Controls'
-import { Container, Grid, Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
+import FlowButtons from '../FlowButtons/FlowButtons'
 
 const TreeMapWrapper = ({ SITC2Data }) => {
   const [flow, setFlow] = useState('exports')
@@ -15,16 +15,10 @@ const TreeMapWrapper = ({ SITC2Data }) => {
   }
 
   return (
-    <Container fluid>
-      <Grid>
-        <Grid.Column width={4} verticalAlign='middle' style={{ paddingLeft: '10em' }}>
-          <Controls flow={flow} setFlow={setFlow} />
-        </Grid.Column>
-        <Grid.Column width={12}>
-          <ProductsTreeMap SITC2Data={SITC2Data} flow={flow} />
-        </Grid.Column>
-      </Grid>
-    </Container>
+    <>
+      <FlowButtons setFlow={setFlow} />
+      <ProductsTreeMap SITC2Data={SITC2Data} flow={flow} />
+    </>
   )
 }
 
