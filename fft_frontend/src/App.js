@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import ScrollableAnchor from 'react-scrollable-anchor'
+import { Container, Loader } from 'semantic-ui-react'
 import './App.css'
-import Map from './components/Map/Map'
-import FlowButtons from './components/FlowButtons/FlowButtons'
-import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
 import CountryDataWrapper from './components/CountryData/CountryDataWrapper'
 import CountrySearch from './components/CountryData/CountrySearch'
-import NavBar from './components/NavBar/NavBar'
+import FlowButtons from './components/FlowButtons/FlowButtons'
 import Footer from './components/Footer/Footer'
-
-import dataService from './services/dataService'
-import { Container, Loader } from 'semantic-ui-react'
-
-import ScrollableAnchor from 'react-scrollable-anchor'
+import Map from './components/Map/Map'
+import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
+import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
+import dataService from './services/dataService'
 
 //configureAnchors({ offset: -50 })
 
