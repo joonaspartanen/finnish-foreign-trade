@@ -8,13 +8,13 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
   const [countryExports, setCountryExports] = useState([])
 
   useEffect(() => {
-    dataService.getSITC2CountryData('imports', year, country).then(res => {
+    dataService.getSitc2CountryData('imports', year, country).then((res) => {
       setCountryImports(res.data)
     })
-    dataService.getSITC2CountryData('exports', year, country).then(res => {
+    dataService.getSitc2CountryData('exports', year, country).then((res) => {
       setCountryExports(res.data)
     })
-  }, [country])
+  }, [country, year])
 
   if (country.length === 0) {
     return null
