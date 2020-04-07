@@ -40,4 +40,5 @@
 | 5.3. | 2 | Lisää testejä frontendiin. Frontend-testien suoritus lisätty CI-pipelineen.
 | 7.-8.3. | 3 | Lisätty backendiin endpoint, josta voi hakea SITC2-vienti- ja tuontitiedot yhdessä. Frontendiin lisätty mahdollisuus valita kummat näytetään treemapissa. Valmisteltu vuoden valintaa frontendissä.
 | 8.3. | 2 | Lisätty mahdollisuus valita vuosi, jonka data haetaan. Tätä varten lisätty valikko frontendiin ja backendissä tehty tarvittavat muutokset routereihin.
-| Yhteensä | 68 | |
+| 7.4. | 2 | Otettu redux, react-redux ja redux-thunk alustavasti käyttöön. Siirretty tuonti- ja vientitiedot redux storeen.
+| Yhteensä | 70 | |
