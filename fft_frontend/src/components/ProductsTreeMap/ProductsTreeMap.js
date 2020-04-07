@@ -5,14 +5,14 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 
-const ProductsTreeMap = ({ SITC2Data, flow }) => {
+const ProductsTreeMap = ({ sitc2Data, flow }) => {
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
     let chart = am4core.create(`products-treemap-div`, am4charts.TreeMap)
     chart.responsive.enabled = true
 
-    chart.data = SITC2Data[flow]
+    chart.data = sitc2Data[flow]
     chart.dataFields.value = 'value'
     chart.dataFields.name = 'group'
     chart.dataFields.children = 'children'
@@ -39,7 +39,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
           return state
         }
         return null
-      }
+      },
     })
 
     return () => {
@@ -47,7 +47,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
         chart.dispose()
       }
     }
-  }, [SITC2Data, flow])
+  }, [sitc2Data, flow])
 
   return (
     <div
@@ -57,7 +57,7 @@ const ProductsTreeMap = ({ SITC2Data, flow }) => {
         paddingTop: '3em',
         paddingRight: '10vw',
         paddingLeft: '10vw',
-        textAlign: 'center'
+        textAlign: 'center',
       }}>
       <Header inverted as='h3'>
         Finnish {flow} by product category
