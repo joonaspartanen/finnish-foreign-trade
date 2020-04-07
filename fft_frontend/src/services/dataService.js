@@ -2,12 +2,12 @@ import axios from 'axios'
 
 const getImports = async year => {
   const response = await axios.get(`/imports/${year}`)
-  return response
+  return response.data
 }
 
 const getExports = async year => {
   const response = await axios.get(`/exports/${year}`)
-  return response
+  return response.data
 }
 
 const getTradeBalance = async () => {
