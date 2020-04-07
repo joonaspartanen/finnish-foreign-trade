@@ -4,27 +4,26 @@ import * as am4maps from '@amcharts/amcharts4/maps'
 import am4themes_dark from '@amcharts/amcharts4/themes/dark'
 //import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
+import { useSelector } from 'react-redux'
 
-const Map = ({ imports, exports, flow, year }) => {
+const Map = ({ flow }) => {
+  const tradeData = useSelector((state) => state)
+
   let values = null
   let color = '#5E5B78'
   let hoverColor = '#4B0000'
 
   if (flow === 'exports') {
-    values = exports
+    values = tradeData.exportsData
     color = '#5E5B78'
     hoverColor = '#4B0000'
   } else {
-    values = imports
+    values = tradeData.importsData
     color = '#C17D80'
     hoverColor = '#161331'
   }
 
   useEffect(() => {
-    console.log(flow)
-    console.log(exports)
-    console.log(imports)
-
     //am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_dark)
 
@@ -55,7 +54,7 @@ const Map = ({ imports, exports, flow, year }) => {
 
     map.homeGeoPoint = {
       latitude: 50,
-      longitude: 11
+      longitude: 11,
     }
 
     map.maxPanOut = 0
@@ -66,7 +65,7 @@ const Map = ({ imports, exports, flow, year }) => {
       property: 'fill',
       target: polygonSeries.mapPolygons.template,
       min: am4core.color(color).brighten(1.4),
-      max: am4core.color(color).brighten(-0.6)
+      max: am4core.color(color).brighten(-0.6),
 
       //      min: map.colors.getIndex(colorIndex).brighten(2.0),
       //      max: map.colors.getIndex(colorIndex).brighten(-0.8)
@@ -96,7 +95,7 @@ const Map = ({ imports, exports, flow, year }) => {
         map.dispose()
       }
     }
-  }, [values, color, hoverColor, exports, imports, flow])
+  }, [values, color, hoverColor, flow])
 
   return <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
 }
