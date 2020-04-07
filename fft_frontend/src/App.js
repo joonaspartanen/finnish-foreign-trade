@@ -11,13 +11,15 @@ import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
 import dataService from './services/dataService'
+import { useDispatch, useSelector } from 'react-redux'
+import { initializeTradeData } from './reducers/tradeDataReducer'
 
 //configureAnchors({ offset: -50 })
 
 const App = () => {
+  const dispatch = useDispatch()
+
   const [year, setYear] = useState(2019)
-  const [imports, setImports] = useState([])
-  const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
   const [sitc2Data, setSitc2Data] = useState({})
   const [flow, setFlow] = useState('exports')
@@ -25,40 +27,39 @@ const App = () => {
   const [countryFilter, setCountryFilter] = useState('')
   const [countryCodes, setCountryCodes] = useState([])
 
-  const handleCountryFilterChange = countryName => {
+  const handleCountryFilterChange = (countryName) => {
     setCountryFilter(countryName)
-    const country = countryCodes.filter(c => c.name === countryName)
+    const country = countryCodes.filter((c) => c.name === countryName)
     setCountry(country)
   }
 
+  const tradeData = useSelector((state) => state)
+  console.log(tradeData)
+
   useEffect(() => {
-    dataService.getImports(year).then(res => {
-      setImports(res.data)
-    })
-    dataService.getExports(year).then(res => {
-      setExports(res.data)
-    })
-    dataService.getTradeBalance().then(res => {
+    dispatch(initializeTradeData(year))
+
+    dataService.getTradeBalance().then((res) => {
       setTradeBalance(res.data)
     })
-    dataService.getSitc2Data(year, 'total').then(res => {
+    dataService.getSitc2Data(year, 'total').then((res) => {
       setSitc2Data(res.data)
     })
-    dataService.getCountryCodes().then(res => {
+    dataService.getCountryCodes().then((res) => {
       setCountryCodes(res.data)
     })
-  }, [year])
+  }, [year, dispatch])
 
   return (
     <div style={{ backgroundColor: '#333', paddingLeft: 0, paddingRight: 0 }}>
       <Container fluid>
         <NavBar year={year} setYear={setYear} />
-        {(imports.length === 0 || exports.length === 0) && (
+        {(tradeData.importsData === undefined || tradeData.exportsData === undefined) && (
           <div style={{ height: '100vh' }}>
             <Loader active />
           </div>
         )}
-        {imports.length > 0 && exports.length > 0 && (
+        {tradeData.importsData !== undefined && tradeData.exportsData !== undefined && (
           <div>
             <ScrollableAnchor id={'trade-map'}>
               <div
@@ -66,9 +67,9 @@ const App = () => {
                 style={{
                   position: 'relative',
                   height: 'calc(100vh - 60px)',
-                  backgroundColor: '#333'
+                  backgroundColor: '#333',
                 }}>
-                <Map imports={imports} exports={exports} flow={flow} />
+                <Map flow={flow} />
                 <FlowButtons setFlow={setFlow} />
                 <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
@@ -82,7 +83,7 @@ const App = () => {
                   height: '100vh',
                   backgroundColor: '#222',
                   position: 'relative',
-                  padding: '0 0 4em 0'
+                  padding: '0 0 4em 0',
                 }}>
                 <TradeBalanceChart tradeBalance={tradeBalance} />
                 <a href='#imports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
@@ -97,7 +98,7 @@ const App = () => {
                   height: '100vh',
                   backgroundColor: '#333',
                   position: 'relative',
-                  padding: '0 0 3em 0'
+                  padding: '0 0 3em 0',
                 }}>
                 <TreeMapWrapper sitc2Data={sitc2Data} />
                 <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
@@ -112,15 +113,15 @@ const App = () => {
                   minHeight: 'calc(100vh - 40px)',
                   backgroundColor: '#222',
                   position: 'relative',
-                  padding: '0 0 3em 0'
+                  padding: '0 0 3em 0',
                 }}>
                 {country.length === 0 && (
                   <CountrySearch
                     countryFilter={countryFilter}
                     handleCountryFilterChange={handleCountryFilterChange}
-                    countryNames={countryCodes.map(c => ({
+                    countryNames={countryCodes.map((c) => ({
                       title: c.name,
-                      key: c.code
+                      key: c.code,
                     }))}
                   />
                 )}
