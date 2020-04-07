@@ -4,7 +4,7 @@ const baseUrl =
 const utils = require('../utils/utils')
 
 const fetchData = async (SITC, classification, country, year, flow) => {
-  axios.interceptors.response.use(res => {
+  axios.interceptors.response.use((res) => {
     if (typeof res.data !== 'object') {
       try {
         const parsedData = JSON.parse(res.data.slice(1))
@@ -16,42 +16,24 @@ const fetchData = async (SITC, classification, country, year, flow) => {
     return res
   })
 
-  if (SITC === 'SITC1') {
-    try {
-      const response = await axios.get(baseUrl, {
-        params: {
-          'Classification of Products SITC1': classification,
-          Country: country,
-          Year: year,
-          Flow: flow,
-          Indicators: 'V1'
-        }
-      })
-      return response.data
-    } catch (e) {
-      console.log(e)
-    }
-  } else if (SITC === 'SITC2') {
-    try {
-      const response = await axios.get(baseUrl, {
-        params: {
-          'Classification of Products SITC2': classification,
-          Country: country,
-          Year: year,
-          Flow: flow,
-          Indicators: 'V1',
-          Exclude: 'ZAN'
-        }
-      })
-      return response.data
-    } catch (e) {
-      console.log(e)
-    }
+  try {
+    const response = await axios.get(baseUrl, {
+      params: {
+        [`Classification of Products ${SITC}`]: classification,
+        Country: country,
+        Year: year,
+        Flow: flow,
+        Indicators: 'V1',
+      },
+    })
+    return response.data
+  } catch (e) {
+    console.log(e)
   }
 }
 
 const fetchCountryCodes = async () => {
-  axios.interceptors.response.use(res => {
+  axios.interceptors.response.use((res) => {
     if (typeof res.data !== 'object') {
       try {
         const parsedData = JSON.parse(res.data.slice(1))
