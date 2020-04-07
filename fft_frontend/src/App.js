@@ -19,7 +19,7 @@ const App = () => {
   const [imports, setImports] = useState([])
   const [exports, setExports] = useState([])
   const [tradeBalance, setTradeBalance] = useState([])
-  const [SITC2Data, setSITC2Data] = useState({})
+  const [sitc2Data, setSitc2Data] = useState({})
   const [flow, setFlow] = useState('exports')
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
@@ -41,8 +41,8 @@ const App = () => {
     dataService.getTradeBalance().then(res => {
       setTradeBalance(res.data)
     })
-    dataService.getSITC2Data(year, 'total').then(res => {
-      setSITC2Data(res.data)
+    dataService.getSitc2Data(year, 'total').then(res => {
+      setSitc2Data(res.data)
     })
     dataService.getCountryCodes().then(res => {
       setCountryCodes(res.data)
@@ -99,7 +99,7 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 3em 0'
                 }}>
-                <TreeMapWrapper SITC2Data={SITC2Data} />
+                <TreeMapWrapper sitc2Data={sitc2Data} />
                 <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
