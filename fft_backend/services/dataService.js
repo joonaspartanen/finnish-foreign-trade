@@ -55,39 +55,42 @@ const fetchCountryCodes = async () => {
   }
 }
 
-const extractCountryCodes = data => {
-  const countryCodes = data.classification.filter(a => a.id === 'D3')
+const extractCountryCodes = (data) => {
+  const countryCodes = data.classification.filter((a) => a.id === 'D3')
   return mapCountryCodes(countryCodes[0].class)
 }
 
-const mapCountryCodes = data => {
+const mapCountryCodes = (data) => {
   data = removeUnwantedCountryCodes(data)
   const parenthesesRegex = / *\([^)]*\) */g
-  return data.map(a => ({ code: a.code.toLowerCase(), name: a.text.replace(parenthesesRegex, '') }))
+  return data.map((a) => ({
+    code: a.code.toLowerCase(),
+    name: a.text.replace(parenthesesRegex, ''),
+  }))
 }
 
 // TODO: It might be better to exclude these already when fetching data
-const removeUnwantedCountryCodes = data => {
+const removeUnwantedCountryCodes = (data) => {
   const unwantedCountryCodes = ['AA', 'QR', 'QS', 'QU', 'QV', 'QY', 'QZ']
-  return data.filter(a => !unwantedCountryCodes.includes(a.code))
+  return data.filter((a) => !unwantedCountryCodes.includes(a.code))
 }
 
-const mapData = data => {
+const mapData = (data) => {
   return data
-    .map(a => ({
+    .map((a) => ({
       id: a.keys[1].substring(0, 2),
       year: parseInt(a.keys[2]),
-      euros: a.vals[0]
+      euros: a.vals[0],
     }))
-    .filter(a => a.id !== 'AA')
-    .map(a =>
+    .filter((a) => a.id !== 'AA')
+    .map((a) =>
       // Serbian country code must be changed
       a.id === 'XS' ? { ...a, id: 'RS' } : a
     )
 }
 
-const classifyData = data => {
-  return data.map(a => {
+const classifyData = (data) => {
+  return data.map((a) => {
     let c = 1
     if (a.euros >= 5000000000) {
       c = 6
@@ -116,21 +119,21 @@ const getClassifiedTradeData = async (year, flow) => {
 const getTradeBalanceData = async () => {
   const imports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
   const exports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
-  const mappedImports = imports.map(a => ({
+  const mappedImports = imports.map((a) => ({
     year: parseInt(a.keys[2]),
-    imports: a.vals[0]
+    imports: a.vals[0],
   }))
-  const mappedExports = exports.map(a => ({
+  const mappedExports = exports.map((a) => ({
     year: parseInt(a.keys[2]),
-    exports: a.vals[0]
+    exports: a.vals[0],
   }))
   const combinedData = mappedImports.map((a, i) => ({
     ...a,
-    exports: mappedExports[i].exports
+    exports: mappedExports[i].exports,
   }))
-  const result = combinedData.map(a => ({
+  const result = combinedData.map((a) => ({
     ...a,
-    tradeBalance: a.exports - a.imports
+    tradeBalance: a.exports - a.imports,
   }))
   return result.sort((a, b) => b.year - a.year)
 }
@@ -141,12 +144,12 @@ const getSITC1Data = async () => {
   const exports = await fetchData('SITC1', '=ALL', 'AA', '2018', '2')
   const mappedImports = imports
     .sort((a, b) => b.vals - a.vals)
-    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map(a => ({ [a.keys[0].substring(12)]: a.vals[0] }))
+    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map((a) => ({ [a.keys[0].substring(12)]: a.vals[0] }))
   const mappedExports = exports
     .sort((a, b) => b.vals - a.vals)
-    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map(a => ({ [a.keys[0].substring(12)]: a.vals[0] }))
+    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map((a) => ({ [a.keys[0].substring(12)]: a.vals[0] }))
   const finalImports = Object.assign({ flow: 'Imports' }, ...mappedImports)
   const finalExports = Object.assign({ flow: 'Exports' }, ...mappedExports)
 
@@ -159,19 +162,19 @@ const getSITC2Data = async (year, flow) => {
   const SITC2Array = utils.initializeSITC2Array()
   let data = await fetchData('SITC2', '=ALL', 'AA', year, flow)
   data = mapDataForSITC2(data)
-  data.forEach(a => {
+  data.forEach((a) => {
     SITC2Array[a.SITC1].children.push(a)
   })
   return SITC2Array
 }
 
-const mapDataForSITC2 = data => {
+const mapDataForSITC2 = (data) => {
   return data
-    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map(a => ({
+    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map((a) => ({
       group: a.keys[0].substring(13),
       value: a.vals[0],
-      SITC1: parseInt(a.keys[0].substring(0, 1))
+      SITC1: parseInt(a.keys[0].substring(0, 1)),
     }))
     .sort((a, b) => a.SITC1 - b.SITC1)
 }
@@ -181,15 +184,15 @@ const getSITC2CountryData = async (country, year, flow) => {
   data = removeAllGroupsItem(data)
   data = data
     .sort((a, b) => b.vals - a.vals)
-    .map(a => ({
+    .map((a) => ({
       group: a.keys[0].substring(13),
-      value: a.vals[0]
+      value: a.vals[0],
     }))
   return data
 }
 
-const removeAllGroupsItem = data => {
-  return data.filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+const removeAllGroupsItem = (data) => {
+  return data.filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
 }
 
 module.exports = {
@@ -200,5 +203,5 @@ module.exports = {
   getSITC1Data,
   getSITC2Data,
   getSITC2CountryData,
-  fetchCountryCodes
+  fetchCountryCodes,
 }
