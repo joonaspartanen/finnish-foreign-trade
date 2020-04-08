@@ -5,11 +5,12 @@ import * as am4maps from '@amcharts/amcharts4/maps'
 import am4themes_dark from '@amcharts/amcharts4/themes/dark'
 import React, { useEffect } from 'react'
 
+const Map = ({ tradeData }) => {
   let values = null
   let color = '#5E5B78'
   let hoverColor = '#4B0000'
 
-  if (flow === 'exports') {
+  if (tradeData.flow === 'exports') {
     values = tradeData.exportsData
     color = '#5E5B78'
     hoverColor = '#4B0000'
@@ -91,7 +92,7 @@ import React, { useEffect } from 'react'
         map.dispose()
       }
     }
-  }, [values, color, hoverColor, flow])
+  }, [values, color, hoverColor])
 
   return <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
 }
