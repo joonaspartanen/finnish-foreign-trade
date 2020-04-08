@@ -12,12 +12,12 @@ const getExports = async (year) => {
 
 const getTradeBalance = async () => {
   const response = await axios.get('/tradebalance')
-  return response
+  return response.data
 }
 
 const getSitc2Data = async (year, flow) => {
   const response = await axios.get(`/SITC2/${flow}/${year}`)
-  return response
+  return response.data
 }
 
 const getSitc2CountryData = async (flow, year, country) => {
