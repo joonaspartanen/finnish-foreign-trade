@@ -2,10 +2,19 @@ import React, { useState } from 'react'
 import { Search } from 'semantic-ui-react'
 import _ from 'lodash'
 
-const CountrySearch = ({ handleCountryFilterChange, countryNames }) => {
+const CountrySearch = ({ handleCountryFilterChange, countryCodes }) => {
   const [value, setValue] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState([])
+
+  if (countryCodes === undefined) {
+    return null
+  }
+  
+  const countryNames = countryCodes.map((c) => ({
+    title: c.name,
+    key: c.code,
+  }))
 
   const resultRenderer = ({ title }) => <div>{title}</div>
 
@@ -29,7 +38,7 @@ const CountrySearch = ({ handleCountryFilterChange, countryNames }) => {
     }
 
     const re = new RegExp(_.escapeRegExp(value), 'i')
-    const isMatch = result => re.test(result.title)
+    const isMatch = (result) => re.test(result.title)
 
     setIsLoading(false)
 
@@ -51,7 +60,7 @@ const CountrySearch = ({ handleCountryFilterChange, countryNames }) => {
       loading={isLoading}
       onResultSelect={handleResultSelect}
       onSearchChange={_.debounce(handleSearchChange, 500, {
-        leading: true
+        leading: true,
       })}
       results={results}
       resultRenderer={resultRenderer}
