@@ -10,7 +10,7 @@ const CountrySearch = ({ handleCountryFilterChange, countryCodes }) => {
   if (countryCodes === undefined) {
     return null
   }
-  
+
   const countryNames = countryCodes.map((c) => ({
     title: c.name,
     key: c.code,
