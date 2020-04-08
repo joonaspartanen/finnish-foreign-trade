@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
+//import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4maps from '@amcharts/amcharts4/maps'
 import am4themes_dark from '@amcharts/amcharts4/themes/dark'
-//import am4themes_animated from '@amcharts/amcharts4/themes/animated'
-import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
-import { useSelector } from 'react-redux'
-
-const Map = ({ flow }) => {
-  const tradeData = useSelector((state) => state)
+import React, { useEffect } from 'react'
 
   let values = null
   let color = '#5E5B78'
