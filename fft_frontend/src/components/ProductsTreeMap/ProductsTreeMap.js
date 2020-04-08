@@ -2,8 +2,15 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { Header } from 'semantic-ui-react'
 
-const ProductsTreeMap = ({ sitc2Data, flow }) => {
+const ProductsTreeMap = () => {
+  const tradeData = useSelector((state) => state.tradeData)
+  const sitc2Data = tradeData.sitc2Data
+  const flow = tradeData.flow
+
   useEffect(() => {
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
