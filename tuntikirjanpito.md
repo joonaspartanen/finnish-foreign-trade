@@ -41,4 +41,5 @@
 | 7.-8.3. | 3 | Lisätty backendiin endpoint, josta voi hakea SITC2-vienti- ja tuontitiedot yhdessä. Frontendiin lisätty mahdollisuus valita kummat näytetään treemapissa. Valmisteltu vuoden valintaa frontendissä.
 | 8.3. | 2 | Lisätty mahdollisuus valita vuosi, jonka data haetaan. Tätä varten lisätty valikko frontendiin ja backendissä tehty tarvittavat muutokset routereihin.
 | 7.4. | 2 | Otettu redux, react-redux ja redux-thunk alustavasti käyttöön. Siirretty tuonti- ja vientitiedot redux storeen.
-| Yhteensä | 70 | |
+| 8.4. | 2 | Viety sovelluksen tilasta suurin osa (myös kaupan suunta ja maakoodit) redux-storeen.
+| Yhteensä | 72 | |
