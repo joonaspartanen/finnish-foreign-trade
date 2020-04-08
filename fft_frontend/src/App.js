@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ScrollableAnchor from 'react-scrollable-anchor'
 import { Container, Loader } from 'semantic-ui-react'
 import './App.css'
@@ -10,22 +11,16 @@ import Map from './components/Map/Map'
 import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
-import dataService from './services/dataService'
-import { useDispatch, useSelector } from 'react-redux'
 import { initializeTradeData } from './reducers/tradeDataReducer'
-
-//configureAnchors({ offset: -50 })
+import getCountryCodes from './services/countryService'
+import { initializeCountryCodes } from './reducers/countryReducer'
 
 const App = () => {
   const dispatch = useDispatch()
 
   const [year, setYear] = useState(2019)
-  const [tradeBalance, setTradeBalance] = useState([])
-  const [sitc2Data, setSitc2Data] = useState({})
-  const [flow, setFlow] = useState('exports')
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
-  const [countryCodes, setCountryCodes] = useState([])
 
   const handleCountryFilterChange = (countryName) => {
     setCountryFilter(countryName)
@@ -33,21 +28,14 @@ const App = () => {
     setCountry(country)
   }
 
-  const tradeData = useSelector((state) => state)
-  console.log(tradeData)
+  const state = useSelector((state) => state)
+  const tradeData = state.tradeData
+  const countryCodes = state.countryData.countryCodes
+  console.log(state)
 
   useEffect(() => {
     dispatch(initializeTradeData(year))
-
-    dataService.getTradeBalance().then((res) => {
-      setTradeBalance(res.data)
-    })
-    dataService.getSitc2Data(year, 'total').then((res) => {
-      setSitc2Data(res.data)
-    })
-    dataService.getCountryCodes().then((res) => {
-      setCountryCodes(res.data)
-    })
+    dispatch(initializeCountryCodes())
   }, [year, dispatch])
 
   return (
@@ -69,8 +57,8 @@ const App = () => {
                   height: 'calc(100vh - 60px)',
                   backgroundColor: '#333',
                 }}>
-                <Map flow={flow} />
-                <FlowButtons setFlow={setFlow} />
+                <Map tradeData={tradeData} />
+                <FlowButtons />
                 <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
@@ -85,7 +73,7 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 4em 0',
                 }}>
-                <TradeBalanceChart tradeBalance={tradeBalance} />
+                <TradeBalanceChart tradeBalance={tradeData.tradeBalance} />
                 <a href='#imports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
@@ -100,7 +88,7 @@ const App = () => {
                   position: 'relative',
                   padding: '0 0 3em 0',
                 }}>
-                <TreeMapWrapper sitc2Data={sitc2Data} />
+                <TreeMapWrapper sitc2Data={tradeData.sitc2Data} />
                 <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
                   <div className='arrow-down'></div>
                 </a>
@@ -119,10 +107,7 @@ const App = () => {
                   <CountrySearch
                     countryFilter={countryFilter}
                     handleCountryFilterChange={handleCountryFilterChange}
-                    countryNames={countryCodes.map((c) => ({
-                      title: c.name,
-                      key: c.code,
-                    }))}
+                    countryCodes={countryCodes}
                   />
                 )}
                 {country.length !== 0 && (
