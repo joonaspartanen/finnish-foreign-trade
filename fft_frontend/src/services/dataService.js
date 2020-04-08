@@ -25,16 +25,10 @@ const getSitc2CountryData = async (flow, year, country) => {
   return response
 }
 
-const getCountryCodes = async () => {
-  const response = await axios.get('/countries')
-  return response
-}
-
 export default {
   getImports,
   getExports,
   getTradeBalance,
   getSitc2Data,
   getSitc2CountryData,
-  getCountryCodes
 }
