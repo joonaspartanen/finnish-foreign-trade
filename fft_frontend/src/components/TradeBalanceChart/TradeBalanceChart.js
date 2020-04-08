@@ -7,6 +7,7 @@ import { Header } from 'semantic-ui-react'
 
 const TradeBalanceChart = ({ tradeBalance }) => {
   useEffect(() => {
+
     am4core.useTheme(am4themes_animated)
     am4core.useTheme(am4themes_spiritedaway)
 
