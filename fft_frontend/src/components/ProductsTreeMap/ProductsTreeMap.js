@@ -2,39 +2,37 @@ import * as am4charts from '@amcharts/amcharts4/charts'
 import * as am4core from '@amcharts/amcharts4/core'
 import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useRef, useEffect } from 'react'
 import { Header } from 'semantic-ui-react'
 
-const ProductsTreeMap = () => {
-  const tradeData = useSelector((state) => state.tradeData)
-  const sitc2Data = tradeData.sitc2Data
-  const flow = tradeData.flow
+const ProductsTreeMap = ({ sitc2Data, flow }) => {
+  const chart = useRef(null)
+
+  am4core.useTheme(am4themes_animated)
+  am4core.useTheme(am4themes_spiritedaway)
 
   useEffect(() => {
-    am4core.useTheme(am4themes_animated)
-    am4core.useTheme(am4themes_spiritedaway)
-    let chart = am4core.create(`products-treemap-div`, am4charts.TreeMap)
-    chart.responsive.enabled = true
+    let treemap = am4core.create('products-treemap-div', am4charts.TreeMap)
+    treemap.responsive.enabled = true
 
-    chart.data = sitc2Data[flow]
-    chart.dataFields.value = 'value'
-    chart.dataFields.name = 'group'
-    chart.dataFields.children = 'children'
+    treemap.data = sitc2Data['exports']
+    treemap.dataFields.value = 'value'
+    treemap.dataFields.name = 'group'
+    treemap.dataFields.children = 'children'
 
-    let level1 = chart.seriesTemplates.create('1')
+    let level1 = treemap.seriesTemplates.create('1')
     let level1_column = level1.columns.template
 
     level1_column.tooltipText = '{group}: {value} €'
     level1.tooltip.pointerOrientation = 'down'
 
-    chart.legend = new am4charts.Legend()
-    chart.legend.position = 'bottom'
-    chart.legend.paddingTop = 20
-    chart.legend.itemContainers.template.tooltipText = '{group}'
-    chart.legend.labels.template.text = ''
+    treemap.legend = new am4charts.Legend()
+    treemap.legend.position = 'bottom'
+    treemap.legend.paddingTop = 20
+    treemap.legend.itemContainers.template.tooltipText = '{group}'
+    treemap.legend.labels.template.text = ''
 
-    chart.responsive.rules.push({
+    treemap.responsive.rules.push({
       relevant: am4core.ResponsiveBreakpoints.widthXL,
       state: (target, stateId) => {
         if (target instanceof am4charts.Legend) {
@@ -47,11 +45,15 @@ const ProductsTreeMap = () => {
       },
     })
 
+    chart.current = treemap
+
     return () => {
-      if (chart) {
-        chart.dispose()
-      }
+      treemap.dispose()
     }
+  }, [sitc2Data])
+
+  useEffect(() => {
+    chart.current.data = sitc2Data[flow]
   }, [sitc2Data, flow])
 
   return (
