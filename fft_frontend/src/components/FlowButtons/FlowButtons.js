@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import { Button } from 'semantic-ui-react'
-import { setFlowDirection } from '../../reducers/tradeDataReducer'
 
-const FlowButtons = ({ setFlow }) => {
-  const [exportsActive, setExportsActive] = useState(true)
-  const dispatch = useDispatch()
+const FlowButtons = ({ flow, setFlow }) => {
+
+  const exportsActive = flow === 'exports'
 
   return (
-    <div style={{ position: 'absolute', bottom: '2em', left: '2em' }}>
+    <div style={{ position: 'absolute', bottom: '2em', left: '2em', zIndex: '1' }}>
       <Button.Group>
         <Button
           toggle
           active={exportsActive}
           content='Exports'
-          onClick={(value) => {
+          onClick={value => {
             if (!exportsActive) {
-              setExportsActive(true)
-              dispatch(setFlowDirection('exports'))
+              setFlow('exports')
             }
           }}
         />
@@ -25,10 +22,9 @@ const FlowButtons = ({ setFlow }) => {
           toggle
           active={!exportsActive}
           content='Imports'
-          onClick={(value) => {
+          onClick={value => {
             if (exportsActive) {
-              setExportsActive(false)
-              dispatch(setFlowDirection('imports'))
+              setFlow('imports')
             }
           }}
         />
