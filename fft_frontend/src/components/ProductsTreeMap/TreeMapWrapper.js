@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import FlowButtons from '../FlowButtons/FlowButtons'
 import ProductsTreeMap from './ProductsTreeMap'
 
 const TreeMapWrapper = ({ sitc2Data }) => {
+  const [flow, setFlow] = useState('exports')
 
   if (sitc2Data === undefined) {
     return (
@@ -15,8 +16,8 @@ const TreeMapWrapper = ({ sitc2Data }) => {
 
   return (
     <>
-      <FlowButtons />
-      <ProductsTreeMap />
+      <FlowButtons flow={flow} setFlow={setFlow} />
+      <ProductsTreeMap sitc2Data={sitc2Data} flow={flow} />
     </>
   )
 }
