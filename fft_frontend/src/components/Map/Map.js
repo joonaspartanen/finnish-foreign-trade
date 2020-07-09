@@ -3,39 +3,27 @@ import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4maps from '@amcharts/amcharts4/maps'
 import am4themes_dark from '@amcharts/amcharts4/themes/dark'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 
-const Map = ({ tradeData }) => {
-  let values = null
-  let color = '#5E5B78'
-  let hoverColor = '#4B0000'
+const Map = ({ imports, exports, flow }) => {
+  const chart = useRef(null)
 
-  if (tradeData.flow === 'exports') {
-    values = tradeData.exportsData
-    color = '#5E5B78'
-    hoverColor = '#4B0000'
-  } else {
-    values = tradeData.importsData
-    color = '#C17D80'
-    hoverColor = '#161331'
-  }
+  am4core.useTheme(am4themes_dark)
 
   useEffect(() => {
-    //am4core.useTheme(am4themes_animated)
-    am4core.useTheme(am4themes_dark)
-
-    let map = am4core.create('mapdiv', am4maps.MapChart)
+    const map = am4core.create('mapdiv', am4maps.MapChart)
 
     map.geodata = am4geodata_worldLow
     map.projection = new am4maps.projections.Mercator()
-    //map.projection = new am4maps.projections.Orthographic()
-    //map.panBehavior = 'rotateLongLat'
     map.zoomControl = new am4maps.ZoomControl()
     map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#EEE')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
     map.chartContainer.wheelable = false
 
-    //let graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
+    //Use orthographic map projection
+    //map.projection = new am4maps.projections.Orthographic()
+    //map.panBehavior = 'rotateLongLat'
+    //const graticuleSeries = map.series.push(new am4maps.GraticuleSeries())
     //graticuleSeries.mapLines.template.line.stroke = am4core.color('#67b7dc')
     //graticuleSeries.mapLines.template.line.strokeOpacity = 0.2
     //graticuleSeries.fitExtent = false
@@ -56,43 +44,71 @@ const Map = ({ tradeData }) => {
 
     map.maxPanOut = 0
 
-    let polygonSeries = map.series.push(new am4maps.MapPolygonSeries())
+    const prepareDataSeries = flow => {
+      const baseColor = flow === 'exports' ? '#C17D80' : '#5E5B78'
+      const hoverColor = '#333'
 
-    polygonSeries.heatRules.push({
-      property: 'fill',
-      target: polygonSeries.mapPolygons.template,
-      min: am4core.color(color).brighten(1.4),
-      max: am4core.color(color).brighten(-0.6),
+      const dataSeries = new am4maps.MapPolygonSeries()
+      dataSeries.name = flow.charAt(0).toUpperCase() + flow.slice(1)
+      dataSeries.id = flow
+      dataSeries.heatRules.push({
+        property: 'fill',
+        target: dataSeries.mapPolygons.template,
+        min: am4core.color(baseColor).brighten(1.4),
+        max: am4core.color(baseColor).brighten(-0.6),
+      })
+      dataSeries.useGeodata = true
+      dataSeries.exclude = ['AQ', 'SJ']
+      dataSeries.data = flow === 'exports' ? exports : imports
 
-      //      min: map.colors.getIndex(colorIndex).brighten(2.0),
-      //      max: map.colors.getIndex(colorIndex).brighten(-0.8)
-    })
+      dataSeries.mapPolygons.template.tooltipText = `Total ${flow === 'exports' ? 'exports from Finland to {name}': 'imports from {name} to Finland'}: {euros} € ({year.formatNumber('#')})`
+      dataSeries.mapPolygons.template.nonScalingStroke = true
+      dataSeries.mapPolygons.template.strokeWidth = 0.5
+      
+      const hoverState = dataSeries.mapPolygons.template.states.create('hover')
+      hoverState.properties.fill = am4core.color(hoverColor)
+      
+      formatFinlandPolygon(dataSeries)
 
-    polygonSeries.useGeodata = true
-    polygonSeries.exclude = ['AQ', 'SJ']
+      return dataSeries
+    }
 
-    polygonSeries.data = values
+    const formatFinlandPolygon = dataSeries => {
+      map.events.on('ready', () => {
+        const finland = dataSeries.getPolygonById('FI')
+        finland.fill = am4core.color('#FFF')
+        finland.tooltipText = ''
+      })
+    }
 
-    let polygonTemplate = polygonSeries.mapPolygons.template
-    polygonTemplate.tooltipText = `{name}: {euros} €`
-    polygonTemplate.nonScalingStroke = true
-    polygonTemplate.strokeWidth = 0.5
+    const exportsSeries = prepareDataSeries('exports')
+    const importsSeries = prepareDataSeries('imports')
+    importsSeries.hidden = true
 
-    map.events.on('ready', () => {
-      let finland = polygonSeries.getPolygonById('FI')
-      finland.fill = am4core.color('#FFF')
-      finland.tooltipText = ''
-    })
+    map.series.push(exportsSeries)
+    map.series.push(importsSeries)
 
-    let hs = polygonTemplate.states.create('hover')
-    hs.properties.fill = am4core.color(hoverColor)
+
+
+    chart.current = map
 
     return () => {
-      if (map) {
-        map.dispose()
-      }
+      map.dispose()
     }
-  }, [values, color, hoverColor])
+  }, [imports, exports])
+
+  useEffect(() => {
+    const exportsSeries = chart.current.series.getIndex(0)
+    const importsSeries = chart.current.series.getIndex(1)
+
+    if (flow === 'exports') {
+      exportsSeries.show()
+      importsSeries.hide()
+    } else {
+      importsSeries.show()
+      exportsSeries.hide()
+    }
+  }, [flow])
 
   return <div id='mapdiv' style={{ width: '100%', height: '100%', overflow: 'hidden' }}></div>
 }
