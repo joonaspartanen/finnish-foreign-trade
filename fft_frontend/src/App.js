@@ -37,9 +37,9 @@ const App = () => {
   }, [year, dispatch])
 
   return (
-    <div style={{ backgroundColor: '#333', paddingLeft: 0, paddingRight: 0 }}>
+    <div className={state.colorMode.darkModeActive ? 'main-container dark-mode' : 'main-container'}>
       <Container fluid>
-        <NavBar year={year} setYear={setYear} />
+        <NavBar year={year} setYear={setYear} darkModeActive={state.colorMode.darkModeActive} />
         {(tradeData.importsData === undefined || tradeData.exportsData === undefined) && (
           <div style={{ height: '100vh' }}>
             <Loader active />
@@ -58,7 +58,7 @@ const App = () => {
             <ScrollableAnchor id={'trade-balance'}>
               <section className='chart-section'>
                 <TradeBalanceChart tradeBalance={tradeData.tradeBalance} />
-                <a href='#imports-by-product' style={{ position: 'absolute', bottom: '2em' }}>
+                <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
               </section>
@@ -66,7 +66,7 @@ const App = () => {
             <ScrollableAnchor id={'imports-by-product'}>
               <section className='chart-section'>
                 <TreeMapWrapper sitc2Data={tradeData.sitc2Data} />
-                <a href='#trade-partners' style={{ position: 'absolute', bottom: '2em' }}>
+                <a href='#trade-partners' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
               </section>
