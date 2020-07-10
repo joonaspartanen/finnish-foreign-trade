@@ -32,6 +32,20 @@ const ProductsTreeMap = ({ sitc2Data, flow }) => {
     treemap.legend.itemContainers.template.tooltipText = '{group}'
     treemap.legend.labels.template.text = ''
 
+    const level0_hoverState = treemap.seriesTemplates
+      .create('0')
+      .columns.template.states.create('hover')
+    level0_hoverState.adapter.add('fill', fill =>
+      am4core.color(am4core.colors.brighten(fill.rgb, -0.2))
+    )
+
+    const level1_hoverState = level1_column.states.create('hover')
+    level1_hoverState.adapter.add('fill', fill =>
+      am4core.color(am4core.colors.brighten(fill.rgb, -0.2))
+    )
+
+    treemap.maxLevels = 1
+
     treemap.responsive.rules.push({
       relevant: am4core.ResponsiveBreakpoints.widthXL,
       state: (target, stateId) => {
