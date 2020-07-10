@@ -45,8 +45,8 @@ const Map = ({ imports, exports, flow }) => {
     map.maxPanOut = 0
 
     const prepareDataSeries = flow => {
-      const baseColor = flow === 'exports' ? '#C17D80' : '#5E5B78'
-      const hoverColor = '#333'
+      const baseColor = flow === 'exports' ? '#5E5B78' : '#C17D80'
+      const hoverColor = '#555'
 
       const dataSeries = new am4maps.MapPolygonSeries()
       dataSeries.name = flow.charAt(0).toUpperCase() + flow.slice(1)
@@ -54,20 +54,34 @@ const Map = ({ imports, exports, flow }) => {
       dataSeries.heatRules.push({
         property: 'fill',
         target: dataSeries.mapPolygons.template,
-        min: am4core.color(baseColor).brighten(1.4),
-        max: am4core.color(baseColor).brighten(-0.6),
+        min: am4core.color(baseColor).brighten(1.2),
+        max: am4core.color(baseColor).brighten(-0.4),
       })
       dataSeries.useGeodata = true
       dataSeries.exclude = ['AQ', 'SJ']
       dataSeries.data = flow === 'exports' ? exports : imports
 
-      dataSeries.mapPolygons.template.tooltipText = `Total ${flow === 'exports' ? 'exports from Finland to {name}': 'imports from {name} to Finland'}: {euros} € ({year.formatNumber('#')})`
+      dataSeries.tooltip.getFillFromObject = false
+      dataSeries.tooltip.background.fill = am4core.color('#333')
+      dataSeries.tooltip.background.fillOpacity = 0.8
+
+      dataSeries.mapPolygons.template.tooltipHTML = `
+      <div class="tooltip">
+        Total ${
+          flow === 'exports' ? 'exports from Finland to {name}' : 'imports from {name} to Finland'
+        } ({year.formatNumber('#')}):
+        <br>
+        {euros} €
+      </div>
+      `
+      dataSeries.tooltip.label.interactionsEnabled = true
+
       dataSeries.mapPolygons.template.nonScalingStroke = true
       dataSeries.mapPolygons.template.strokeWidth = 0.5
-      
+
       const hoverState = dataSeries.mapPolygons.template.states.create('hover')
       hoverState.properties.fill = am4core.color(hoverColor)
-      
+
       formatFinlandPolygon(dataSeries)
 
       return dataSeries
@@ -78,6 +92,8 @@ const Map = ({ imports, exports, flow }) => {
         const finland = dataSeries.getPolygonById('FI')
         finland.fill = am4core.color('#FFF')
         finland.tooltipText = ''
+        finland.tooltipHTML = null
+        finland.hoverable = false
       })
     }
 
@@ -87,8 +103,6 @@ const Map = ({ imports, exports, flow }) => {
 
     map.series.push(exportsSeries)
     map.series.push(importsSeries)
-
-
 
     chart.current = map
 
