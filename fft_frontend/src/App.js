@@ -48,15 +48,23 @@ const App = () => {
         {tradeData.importsData !== undefined && tradeData.exportsData !== undefined && (
           <div>
             <ScrollableAnchor id={'trade-map'}>
-              <section className='chart-section first'>
-                <MapWrapper imports={tradeData.importsData} exports={tradeData.exportsData}></MapWrapper>
-                <a href='#trade-balance' style={{ position: 'absolute', bottom: '2em' }}>
+              <section
+                className={
+                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                }>
+                <MapWrapper
+                  imports={tradeData.importsData}
+                  exports={tradeData.exportsData}></MapWrapper>
+                <a href='#trade-balance' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
               </section>
             </ScrollableAnchor>
             <ScrollableAnchor id={'trade-balance'}>
-              <section className='chart-section'>
+              <section
+                className={
+                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                }>
                 <TradeBalanceChart tradeBalance={tradeData.tradeBalance} />
                 <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
@@ -64,7 +72,10 @@ const App = () => {
               </section>
             </ScrollableAnchor>
             <ScrollableAnchor id={'imports-by-product'}>
-              <section className='chart-section'>
+              <section
+                className={
+                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                }>
                 <TreeMapWrapper sitc2Data={tradeData.sitc2Data} />
                 <a href='#trade-partners' className='anchor-link'>
                   <div className='arrow-down'></div>
@@ -72,7 +83,10 @@ const App = () => {
               </section>
             </ScrollableAnchor>
             <ScrollableAnchor id={'trade-partners'}>
-              <section className='chart-section'>
+              <section
+                className={
+                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                }>
                 {country.length === 0 && (
                   <CountrySearch
                     countryFilter={countryFilter}
@@ -92,7 +106,7 @@ const App = () => {
             </ScrollableAnchor>
           </div>
         )}
-        <Footer />
+        <Footer darkModeActive={state.colorMode.darkModeActive} />
       </Container>
     </div>
   )
