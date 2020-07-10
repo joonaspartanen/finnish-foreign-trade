@@ -45,4 +45,5 @@
 | 5.7. | 4 | Tutustuttu d3.js:n dokumentaatioon ja aloitettu amcharts-kaavioiden mahdollinen korvaaminen d3:lla (haara d3js)
 | 6.7. | 2 | Debugattu redux storen hitautta. Otettu node-sass käyttöön.
 | 9.7. | 4 | Paranneltu kartassa näytettävän datan (vienti/tuonti) päivityslogiikkaa, tuloksena paljon entistä sujuvampi näkymän päivitys. Refaktoitu karttakomponenttia toiston poistamiseksi.
-| Yhteensä | 82 | |
+| 10.7. | 4 | Muokattu sovelluksen tyylejä. Luotu light/dark mode -valintamahdollisuus.
+| Yhteensä | 86 | |
