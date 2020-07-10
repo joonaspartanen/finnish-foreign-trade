@@ -125,31 +125,50 @@ nav.ui.stackable.navbar.menu {
   }
 
   &:nth-child(odd) {
-    background-color: #333;
+    background-color: $grey-light;
   }
-  
+
   &:nth-child(even) {
-    background-color: #222;
+    background-color: $grey-lighter;
+  }
+
+  &.dark-mode {
+    &:nth-child(odd) {
+      background-color: $grey-dark;
+    }
+
+    &:nth-child(even) {
+      background-color: $grey-darker;
+    }
   }
 }
 
-.btn-primary {
-  background-color: #161330 !important;
-}
-
-.btn-secondary {
-  background-color: #4d090c !important;
+.ui.buttons > button.ui.active.toggle.button {
+  background-color: $finnish-blue !important;
 }
 
 h2 {
-  color: #fff;
+  color: white;
 }
 
 h3 {
-  color: #fff;
+  color: white;
 }
 
 .ui.container {
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+
+.tooltip {
+  padding: 0.5em;
+}
+
+.footer.ui.secondary.menu {
+  background-color: $grey-light;
+  margin-top: 0px;
+
+  &.dark-mode {
+    background-color: $grey-darker;
+  }
 }
