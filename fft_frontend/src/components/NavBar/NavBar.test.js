@@ -1,14 +1,28 @@
 import React from 'react'
 import { render, cleanup } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+import configureStore from 'redux-mock-store'
 import NavBar from './NavBar'
+import { Provider } from 'react-redux'
 
 afterEach(cleanup)
 
+const mockStore = configureStore([])
+
 let component
+let store
 
 beforeEach(() => {
-  component = render(<NavBar />)
+  store = mockStore({
+    colorMode: {
+      darkModeActive: true,
+    },
+  })
+  component = render(
+    <Provider store={store}>
+      <NavBar />
+    </Provider>
+  )
 })
 
 describe('<NavBar />', () => {
