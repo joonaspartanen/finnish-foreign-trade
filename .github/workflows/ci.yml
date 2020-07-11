@@ -5,7 +5,8 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  build-test-and-deploy:
+    name: Build, test and deploy to Heroku
 
     runs-on: ubuntu-latest
 
@@ -37,5 +38,3 @@ jobs:
         run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
       - name: Deploy to Heroku
         run: git push --force heroku `git subtree split --prefix fft_backend HEAD`:master
-
-           
