@@ -1,13 +1,15 @@
-name: CI/CD
+name: CI
 
 on: 
   push:
     branches: [master]
 
 jobs:
-  test:
-    name: Test
+  build-test-and-deploy:
+    name: Build, test and deploy to Heroku
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -27,29 +29,12 @@ jobs:
           npm test
         env:
           CI: true
-   
-  build:
-    name: Create production build
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with: 
-          node-version: '12.x'
       - name: Create production build
         run: |
           pwd
           cd fft_backend
           npm run build:ui
-  
-  deploy:
-    name: Deploy to heroku
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.2.6
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
-          heroku_email: "partanen.joonas@gmail.com"
-          appdir: "fft_backend"        
+      - name: Add remote origin
+        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      - name: Deploy to Heroku
+        run: git push --force heroku `git subtree split --prefix fft_backend HEAD`:master
