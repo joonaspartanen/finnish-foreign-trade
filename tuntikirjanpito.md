@@ -46,4 +46,5 @@
 | 6.7. | 2 | Debugattu redux storen hitautta. Otettu node-sass käyttöön.
 | 9.7. | 4 | Paranneltu kartassa näytettävän datan (vienti/tuonti) päivityslogiikkaa, tuloksena paljon entistä sujuvampi näkymän päivitys. Refaktoitu karttakomponenttia toiston poistamiseksi.
 | 10.7. | 4 | Muokattu sovelluksen tyylejä. Luotu light/dark mode -valintamahdollisuus.
-| Yhteensä | 86 | |
+| 11.7. | 2 | Mockattu redux-store testissä. Viritelty CD-putkea Github Actioniin (vielä tuloksetta).
+| Yhteensä | 88 | |
