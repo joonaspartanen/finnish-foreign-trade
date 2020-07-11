@@ -76,7 +76,7 @@ const App = () => {
                 className={
                   state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
-                <TreeMapWrapper sitc2Data={tradeData.sitc2Data} />
+                <TreeMapWrapper sitc2Data={tradeData.sitc2Data} year={year} />
                 <a href='#trade-partners' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>

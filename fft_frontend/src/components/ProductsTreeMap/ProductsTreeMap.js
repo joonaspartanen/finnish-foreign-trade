@@ -5,7 +5,7 @@ import am4themes_spiritedaway from '@amcharts/amcharts4/themes/spiritedaway'
 import React, { useRef, useEffect } from 'react'
 import { Header } from 'semantic-ui-react'
 
-const ProductsTreeMap = ({ sitc2Data, flow }) => {
+const ProductsTreeMap = ({ sitc2Data, flow, year }) => {
   const chart = useRef(null)
 
   am4core.useTheme(am4themes_animated)
@@ -81,7 +81,7 @@ const ProductsTreeMap = ({ sitc2Data, flow }) => {
         textAlign: 'center',
       }}>
       <Header inverted as='h3'>
-        Finnish {flow} by product category
+        Finnish {flow} by product category ({year})
       </Header>
       <div id='products-treemap-div' style={{ width: '100%', height: '90%' }}></div>
     </div>
