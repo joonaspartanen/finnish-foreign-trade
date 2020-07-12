@@ -47,5 +47,5 @@
 | 9.7. | 4 | Paranneltu kartassa näytettävän datan (vienti/tuonti) päivityslogiikkaa, tuloksena paljon entistä sujuvampi näkymän päivitys. Refaktoitu karttakomponenttia toiston poistamiseksi.
 | 10.7. | 4 | Muokattu sovelluksen tyylejä. Luotu light/dark mode -valintamahdollisuus.
 | 11.7. | 2 | Mockattu redux-store testissä. Viritelty CD-putkea Github Actioniin (vielä tuloksetta).
-| 12.7. | 5 | Korvattu kauppatasekuvaaja omalla d3.js-toteutuksella.
+| 12.7. | 5 | Korvattu kauppatasekuvaaja omalla d3.js-toteutuksella. Redux-storen rakennetta selkiytetty.
 | Yhteensä | 93 | |
