@@ -3,8 +3,6 @@ import * as d3 from 'd3'
 import './tradeBalanceChart.css'
 
 const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
-  console.log(tradeData)
-
   const ref = useRef()
 
   useEffect(() => {

@@ -5,8 +5,6 @@ import Map from './Map'
 
 const MapWrapper = ({ imports, exports, year }) => {
     const [flow, setFlow] = useState('exports')
-    console.log(imports)
-    console.log(exports)
   
     if (imports === undefined || exports === undefined) {
       return (
