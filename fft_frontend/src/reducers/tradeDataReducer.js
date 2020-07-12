@@ -1,6 +1,6 @@
 import dataService from '../services/dataService'
 
-const tradeDataReducer = (state = { flow: 'exports' }, action) => {
+const tradeData = (state = { flow: 'exports' }, action) => {
   switch (action.type) {
     case 'INIT_TRADEDATA':
       return {
@@ -20,8 +20,8 @@ const tradeDataReducer = (state = { flow: 'exports' }, action) => {
   }
 }
 
-export const initializeTradeData = (year) => {
-  return async (dispatch) => {
+export const initializeTradeData = year => {
+  return async dispatch => {
     const exportsData = await dataService.getExports(year)
     const importsData = await dataService.getImports(year)
     const tradeBalance = await dataService.getTradeBalance()
@@ -36,8 +36,8 @@ export const initializeTradeData = (year) => {
   }
 }
 
-export const setFlowDirection = (flow) => {
-  return (dispatch) => {
+export const setFlowDirection = flow => {
+  return dispatch => {
     dispatch({
       type: 'SET_FLOW',
       flow: flow,
@@ -45,4 +45,4 @@ export const setFlowDirection = (flow) => {
   }
 }
 
-export default tradeDataReducer
+export default tradeData
