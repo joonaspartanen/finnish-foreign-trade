@@ -45,7 +45,6 @@ const App = () => {
             <Loader active />
           </div>
         )}
-        <D3TradeBalanceChart tradeBalance={tradeData.tradeBalance}></D3TradeBalanceChart>
         {tradeData.importsData !== undefined && tradeData.exportsData !== undefined && (
           <div>
             <ScrollableAnchor id={'trade-map'}>
@@ -66,7 +65,7 @@ const App = () => {
                 className={
                   state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
-                <TradeBalanceChart tradeBalance={tradeData.tradeBalance} />
+                <D3TradeBalanceChart tradeBalance={tradeData.tradeBalance}></D3TradeBalanceChart>
                 <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
