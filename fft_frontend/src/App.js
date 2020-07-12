@@ -9,7 +9,6 @@ import Footer from './components/Footer/Footer'
 import MapWrapper from './components/Map/MapWrapper'
 import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
-import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
 import D3TradeBalanceChart from './components/TradeBalanceChart/D3TradeBalanceChart'
 import { initializeTradeData } from './reducers/tradeDataReducer'
 import { initializeCountryCodes } from './reducers/countryReducer'
@@ -23,13 +22,12 @@ const App = () => {
 
   const handleCountryFilterChange = countryName => {
     setCountryFilter(countryName)
-    const country = countryCodes.filter(c => c.name === countryName)
+    const country = state.countryCodes.filter(c => c.name === countryName)
     setCountry(country)
   }
 
   const state = useSelector(state => state)
   const tradeData = state.tradeData
-  const countryCodes = state.countryData.countryCodes
 
   useEffect(() => {
     dispatch(initializeTradeData(year))
@@ -37,9 +35,9 @@ const App = () => {
   }, [year, dispatch])
 
   return (
-    <div className={state.colorMode.darkModeActive ? 'main-container dark-mode' : 'main-container'}>
+    <div className={state.darkModeActive ? 'main-container dark-mode' : 'main-container'}>
       <Container fluid>
-        <NavBar year={year} setYear={setYear} darkModeActive={state.colorMode.darkModeActive} />
+        <NavBar year={year} setYear={setYear} darkModeActive={state.darkModeActive} />
         {(tradeData.importsData === undefined || tradeData.exportsData === undefined) && (
           <div style={{ height: '100vh' }}>
             <Loader active />
@@ -50,7 +48,7 @@ const App = () => {
             <ScrollableAnchor id={'trade-map'}>
               <section
                 className={
-                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
                 <MapWrapper
                   imports={tradeData.importsData}
@@ -63,7 +61,7 @@ const App = () => {
             <ScrollableAnchor id={'trade-balance'}>
               <section
                 className={
-                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
                 <D3TradeBalanceChart tradeBalance={tradeData.tradeBalance}></D3TradeBalanceChart>
                 <a href='#imports-by-product' className='anchor-link'>
@@ -74,7 +72,7 @@ const App = () => {
             <ScrollableAnchor id={'imports-by-product'}>
               <section
                 className={
-                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
                 <TreeMapWrapper sitc2Data={tradeData.sitc2Data} year={year} />
                 <a href='#trade-partners' className='anchor-link'>
@@ -85,13 +83,13 @@ const App = () => {
             <ScrollableAnchor id={'trade-partners'}>
               <section
                 className={
-                  state.colorMode.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
+                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
                 }>
                 {country.length === 0 && (
                   <CountrySearch
                     countryFilter={countryFilter}
                     handleCountryFilterChange={handleCountryFilterChange}
-                    countryCodes={countryCodes}
+                    countryCodes={state.countryCodes}
                   />
                 )}
                 {country.length !== 0 && (
@@ -106,7 +104,7 @@ const App = () => {
             </ScrollableAnchor>
           </div>
         )}
-        <Footer darkModeActive={state.colorMode.darkModeActive} />
+        <Footer darkModeActive={state.darkModeActive} />
       </Container>
     </div>
   )
