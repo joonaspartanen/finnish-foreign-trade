@@ -1,7 +1,7 @@
-const colorModeReducer = (state = { darkModeActive: true }, action) => {
+const darkModeActive = (state = true, action) => {
   switch (action.type) {
     case 'CHANGE_MODE':
-      return { ...state, darkModeActive: !state.darkModeActive }
+      return !state
     default:
       return state
   }
@@ -15,4 +15,4 @@ export const changeColorMode = () => {
   }
 }
 
-export default colorModeReducer
+export default darkModeActive
