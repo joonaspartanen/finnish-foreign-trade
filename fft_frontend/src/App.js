@@ -10,6 +10,7 @@ import MapWrapper from './components/Map/MapWrapper'
 import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import TradeBalanceChart from './components/TradeBalanceChart/TradeBalanceChart'
+import D3TradeBalanceChart from './components/TradeBalanceChart/D3TradeBalanceChart'
 import { initializeTradeData } from './reducers/tradeDataReducer'
 import { initializeCountryCodes } from './reducers/countryReducer'
 
@@ -29,7 +30,6 @@ const App = () => {
   const state = useSelector(state => state)
   const tradeData = state.tradeData
   const countryCodes = state.countryData.countryCodes
-  console.log(state)
 
   useEffect(() => {
     dispatch(initializeTradeData(year))
@@ -45,6 +45,7 @@ const App = () => {
             <Loader active />
           </div>
         )}
+        <D3TradeBalanceChart tradeBalance={tradeData.tradeBalance}></D3TradeBalanceChart>
         {tradeData.importsData !== undefined && tradeData.exportsData !== undefined && (
           <div>
             <ScrollableAnchor id={'trade-map'}>
