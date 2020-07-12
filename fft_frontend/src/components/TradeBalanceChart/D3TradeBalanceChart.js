@@ -12,14 +12,12 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       return
     }
 
-    const margin = { TOP: 20, RIGHT: 20, BOTTOM: 100, LEFT: 30 }
+    const margin = { TOP: 20, RIGHT: 40, BOTTOM: 100, LEFT: 20 }
     const width = window.innerWidth - margin.RIGHT - margin.LEFT
     const height = window.innerHeight - margin.TOP - margin.BOTTOM
     const orientation = width > height ? 'horizontal' : 'vertical'
     const keys = ['imports', 'exports']
-    const colors = d3.scaleOrdinal().range(['#f4a582', '#92c5de'])
-
-    console.log(orientation)
+    const colors = d3.scaleOrdinal().range(['#58556d', '#743033'])
 
     const maxValue = Math.max(
       d3.max(tradeData.map(d => d.imports)),
