@@ -127,13 +127,13 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       })
       .on('mousemove', () => moveTooltip(tooltip))
       .on('mouseout', () => {
-        tooltip.style('visibility', 'hidden')
+        tooltip.style('display', 'none')
       })
 
     const tooltip = d3.select('body').append('div').attr('class', 'd3-tooltip')
 
-    const showTooltip = (tooltip, tooltipHtml) =>{
-      tooltip.style('visibility', 'visible')
+    const showTooltip = (tooltip, tooltipHtml) => {
+      tooltip.style('display', 'block')
       tooltip.html(tooltipHtml)
     }
 
@@ -168,7 +168,7 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       })
       .on('mousemove', () => moveTooltip(tooltip))
       .on('mouseout', () => {
-        tooltip.style('visibility', 'hidden')
+        tooltip.style('display', 'none')
       })
 
     legend
