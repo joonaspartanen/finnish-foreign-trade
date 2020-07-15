@@ -116,31 +116,82 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       .on('mouseout', function (d) {
         d3.select(this).style('fill', colors(d.key))
       })
+      .on('mouseover', d => {
+        const tooltipHtml = `
+        <div>
+          Total ${d.key} from Finland:
+          <br>
+          ${d3.format(',')(d.value)}
+        €</div>
+        `
+        showTooltip(tooltip, tooltipHtml)
+      })
+      .on('mousemove', () => moveTooltip(tooltip))
+      .on('mouseout', () => {
+        tooltip.style('visibility', 'hidden')
+      })
 
-    /*
-      const legend = svg
-        .selectAll('.legend')
-        .data(keys)
-        .enter()
-        .append('g')
-        .attr('class', 'legend')
-        .attr('transform', (d, i) => `translate(0, ${i * 20})`)
+    const tooltip = d3.select('body').append('div').attr('class', 'd3-tooltip')
 
-      legend
-        .append('rect')
-        .attr('x', width - 20)
-        .attr('width', 20)
-        .attr('height', 20)
-        .style('fill', d => colors(d))
+    const showTooltip = (tooltip, tooltipHtml) =>{
+      tooltip.style('visibility', 'visible')
+      tooltip.html(tooltipHtml)
+    }
 
-      legend
-        .append('text')
-        .attr('x', width - 24)
-        .attr('y', 9)
-        .attr('dy', '.35em')
-        .style('text-anchor', 'end')
-        .text(d => d)
-        */
+    const moveTooltip = tooltip => {
+      tooltip.style('left', `${d3.event.pageX + 5}px`).style('top', `${d3.event.pageY - 65}px`)
+    }
+
+    const legendWrapper = chart
+      .append('svg')
+      .attr('width', 300)
+      .attr('height', 40)
+      .attr('class', 'legend-wrapper')
+
+    const legend = legendWrapper
+      .selectAll('.legend')
+      .data(keys)
+      .enter()
+      .append('g')
+      .attr('class', 'legend')
+      .attr('transform', (d, i) => `translate(${i * 140}, 0)`)
+
+    legend
+      .append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 40)
+      .attr('height', 40)
+      .style('fill', d => colors(d))
+      .on('mouseover', d => {
+        const tooltipHtml = `<div>${keyDescriptions[d]}</div>`
+        showTooltip(tooltip, tooltipHtml)
+      })
+      .on('mousemove', () => moveTooltip(tooltip))
+      .on('mouseout', () => {
+        tooltip.style('visibility', 'hidden')
+      })
+
+    legend
+      .append('text')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('transform', d => 'translate(50, 25)')
+      .attr('class', 'd3-legend-text')
+      .style('fill', '#fff')
+      .text(d => d.toUpperCase())
+
+    return () => {
+      chart.selectAll('*').remove()
+    }
+  }, [tradeData])
+
+  useEffect(() => {
+    if (!tradeData) {
+      return
+    }
+    // TODO: Update data without redrawing whole chart
+    console.log('trade data updated')
   }, [tradeData])
 
   return <div ref={ref}></div>
