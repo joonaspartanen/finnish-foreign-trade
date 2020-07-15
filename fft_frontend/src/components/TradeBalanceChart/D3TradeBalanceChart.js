@@ -94,87 +94,20 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
         .attr('fill', d => colors(d.key))
     }
 
-    const drawVerticalChart = () => {
-      const y0 = d3
-        .scaleBand()
-        .domain(tradeData.map(d => d.year).sort((a, b) => a - b))
-        .rangeRound([height - margin.TOP, margin.TOP])
-        .paddingInner(0.1)
+    const chart = d3.select(ref.current)
 
-      const y1 = d3.scaleBand().domain(keys).rangeRound([0, y0.bandwidth()]).padding(0.05)
-
-      const x = d3
-        .scaleLinear()
-        .domain([0, maxValue])
-        .nice()
-        .rangeRound([margin.LEFT, width - margin.RIGHT])
-
-      const xAxis = g =>
-        g
-          .attr('transform', `translate(0, ${height - margin.TOP + 10})`)
-          .call(d3.axisBottom(x).tickSize(0))
-          .style('color', '#fff')
-          .call(g => g.select('.domain').remove())
-
-      const yAxis = g =>
-        g
-          .attr('transform', `translate(${margin.LEFT - 5}, 0)`)
-          .call(d3.axisLeft(y0).ticks(null, 's').tickSizeInner(0))
-          .style('color', '#fff')
-          .call(g => g.select('.domain').remove())
-
-      svg.append('g').call(xAxis)
-      svg.append('g').call(yAxis)
-      svg
-        .append('g')
-        .attr('class', 'grid')
-        .call(
-          d3
-            .axisBottom(x)
-            .tickSize(-height + margin.TOP + 20)
-            .tickFormat('')
-        )
-        .attr('transform', `translate(0, 0)`)
-
-      svg
-        .append('g')
-        .selectAll('g')
-        .data(tradeData)
-        .join('g')
-        .attr('transform', d => `translate(${y0(d.year)}, 0)`)
-        .selectAll('rect')
-        .data(d => keys.map(key => ({ key, value: d[key] })))
-        .join('rect')
-        .attr('class', 'bar')
-        .attr('y', d => y1(d.key))
-        .attr('heigth', y1.bandwidth())
-        .attr('x', d => x(d.value))
-        .attr('width', d => x(d.value))
-        .attr('fill', d => colors(d.key))
-    }
-
-    const svg = d3
-      .select(ref.current)
+    const svg = chart
       .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', `0 0 ${width} ${height}`)
-      .attr('transform', `translate(${margin.LEFT}, ${margin.TOP})`)
+      .attr('width', width + padding.RIGHT + padding.LEFT)
+      .attr('height', height + padding.TOP + padding.BOTTOM)
+      .attr(
+        'viewBox',
+        `0 0 ${width + padding.RIGHT + padding.LEFT} ${height + padding.TOP + padding.BOTTOM}`
+      )
 
-    const resize = () => {
-      svg.attr('width', window.innerWidth - margin.LEFT - margin.RIGHT)
-      svg.attr('height', window.innerHeight - margin.TOP - margin.BOTTOM)
-    }
+    drawHorizontalChart()
 
-    d3.select(window).on('resize', resize)
-
-    if (orientation === 'horizontal') {
-      drawHorizontalChart()
-    } else {
-      // TODO: Fix this and think it over...
-      //drawVerticalChart()
-    }
-
+    
     svg
       .selectAll('.bar')
       .on('mouseover', function (d) {
