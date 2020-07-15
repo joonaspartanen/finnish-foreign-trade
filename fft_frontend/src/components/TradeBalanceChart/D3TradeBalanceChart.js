@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
+import { Header } from 'semantic-ui-react'
 import * as d3 from 'd3'
-import './tradeBalanceChart.css'
 
 const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
   const ref = useRef()
@@ -10,7 +10,7 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       return
     }
 
-    const margin = { TOP: 40, RIGHT: 40, BOTTOM: 60, LEFT: 40 }
+    const margin = { TOP: 80, RIGHT: 40, BOTTOM: 80, LEFT: 40 }
     const padding = { TOP: 20, RIGHT: 10, BOTTOM: 20, LEFT: 10 }
 
     const width = window.innerWidth - margin.RIGHT - margin.LEFT
@@ -46,7 +46,7 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
 
       const xAxis = g =>
         g
-          .attr('transform', `translate(0, ${height - padding.BOTTOM})`)
+          .attr('transform', `translate(0, ${height - margin.BOTTOM + padding.BOTTOM})`)
           .call(d3.axisBottom(x0).tickSize(0))
           .style('color', '#fff')
           .call(g => g.select('.domain').remove())
@@ -107,7 +107,6 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
 
     drawHorizontalChart()
 
-    
     svg
       .selectAll('.bar')
       .on('mouseover', function (d) {
@@ -194,7 +193,20 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
     console.log('trade data updated')
   }, [tradeData])
 
-  return <div ref={ref}></div>
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100vh',
+        paddingTop: '3em',
+        textAlign: 'center',
+      }}>
+      <Header inverted as='h3'>
+        Finnish Trade Balance
+      </Header>
+      <div ref={ref}></div>
+    </div>
+  )
 }
 
 export default D3TradeBalanceChart
