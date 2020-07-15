@@ -66,7 +66,7 @@ const Map = ({ imports, exports, flow }) => {
       dataSeries.tooltip.background.fillOpacity = 0.8
 
       dataSeries.mapPolygons.template.tooltipHTML = `
-      <div class="tooltip">
+      <div>
         Total ${
           flow === 'exports' ? 'exports from Finland to {name}' : 'imports from {name} to Finland'
         } ({year.formatNumber('#')}):
