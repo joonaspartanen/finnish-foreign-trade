@@ -15,8 +15,13 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
 
     const width = window.innerWidth - margin.RIGHT - margin.LEFT
     const height = window.innerHeight - margin.TOP - margin.BOTTOM
-    const orientation = width > height ? 'horizontal' : 'vertical'
     const keys = ['imports', 'exports']
+
+    const keyDescriptions = {
+      imports: 'Total value of goods imported to Finland',
+      exports: 'Total value of goods exported from Finland',
+    }
+
     const colors = d3.scaleOrdinal().range(['#58556d', '#743033'])
 
     const maxValue = Math.max(
