@@ -10,7 +10,9 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
       return
     }
 
-    const margin = { TOP: 20, RIGHT: 40, BOTTOM: 100, LEFT: 20 }
+    const margin = { TOP: 40, RIGHT: 40, BOTTOM: 60, LEFT: 40 }
+    const padding = { TOP: 20, RIGHT: 10, BOTTOM: 20, LEFT: 10 }
+
     const width = window.innerWidth - margin.RIGHT - margin.LEFT
     const height = window.innerHeight - margin.TOP - margin.BOTTOM
     const orientation = width > height ? 'horizontal' : 'vertical'
@@ -39,37 +41,39 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
 
       const xAxis = g =>
         g
-          .attr('transform', `translate(0, ${height - margin.TOP + 10})`)
+          .attr('transform', `translate(0, ${height - padding.BOTTOM})`)
           .call(d3.axisBottom(x0).tickSize(0))
           .style('color', '#fff')
           .call(g => g.select('.domain').remove())
+          .selectAll('text')
 
       const yAxis = g =>
         g
-          .attr('transform', `translate(${margin.LEFT - 5}, 0)`)
+          .attr('transform', `translate(${margin.LEFT}, 0)`)
           .call(d3.axisLeft(y).ticks(null, 's').tickSizeInner(0))
           .style('color', '#fff')
           .call(g => g.select('.domain').remove())
 
       svg.append('g').call(xAxis)
       svg.append('g').call(yAxis)
+
       svg
         .append('g')
         .attr('class', 'grid')
         .call(
           d3
             .axisLeft(y)
-            .tickSize(-width + margin.RIGHT + 20)
+            .tickSize(-width + margin.RIGHT + padding.RIGHT + 20)
             .tickFormat('')
         )
-        .attr('transform', `translate(${margin.LEFT}, 0)`)
+        .attr('transform', `translate(${margin.LEFT + padding.LEFT}, 0)`)
 
       svg
         .append('g')
         .selectAll('g')
         .data(tradeData)
         .join('g')
-        .attr('transform', d => `translate(${x0(d.year)}, 0)`)
+        .attr('transform', d => `translate(${x0(d.year) + padding.LEFT}, 0)`)
         .selectAll('rect')
         .data(d => keys.map(key => ({ key, value: d[key] })))
         .join('rect')
