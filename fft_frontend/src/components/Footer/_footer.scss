@@ -1,0 +1,8 @@
+.footer.ui.secondary.menu {
+  background-color: $grey-light;
+  margin-top: 0px;
+
+  &.dark-mode {
+    background-color: $grey-darker;
+  }
+}

@@ -14,13 +14,13 @@
 
 .legend-wrapper {
   position: absolute;
-  bottom: 2em;
-  right: 4em;
+  bottom: 3em;
+  left: 4em;
 }
 
 .d3-tooltip {
   position: absolute;
-  visibility: hidden;
+  display: none;
   padding: 1em;
   background-color: rgba(0, 0, 0, 0.6);
   border: 1px solid #fff;
