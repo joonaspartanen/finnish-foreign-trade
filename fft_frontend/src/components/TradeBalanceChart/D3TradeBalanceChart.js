@@ -1,52 +1,115 @@
 import React, { useEffect, useRef } from 'react'
 import { Header } from 'semantic-ui-react'
 import * as d3 from 'd3'
+const debounce = require('lodash.debounce')
 
-const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
+const D3TradeBalanceChart = ({ tradeBalance }) => {
   const ref = useRef()
 
+  const data = tradeBalance
+
   useEffect(() => {
-    if (!tradeData) {
+    if (!data) {
       return
     }
 
-    const margin = { TOP: 80, RIGHT: 40, BOTTOM: 80, LEFT: 40 }
+    const margin = { TOP: 40, RIGHT: 40, BOTTOM: 80, LEFT: 40 }
     const padding = { TOP: 20, RIGHT: 10, BOTTOM: 20, LEFT: 10 }
-
-    const width = window.innerWidth - margin.RIGHT - margin.LEFT
-    const height = window.innerHeight - margin.TOP - margin.BOTTOM
+    let width
+    let height
+    let orientation
+    const colors = d3.scaleOrdinal().range(['#58556d', '#743033'])
     const keys = ['imports', 'exports']
-
     const keyDescriptions = {
       imports: 'Total value of goods imported to Finland',
       exports: 'Total value of goods exported from Finland',
     }
+    const maxValue = Math.max(d3.max(data.map(d => d.imports)), d3.max(data.map(d => d.exports)))
 
-    const colors = d3.scaleOrdinal().range(['#58556d', '#743033'])
+    // Define scale variables
+    let x0
+    let x1
+    let y
 
-    const maxValue = Math.max(
-      d3.max(tradeData.map(d => d.imports)),
-      d3.max(tradeData.map(d => d.exports))
-    )
+    const tooltip = d3.select('body').append('div').attr('class', 'd3-tooltip')
+    const chart = d3.select(ref.current)
+    let svg
 
-    const drawHorizontalChart = () => {
-      const x0 = d3
+    drawChart()
+
+    function drawChart() {
+      console.log('drawing chart')
+      drawChartBase()
+      generateHorizontalChartScales()
+      appendAxes()
+      appendData()
+      setOnHoverActions()
+      generateLegend()
+      console.log('chart ready')
+    }
+
+    d3.select(window).on('resize', debounce(onResize, 800))
+
+    function onResize() {
+      console.log('resizing')
+      drawChart()
+    }
+
+    function drawChartBase() {
+      width =
+        Math.max(window.innerWidth, document.documentElement.clientWidth) -
+        margin.RIGHT -
+        margin.LEFT
+      height =
+        Math.max(window.innerHeight, document.documentElement.clientHeight) -
+        margin.TOP -
+        margin.BOTTOM
+      orientation = width >= height ? 'horizontal' : 'vertical'
+      console.log(`${width} x ${height}`)
+
+      if (svg) {
+        svg.remove()
+      }
+
+      svg = chart
+        .append('svg')
+        .attr('width', width + padding.RIGHT + padding.LEFT)
+        .attr('height', height + padding.TOP + padding.BOTTOM)
+        .attr(
+          'viewBox',
+          `0 0 ${width + padding.RIGHT + padding.LEFT} ${height + padding.TOP + padding.BOTTOM}`
+        )
+    }
+
+    function filterData(data) {
+      if (orientation === 'horizontal') {
+        return data
+      } else {
+        return data.slice(0, 4)
+      }
+    }
+
+    function generateHorizontalChartScales() {
+      const filteredData = filterData(data)
+      x0 = d3
         .scaleBand()
-        .domain(tradeData.map(d => d.year).sort((a, b) => a - b))
+        .domain(filteredData.map(d => d.year).sort((a, b) => a - b))
         .rangeRound([margin.LEFT, width - margin.RIGHT])
         .paddingInner(0.1)
 
-      const x1 = d3.scaleBand().domain(keys).rangeRound([0, x0.bandwidth()]).padding(0.05)
+      x1 = d3.scaleBand().domain(keys).rangeRound([0, x0.bandwidth()]).padding(0.05)
 
-      const y = d3
+      y = d3
         .scaleLinear()
         .domain([0, maxValue])
         .nice()
         .rangeRound([height - margin.TOP, margin.TOP])
+    }
 
+    function appendAxes() {
       const xAxis = g =>
         g
-          .attr('transform', `translate(0, ${height - margin.BOTTOM + padding.BOTTOM})`)
+          .attr('transform', `translate(0, ${height - margin.TOP + padding.BOTTOM})`)
           .call(d3.axisBottom(x0).tickSize(0))
           .style('color', '#fff')
           .call(g => g.select('.domain').remove())
@@ -72,11 +135,13 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
             .tickFormat('')
         )
         .attr('transform', `translate(${margin.LEFT + padding.LEFT}, 0)`)
+    }
 
+    function appendData() {
       svg
         .append('g')
         .selectAll('g')
-        .data(tradeData)
+        .data(filterData(data))
         .join('g')
         .attr('transform', d => `translate(${x0(d.year) + padding.LEFT}, 0)`)
         .selectAll('rect')
@@ -94,43 +159,30 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
         .attr('fill', d => colors(d.key))
     }
 
-    const chart = d3.select(ref.current)
-
-    const svg = chart
-      .append('svg')
-      .attr('width', width + padding.RIGHT + padding.LEFT)
-      .attr('height', height + padding.TOP + padding.BOTTOM)
-      .attr(
-        'viewBox',
-        `0 0 ${width + padding.RIGHT + padding.LEFT} ${height + padding.TOP + padding.BOTTOM}`
-      )
-
-    drawHorizontalChart()
-
-    svg
-      .selectAll('.bar')
-      .on('mouseover', function (d) {
-        d3.select(this).style('fill', d3.rgb(colors(d.key)).darker(1))
-      })
-      .on('mouseout', function (d) {
-        d3.select(this).style('fill', colors(d.key))
-      })
-      .on('mouseover', d => {
-        const tooltipHtml = `
-        <div>
-          Total ${d.key} from Finland:
-          <br>
-          ${d3.format(',')(d.value)}
-        €</div>
-        `
-        showTooltip(tooltip, tooltipHtml)
-      })
-      .on('mousemove', () => moveTooltip(tooltip))
-      .on('mouseout', () => {
-        tooltip.style('display', 'none')
-      })
-
-    const tooltip = d3.select('body').append('div').attr('class', 'd3-tooltip')
+    function setOnHoverActions() {
+      svg
+        .selectAll('.bar')
+        .on('mouseover', function (d) {
+          d3.select(this).style('fill', d3.rgb(colors(d.key)).darker(1))
+        })
+        .on('mouseout', function (d) {
+          d3.select(this).style('fill', colors(d.key))
+        })
+        .on('mouseover', d => {
+          const tooltipHtml = `
+          <div>
+            Total ${d.key === 'imports' ? 'imports to' : 'exports from'} Finland:
+            <br>
+            ${d3.format(',')(d.value)}
+          €</div>
+          `
+          showTooltip(tooltip, tooltipHtml)
+        })
+        .on('mousemove', () => moveTooltip(tooltip))
+        .on('mouseout', () => {
+          tooltip.style('display', 'none')
+        })
+    }
 
     const showTooltip = (tooltip, tooltipHtml) => {
       tooltip.style('display', 'block')
@@ -138,60 +190,61 @@ const D3TradeBalanceChart = ({ tradeBalance: tradeData }) => {
     }
 
     const moveTooltip = tooltip => {
-      tooltip.style('left', `${d3.event.pageX + 5}px`).style('top', `${d3.event.pageY - 65}px`)
+      const distanceFromRightEdge = width - d3.event.pageX
+      const tooltipOffset = distanceFromRightEdge > 200 ? 30 : -220
+
+      tooltip
+        .style('left', `${d3.event.pageX + tooltipOffset}px`)
+        .style('top', `${d3.event.pageY - 65}px`)
     }
 
-    const legendWrapper = chart
-      .append('svg')
-      .attr('width', 300)
-      .attr('height', 40)
-      .attr('class', 'legend-wrapper')
+    function generateLegend() {
 
-    const legend = legendWrapper
-      .selectAll('.legend')
-      .data(keys)
-      .enter()
-      .append('g')
-      .attr('class', 'legend')
-      .attr('transform', (d, i) => `translate(${i * 140}, 0)`)
+      if (orientation === 'vertical') {
+        d3.select('.legend-wrapper').remove()
+        return
+      }
 
-    legend
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', 40)
-      .attr('height', 40)
-      .style('fill', d => colors(d))
-      .on('mouseover', d => {
-        const tooltipHtml = `<div>${keyDescriptions[d]}</div>`
-        showTooltip(tooltip, tooltipHtml)
-      })
-      .on('mousemove', () => moveTooltip(tooltip))
-      .on('mouseout', () => {
-        tooltip.style('display', 'none')
-      })
+      const legendWrapper = chart
+        .append('svg')
+        .attr('width', 300)
+        .attr('height', 30)
+        .attr('class', 'legend-wrapper')
 
-    legend
-      .append('text')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('transform', d => 'translate(50, 25)')
-      .attr('class', 'd3-legend-text')
-      .style('fill', '#fff')
-      .text(d => d.toUpperCase())
+      const legend = legendWrapper
+        .selectAll('.legend')
+        .data(keys)
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', (d, i) => `translate(${i * 140}, 0)`)
 
-    return () => {
-      chart.selectAll('*').remove()
+      legend
+        .append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', 30)
+        .attr('height', 30)
+        .style('fill', d => colors(d))
+        .on('mouseover', d => {
+          const tooltipHtml = `<div>${keyDescriptions[d]}</div>`
+          showTooltip(tooltip, tooltipHtml)
+        })
+        .on('mousemove', () => moveTooltip(tooltip))
+        .on('mouseout', () => {
+          tooltip.style('display', 'none')
+        })
+
+      legend
+        .append('text')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('transform', d => 'translate(40, 20)')
+        .attr('class', 'd3-legend-text')
+        .style('fill', '#fff')
+        .text(d => d.toUpperCase())
     }
-  }, [tradeData])
-
-  useEffect(() => {
-    if (!tradeData) {
-      return
-    }
-    // TODO: Update data without redrawing whole chart
-    console.log('trade data updated')
-  }, [tradeData])
+  }, [data])
 
   return (
     <div
