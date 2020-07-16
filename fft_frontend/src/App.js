@@ -9,8 +9,9 @@ import MapWrapper from './components/Map/MapWrapper'
 import NavBar from './components/NavBar/NavBar'
 import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import D3TradeBalanceChart from './components/TradeBalanceChart/D3TradeBalanceChart'
-import { initializeTradeData } from './reducers/tradeDataReducer'
+import { initializeTradeBalanceData, initializeTradeData } from './reducers/tradeDataReducer'
 import { initializeCountryCodes } from './reducers/countryReducer'
+import { startLoading } from './reducers/isLoadingReducer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -27,28 +28,35 @@ const App = () => {
 
   const state = useSelector(state => state)
   const tradeData = state.tradeData
+  const tradeBalance = tradeData.tradeBalance
+  const isLoading = state.isLoading
+  console.log(isLoading)
 
   useEffect(() => {
-    dispatch(initializeTradeData(year))
+    dispatch(startLoading())
     dispatch(initializeCountryCodes())
+    dispatch(initializeTradeBalanceData())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(startLoading())
+    dispatch(initializeTradeData(year))
   }, [year, dispatch])
 
   return (
     <div className={state.darkModeActive ? 'main-container dark-mode' : 'main-container'}>
       <Container fluid>
         <NavBar year={year} setYear={setYear} darkModeActive={state.darkModeActive} />
-        {(tradeData.importsData === undefined || tradeData.exportsData === undefined) && (
+        {isLoading && (
           <div style={{ height: '100vh' }}>
             <Loader active />
           </div>
         )}
-        {tradeData.importsData !== undefined && tradeData.exportsData !== undefined && (
+        {!isLoading && (
           <div>
             <ScrollableAnchor id={'trade-map'}>
               <section
-                className={
-                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
-                }>
+                className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
                 <MapWrapper
                   imports={tradeData.importsData}
                   exports={tradeData.exportsData}></MapWrapper>
@@ -59,10 +67,8 @@ const App = () => {
             </ScrollableAnchor>
             <ScrollableAnchor id={'trade-balance'}>
               <section
-                className={
-                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
-                }>
-                <D3TradeBalanceChart tradeBalance={tradeData.tradeBalance}></D3TradeBalanceChart>
+                className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
+                <D3TradeBalanceChart tradeBalance={tradeBalance}></D3TradeBalanceChart>
                 <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
@@ -70,9 +76,7 @@ const App = () => {
             </ScrollableAnchor>
             <ScrollableAnchor id={'imports-by-product'}>
               <section
-                className={
-                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
-                }>
+                className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
                 <TreeMapWrapper sitc2Data={tradeData.sitc2Data} year={year} />
                 <a href='#trade-partners' className='anchor-link'>
                   <div className='arrow-down'></div>
@@ -81,9 +85,7 @@ const App = () => {
             </ScrollableAnchor>
             <ScrollableAnchor id={'trade-partners'}>
               <section
-                className={
-                  state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'
-                }>
+                className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
                 {country.length === 0 && (
                   <CountrySearch
                     countryFilter={countryFilter}
