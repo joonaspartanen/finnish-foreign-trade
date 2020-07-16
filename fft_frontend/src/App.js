@@ -11,7 +11,6 @@ import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import D3TradeBalanceChart from './components/TradeBalanceChart/D3TradeBalanceChart'
 import { initializeTradeBalanceData, initializeTradeData } from './reducers/tradeDataReducer'
 import { initializeCountryCodes } from './reducers/countryReducer'
-import { startLoading } from './reducers/isLoadingReducer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -33,13 +32,11 @@ const App = () => {
   console.log(isLoading)
 
   useEffect(() => {
-    dispatch(startLoading())
     dispatch(initializeCountryCodes())
     dispatch(initializeTradeBalanceData())
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(startLoading())
     dispatch(initializeTradeData(year))
   }, [year, dispatch])
 

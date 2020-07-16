@@ -1,4 +1,5 @@
 import getCountryCodes from '../services/countryService'
+import { finishLoading, startLoading } from './isLoadingReducer'
 
 const countryCodes = (state = [], action) => {
   switch (action.type) {
@@ -11,11 +12,13 @@ const countryCodes = (state = [], action) => {
 
 export const initializeCountryCodes = () => {
   return async dispatch => {
+    dispatch(startLoading())
     const countryCodes = await getCountryCodes()
     dispatch({
       type: 'INIT_COUNTRYCODES',
       payload: countryCodes,
     })
+    dispatch(finishLoading())
   }
 }
 
