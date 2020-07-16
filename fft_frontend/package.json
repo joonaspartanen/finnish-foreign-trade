@@ -8,7 +8,7 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "d3": "^5.16.0",
-    "lodash": "^4.17.15",
+    "lodash.debounce": "^4.0.8",
     "react": "^16.9.0",
     "react-bootstrap": "^1.0.0-beta.11",
     "react-dom": "^16.9.0",
