@@ -1,0 +1,156 @@
+body {
+  margin: 0;
+  padding-top: 0px; }
+
+.main-container {
+  background-color: #eee;
+  padding-left: 0;
+  padding-right: 0;
+  transition: background-color 0.3s, color 0.3s; }
+  .main-container.dark-mode {
+    background-color: #333; }
+
+.anchor-link {
+  position: absolute;
+  bottom: 2em; }
+
+.arrow-down {
+  box-sizing: border-box;
+  height: 2em;
+  width: 2em;
+  border-style: solid;
+  border-color: white;
+  border-width: 0px 3px 3px 0px;
+  transform: rotate(45deg);
+  transition: border-width 150ms ease-in-out; }
+  .arrow-down:hover {
+    border-bottom-width: 5px;
+    border-right-width: 5px; }
+
+.chart-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 0 3em 0;
+  height: 100vh; }
+  .chart-section:first-of-type {
+    padding: 0;
+    height: calc(100vh - 65px); }
+  .chart-section:nth-child(odd) {
+    background-color: #aaa; }
+  .chart-section:nth-child(even) {
+    background-color: #eee; }
+  .chart-section.dark-mode:nth-child(odd) {
+    background-color: #333; }
+  .chart-section.dark-mode:nth-child(even) {
+    background-color: #222; }
+
+.ui.buttons > button.ui.active.toggle.button {
+  background-color: #18447e !important; }
+
+h2 {
+  color: white; }
+
+h3 {
+  color: white; }
+
+.ui.container {
+  margin-left: 0px !important;
+  margin-right: 0px !important; }
+
+.tooltip {
+  padding: 0.5em; }
+
+.footer.ui.secondary.menu {
+  background-color: #aaa;
+  margin-top: 0px; }
+  .footer.ui.secondary.menu.dark-mode {
+    background-color: #222; }
+
+nav.ui.stackable.navbar.menu {
+  margin: 0;
+  background-color: #eee;
+  margin-bottom: 0px;
+  max-height: 65px;
+  transition: background-color 0.3s, color 0.3s; }
+  nav.ui.stackable.navbar.menu > .item {
+    color: #222; }
+    nav.ui.stackable.navbar.menu > .item::before {
+      background: #aaa; }
+  nav.ui.stackable.navbar.menu.dark-mode {
+    background-color: #333; }
+    nav.ui.stackable.navbar.menu.dark-mode > .item {
+      color: #eee; }
+      nav.ui.stackable.navbar.menu.dark-mode > .item::before {
+        background: #555; }
+    nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown,
+    nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown,
+    nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text {
+      background: #333;
+      color: white;
+      border-color: #555 !important; }
+      nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .menu,
+      nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown > .menu,
+      nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text > .menu {
+        border-color: #555 !important; }
+        nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .menu > .item,
+        nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown > .menu > .item,
+        nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text > .menu > .item {
+          background: #333 !important; }
+          nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .menu > .item:hover, nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .menu > .item.active.selected,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown > .menu > .item:hover,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown > .menu > .item.active.selected,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text > .menu > .item:hover,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text > .menu > .item.active.selected {
+            background: #222 !important; }
+          nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .menu > .item > .text,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.active.selection.dropdown > .menu > .item > .text,
+          nav.ui.stackable.navbar.menu.dark-mode .ui.selection.dropdown > .text > .menu > .item > .text {
+            color: white; }
+
+.color-mode-toggle {
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+  width: 160px; }
+  .color-mode-toggle .ui.toggle.checkbox label:before {
+    background-color: #aaa !important; }
+  .color-mode-toggle .ui.toggle.checkbox input:checked ~ label:before {
+    background-color: #18447e !important; }
+
+.grid line {
+  stroke: lightgray;
+  stroke-opacity: 0.6;
+  shape-rendering: crispEdges; }
+
+.grid path {
+  stroke-width: 0; }
+
+.tick > text {
+  font-size: 1.5em; }
+
+.legend-wrapper {
+  position: absolute;
+  bottom: 3em;
+  left: 4em; }
+
+.d3-tooltip {
+  position: absolute;
+  display: none;
+  padding: 1em;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid #fff;
+  border-radius: 4px;
+  text-align: center;
+  color: #fff; }
+
+.d3-legend-text {
+  font-weight: bold; }
+
+.footer.ui.secondary.menu {
+  background-color: #aaa;
+  margin-top: 0px; }
+  .footer.ui.secondary.menu.dark-mode {
+    background-color: #222; }
