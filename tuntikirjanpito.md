@@ -48,6 +48,7 @@
 | 10.7. | 4 | Muokattu sovelluksen tyylejä. Luotu light/dark mode -valintamahdollisuus.
 | 11.7. | 2 | Mockattu redux-store testissä. Viritelty CD-putkea Github Actioniin (vielä tuloksetta).
 | 12.7. | 5 | Korvattu kauppatasekuvaaja omalla d3.js-toteutuksella. Redux-storen rakennetta selkiytetty.
-| 14.7. | 3 | D3.js-kauppatasekuvaajaan lisätty hiirtä seuraava tooltip ja selite. Kuvaajan ulkoasua parannettu.
-| 14.7. | 1 | Uudelleenjärjestetty CSS-muotoilut pienemmiksi SCSS-tiedostoiksi, jotka käännetään skriptillä yhdeksi CSS-tiedostoksi.
-| Yhteensä | 97 | |
+| 15.7. | 3 | D3.js-kauppatasekuvaajaan lisätty hiirtä seuraava tooltip ja selite. Kuvaajan ulkoasua parannettu.
+| 15.7. | 1 | Uudelleenjärjestetty CSS-muotoilut pienemmiksi SCSS-tiedostoiksi, jotka käännetään skriptillä yhdeksi CSS-tiedostoksi.
+| 16.7. | 3 | Refaktoroitu oma d3.js-komponentti pienemmiksi funktioiksi ja lisätty resize-tapahtumankäsittelijä.
+| Yhteensä | 100 | |
