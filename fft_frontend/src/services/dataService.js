@@ -21,7 +21,7 @@ const getSitc2Data = async (year, flow) => {
 }
 
 const getSitc2CountryData = async (flow, year, country) => {
-  const response = await axios.get(`/SITC2/${flow}/${year}/${country[0].code}`)
+  const response = await axios.get(`/SITC2/${flow}/${year}/${country.code}`)
   return response
 }
 
