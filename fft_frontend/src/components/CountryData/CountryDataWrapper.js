@@ -7,16 +7,19 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
   const [countryImports, setCountryImports] = useState([])
   const [countryExports, setCountryExports] = useState([])
 
+  const getTop10ProductCategories = data =>
+    data.slice(0, 10).filter(product => product.value !== null)
+
   useEffect(() => {
-    dataService.getSitc2CountryData('imports', year, country).then((res) => {
+    dataService.getSitc2CountryData('imports', year, country).then(res => {
       setCountryImports(res.data)
     })
-    dataService.getSitc2CountryData('exports', year, country).then((res) => {
+    dataService.getSitc2CountryData('exports', year, country).then(res => {
       setCountryExports(res.data)
     })
   }, [country, year])
 
-  if (country.length === 0) {
+  if (country === '') {
     return null
   }
 
@@ -29,7 +32,7 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
   }
 
   return (
-    <Grid container stackable relaxed>
+    <Grid container stackable relaxed style={{ paddingTop: '3em' }}>
       <Button
         icon
         circular
@@ -40,12 +43,24 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
         style={{ position: 'absolute', top: '1em', left: '1em' }}>
         <Icon name='angle left' size='large' />
       </Button>
+      <img
+        className='flag'
+        src={`https://www.countryflags.io/${country.code}/flat/64.png`}
+        alt={`Flag of ${country.name}`}></img>
       <Grid.Row columns={2}>
         <Grid.Column>
-          <CountryDataTable country={country} tradeData={countryImports} flow={'imported from'} />
+          <CountryDataTable
+            country={country}
+            tradeData={getTop10ProductCategories(countryExports)}
+            flow={'exports'}
+          />
         </Grid.Column>
         <Grid.Column>
-          <CountryDataTable country={country} tradeData={countryExports} flow={'exported to'} />
+          <CountryDataTable
+            country={country}
+            tradeData={getTop10ProductCategories(countryImports)}
+            flow={'imports'}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>
