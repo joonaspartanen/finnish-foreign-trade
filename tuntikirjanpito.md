@@ -51,4 +51,5 @@
 | 15.7. | 3 | D3.js-kauppatasekuvaajaan lisätty hiirtä seuraava tooltip ja selite. Kuvaajan ulkoasua parannettu.
 | 15.7. | 1 | Uudelleenjärjestetty CSS-muotoilut pienemmiksi SCSS-tiedostoiksi, jotka käännetään skriptillä yhdeksi CSS-tiedostoksi.
 | 16.7. | 3 | Refaktoroitu oma d3.js-komponentti pienemmiksi funktioiksi ja lisätty resize-tapahtumankäsittelijä.
-| Yhteensä | 100 | |
+| 18.7. | 3 | Refaktoroitu frontendin koodia ja päivitetty sovelluksen tyylejä.
+| Yhteensä | 103 | |
