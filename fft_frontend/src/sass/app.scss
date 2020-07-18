@@ -9,8 +9,16 @@ body {
   padding-right: 0;
   transition: background-color 0.3s, color 0.3s;
 
+  h2, h3 {
+    color: $finnish-blue;
+  }
+
   &.dark-mode {
     background-color: $grey-dark;
+
+    h2, h3 {
+      color: white;
+    }
   }
 }
 
@@ -42,15 +50,16 @@ body {
   align-items: center;
   flex-direction: column;
   padding: 0 0 3em 0;
-  height: 100vh;
+  min-height: 100vh;
 
   &:first-of-type {
     padding: 0;
     height: calc(100vh - 65px);
+    min-height: calc(100vh - 65px);
   }
 
   &:nth-child(odd) {
-    background-color: $grey-light;
+    background-color: white;
   }
 
   &:nth-child(even) {
@@ -70,14 +79,6 @@ body {
 
 .ui.buttons > button.ui.active.toggle.button {
   background-color: $finnish-blue !important;
-}
-
-h2 {
-  color: white;
-}
-
-h3 {
-  color: white;
 }
 
 .ui.container {
