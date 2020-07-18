@@ -29,7 +29,6 @@ const App = () => {
   const tradeData = state.tradeData
   const tradeBalance = tradeData.tradeBalance
   const isLoading = state.isLoading
-  console.log(isLoading)
 
   useEffect(() => {
     dispatch(initializeCountryCodes())
@@ -65,7 +64,7 @@ const App = () => {
             <ScrollableAnchor id={'trade-balance'}>
               <section
                 className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
-                <D3TradeBalanceChart tradeBalance={tradeBalance}></D3TradeBalanceChart>
+                <D3TradeBalanceChart tradeBalance={tradeBalance} darkModeActive={state.darkModeActive}></D3TradeBalanceChart>
                 <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
@@ -92,7 +91,7 @@ const App = () => {
                 )}
                 {country.length !== 0 && (
                   <CountryDataWrapper
-                    country={country}
+                    country={country[0]}
                     setCountry={setCountry}
                     setCountryFilter={setCountryFilter}
                     year={year}
