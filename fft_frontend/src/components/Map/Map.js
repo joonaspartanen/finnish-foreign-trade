@@ -16,7 +16,7 @@ const Map = ({ imports, exports, flow }) => {
     map.geodata = am4geodata_worldLow
     map.projection = new am4maps.projections.Mercator()
     map.zoomControl = new am4maps.ZoomControl()
-    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#EEE')
+    map.backgroundSeries.mapPolygons.template.polygon.fill = am4core.color('#eee')
     map.backgroundSeries.mapPolygons.template.polygon.fillOpacity = 1
     map.chartContainer.wheelable = false
 
@@ -45,8 +45,8 @@ const Map = ({ imports, exports, flow }) => {
     map.maxPanOut = 0
 
     const prepareDataSeries = flow => {
-      const baseColor = flow === 'exports' ? '#5E5B78' : '#C17D80'
-      const hoverColor = '#555'
+      const baseColor = flow === 'exports' ? '#18447e' : '#a01c0c'
+      const hoverColor = '#666'
 
       const dataSeries = new am4maps.MapPolygonSeries()
       dataSeries.name = flow.charAt(0).toUpperCase() + flow.slice(1)
@@ -54,7 +54,7 @@ const Map = ({ imports, exports, flow }) => {
       dataSeries.heatRules.push({
         property: 'fill',
         target: dataSeries.mapPolygons.template,
-        min: am4core.color(baseColor).brighten(1.2),
+        min: am4core.color(baseColor).brighten(2.4),
         max: am4core.color(baseColor).brighten(-0.4),
       })
       dataSeries.useGeodata = true
@@ -63,7 +63,7 @@ const Map = ({ imports, exports, flow }) => {
 
       dataSeries.tooltip.getFillFromObject = false
       dataSeries.tooltip.background.fill = am4core.color('#333')
-      dataSeries.tooltip.background.fillOpacity = 0.8
+      dataSeries.tooltip.background.fillOpacity = 0.9
 
       dataSeries.mapPolygons.template.tooltipHTML = `
       <div>
