@@ -80,7 +80,7 @@ const ProductsTreeMap = ({ sitc2Data, flow, year }) => {
         paddingLeft: '10vw',
         textAlign: 'center',
       }}>
-      <Header inverted as='h3'>
+      <Header as='h2'>
         Finnish {flow} by product category ({year})
       </Header>
       <div id='products-treemap-div' style={{ width: '100%', height: '90%' }}></div>
