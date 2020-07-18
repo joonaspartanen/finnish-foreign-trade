@@ -1,27 +1,43 @@
-.grid line {
-  stroke: lightgray;
-  stroke-opacity: 0.6;
-  shape-rendering: crispEdges;
-}
+.bar-chart {
+  .grid line {
+    stroke: $grey-light;
+    stroke-opacity: 0.6;
+    shape-rendering: crispEdges;
+  }
 
-.grid path {
-  stroke-width: 0;
-  shape-rendering: crispEdges;
-}
+  .grid path {
+    stroke-width: 0;
+    shape-rendering: crispEdges;
+  }
 
-.tick > text {
-  font-size: 1.5em;
-  shape-rendering: crispEdges;
-}
+  .tick > text {
+    font-size: 1.5em;
+    shape-rendering: crispEdges;
+  }
 
-g > text {
-  shape-rendering: crispEdges;
-}
+  g > text {
+    shape-rendering: crispEdges;
+  }
 
-.legend-wrapper {
-  position: absolute;
-  bottom: 20px;
-  left: 60px;
+  .legend-wrapper {
+    position: absolute;
+    bottom: 20px;
+    left: 60px;
+  }
+
+  .d3-legend-text {
+    font-weight: bold;
+  }
+
+  &.dark-mode {
+    .grid line {
+      stroke: $grey-light;
+    }
+
+    g > text {
+      fill: #fff;
+    }
+  }
 }
 
 .d3-tooltip {
@@ -33,8 +49,4 @@ g > text {
   border-radius: 4px;
   text-align: center;
   color: #fff;
-}
-
-.d3-legend-text {
-  font-weight: bold;
 }

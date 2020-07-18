@@ -3,7 +3,7 @@ import { Header } from 'semantic-ui-react'
 import * as d3 from 'd3'
 const debounce = require('lodash.debounce')
 
-const D3TradeBalanceChart = ({ tradeBalance }) => {
+const D3TradeBalanceChart = ({ tradeBalance, darkModeActive }) => {
   const ref = useRef()
 
   const data = tradeBalance
@@ -18,7 +18,7 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
     let width
     let height
     let orientation
-    const colors = d3.scaleOrdinal().range(['#58556d', '#743033'])
+    const colors = d3.scaleOrdinal().range(['#18447e', '#A31E0F'])
     const keys = ['imports', 'exports']
     const keyDescriptions = {
       imports: 'Total value of goods imported to Finland',
@@ -111,7 +111,6 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
         g
           .attr('transform', `translate(0, ${height - margin.TOP + padding.BOTTOM})`)
           .call(d3.axisBottom(x0).tickSize(0))
-          .style('color', '#fff')
           .call(g => g.select('.domain').remove())
           .selectAll('text')
 
@@ -119,7 +118,6 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
         g
           .attr('transform', `translate(${margin.LEFT}, 0)`)
           .call(d3.axisLeft(y).ticks(null, 's').tickSizeInner(0))
-          .style('color', '#fff')
           .call(g => g.select('.domain').remove())
 
       svg.append('g').call(xAxis)
@@ -131,7 +129,7 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
         .call(
           d3
             .axisLeft(y)
-            .tickSize(-width + margin.RIGHT + padding.RIGHT + 20)
+            .tickSize(-width + margin.RIGHT + margin.LEFT)
             .tickFormat('')
         )
         .attr('transform', `translate(${margin.LEFT + padding.LEFT}, 0)`)
@@ -150,7 +148,7 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
         .attr('class', 'bar')
         .attr('x', d => x1(d.key))
         .attr('width', x1.bandwidth())
-        .attr('y', d => y(0))
+        .attr('y', () => y(0))
         .transition()
         .ease(d3.easePoly)
         .duration(1500)
@@ -199,7 +197,6 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
     }
 
     function generateLegend() {
-
       if (orientation === 'vertical') {
         d3.select('.legend-wrapper').remove()
         return
@@ -239,24 +236,22 @@ const D3TradeBalanceChart = ({ tradeBalance }) => {
         .append('text')
         .attr('x', 0)
         .attr('y', 0)
-        .attr('transform', d => 'translate(40, 20)')
+        .attr('transform', () => 'translate(40, 20)')
         .attr('class', 'd3-legend-text')
-        .style('fill', '#fff')
-        .text(d => d.toUpperCase())
+        .text(d => d.slice(0, 1).toUpperCase() + d.slice(1))
     }
   }, [data])
 
   return (
     <div
+      className={darkModeActive ? 'bar-chart dark-mode' : 'bar-chart'}
       style={{
         width: '100%',
         height: '100vh',
         paddingTop: '3em',
         textAlign: 'center',
       }}>
-      <Header inverted as='h3'>
-        Finnish Trade Balance
-      </Header>
+      <Header as='h2'>Finnish Trade Balance</Header>
       <div ref={ref}></div>
     </div>
   )
