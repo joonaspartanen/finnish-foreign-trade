@@ -2,7 +2,11 @@ import React from 'react'
 import { Table, Header } from 'semantic-ui-react'
 
 const CountryDataTable = ({ country, tradeData, flow }) => {
-  console.log(tradeData)
+
+  if (tradeData.length === 0) {
+    return <div>No data available</div>
+  }
+
   return (
     <Table inverted basic compact celled selectable singleLine>
       <Table.Header>
