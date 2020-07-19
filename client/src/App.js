@@ -11,6 +11,7 @@ import TreeMapWrapper from './components/ProductsTreeMap/TreeMapWrapper'
 import D3TradeBalanceChart from './components/TradeBalanceChart/D3TradeBalanceChart'
 import { initializeTradeBalanceData, initializeTradeData } from './reducers/tradeDataReducer'
 import { initializeCountryCodes } from './reducers/countryReducer'
+import './App.scss'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -64,7 +65,9 @@ const App = () => {
             <ScrollableAnchor id={'trade-balance'}>
               <section
                 className={state.darkModeActive ? 'chart-section dark-mode' : 'chart-section'}>
-                <D3TradeBalanceChart tradeBalance={tradeBalance} darkModeActive={state.darkModeActive}></D3TradeBalanceChart>
+                <D3TradeBalanceChart
+                  tradeBalance={tradeBalance}
+                  darkModeActive={state.darkModeActive}></D3TradeBalanceChart>
                 <a href='#imports-by-product' className='anchor-link'>
                   <div className='arrow-down'></div>
                 </a>
