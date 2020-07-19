@@ -1,5 +1,5 @@
 const tradeDataRouter = require('express').Router()
-const dataService = require('../services/dataService')
+const dataService = require('../services/tradeDataService')
 const { cache } = require('../utils/middleware')
 const HOUR = 3600
 const LASTYEAR = 2019
@@ -61,11 +61,6 @@ tradeDataRouter.get('/SITC2/exports/:year?/:country', cache(HOUR), async (req, r
   const country = req.params.country
   const data = await dataService.getSITC2CountryData(country, year, '2')
   res.json(data)
-})
-
-tradeDataRouter.get('/countries', cache(HOUR), async (req, res) => {
-  const countries = await dataService.fetchCountryCodes()
-  res.json(countries)
 })
 
 module.exports = tradeDataRouter
