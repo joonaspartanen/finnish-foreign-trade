@@ -21,12 +21,10 @@ const longTradeDataMock = [
   { group: 'knives', value: 100 },
   { group: 'cheese', value: 200 },
   { group: 'computers', value: 300 },
-  { group: 'sofas', value: 100 },
-  { group: 'flowers', value: 200 },
-  { group: 'boots', value: 300 }
+  { group: 'sofas', value: 100 }
 ]
 
-const countryMock = [{ name: 'Mexico', code: 'MX' }]
+const countryMock = { name: 'Mexico', code: 'MX' }
 
 const renderWithData = data => {
   component = render(
@@ -49,7 +47,7 @@ describe('<CountryDataTable />', () => {
     expect(tableCells.length).toEqual(tradeDataMock.length * 2)
   })
 
-  test('contains max 10 rows', () => {
+  test('contains right amount of rows', () => {
     renderWithData(longTradeDataMock)
     const tableCells = component.container.querySelectorAll('td')
     expect(tableCells.length).toEqual(10 * 2)
