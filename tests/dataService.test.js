@@ -1,4 +1,4 @@
-const dataService = require('../services/dataService')
+const dataService = require('../services/tradeDataService')
 const { checkProperties } = require('./testHelper')
 
 const data = [
