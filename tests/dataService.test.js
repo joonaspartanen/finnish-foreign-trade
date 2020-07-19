@@ -49,11 +49,11 @@ const data = [
   }
 ]
 
-describe('mapData', () => {
+describe('mapTradeData', () => {
   let mappedData
 
   beforeAll(() => {
-    mappedData = dataService.mapData(data)
+    mappedData = dataService.mapTradeData(data)
     console.log(mappedData)
   })
 
@@ -67,13 +67,13 @@ describe('mapData', () => {
   })
 })
 
-describe('classifyData', () => {
+describe('classifyTradeData', () => {
   let mappedData
   let classifiedData
 
   beforeAll(() => {
-    mappedData = dataService.mapData(data)
-    classifiedData = dataService.classifyData(mappedData)
+    mappedData = dataService.mapTradeData(data)
+    classifiedData = dataService.classifyTradeData(mappedData)
   })
 
   test('returns right number of data items', () => {
@@ -87,7 +87,7 @@ describe('classifyData', () => {
         { id: 'AA', year: 2018, euros: 5000000000 },
         { id: 'AB', year: 2018, euros: 5000000001 }
       ]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(6))
     })
 
@@ -96,7 +96,7 @@ describe('classifyData', () => {
         { id: 'AA', year: 2018, euros: 4999999999 },
         { id: 'AB', year: 2018, euros: 1000000001 }
       ]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(5))
     })
 
@@ -105,7 +105,7 @@ describe('classifyData', () => {
         { id: 'AA', year: 2018, euros: 999999999 },
         { id: 'AB', year: 2018, euros: 100000001 }
       ]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(4))
     })
 
@@ -114,7 +114,7 @@ describe('classifyData', () => {
         { id: 'AA', year: 2018, euros: 99999999 },
         { id: 'AB', year: 2018, euros: 10000001 }
       ]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(3))
     })
 
@@ -123,13 +123,13 @@ describe('classifyData', () => {
         { id: 'AA', year: 2018, euros: 9999999 },
         { id: 'AB', year: 2018, euros: 1000001 }
       ]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(2))
     })
 
     test('class 1', () => {
       const mockData = [{ id: 'AA', year: 2018, euros: 999999 }]
-      classifiedData = dataService.classifyData(mockData)
+      classifiedData = dataService.classifyTradeData(mockData)
       classifiedData.forEach(item => expect(item.value).toEqual(1))
     })
   })

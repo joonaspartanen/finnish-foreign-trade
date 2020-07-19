@@ -153,6 +153,8 @@ const removeAllGroupsItem = (data) => {
 }
 
 module.exports = {
+  mapTradeData,
+  classifyTradeData,
   getTradeBalanceData,
   getClassifiedTradeData,
   getSITC1Data,
