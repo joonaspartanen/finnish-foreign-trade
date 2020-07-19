@@ -17,14 +17,13 @@ jobs:
           node-version: '12.x'
       - name: npm install and test backend
         run: |
-          cd fft_backend
           npm ci
           npm test
         env:
           CI: true
       - name: npm install and test frontend
         run: |
-          cd fft_frontend
+          cd client
           npm ci
           npm test
         env:
