@@ -2,6 +2,7 @@ import React from 'react'
 import { Menu, Dropdown, Checkbox, Icon } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
 import { changeColorMode } from '../../reducers/colorModeReducer'
+import './NavBar.scss'
 
 const NavBar = ({ year, setYear, darkModeActive }) => {
   const dispatch = useDispatch()

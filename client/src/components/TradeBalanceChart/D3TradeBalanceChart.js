@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Header } from 'semantic-ui-react'
 import * as d3 from 'd3'
+import './D3TradeBalanceChart.scss'
 const debounce = require('lodash.debounce')
 
 const D3TradeBalanceChart = ({ tradeBalance, darkModeActive }) => {

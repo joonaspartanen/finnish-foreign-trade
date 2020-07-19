@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import dataService from '../../services/dataService'
 import { Grid, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
+import './CountryData.scss'
 
 const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => {
   const [countryImports, setCountryImports] = useState([])
