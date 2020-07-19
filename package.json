@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "watch": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --forceExit --verbose --runInBand",
+    "test": "cross-env NODE_ENV=test jest /tests --detectOpenHandles --verbose --runInBand",
     "build:ui": "rm -rf build && cd client && npm run build --prod && cp -r build ..",
     "deploy:full": "npm run build:ui && cd .. && git add . && git commit -m 'Create new frontend build' && git push && git push heroku master"
   },
