@@ -1,9 +1,9 @@
 const axios = require('axios')
 const baseUrl =
-  'http://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
+  'https://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 const utils = require('../utils/utils')
 
-const fetchData = async (SITC, classification, country, year, flow) => {
+const fetchTradeData = async (SITC, classification, country, year, flow) => {
   axios.interceptors.response.use((res) => {
     if (typeof res.data !== 'object') {
       try {
@@ -32,50 +32,7 @@ const fetchData = async (SITC, classification, country, year, flow) => {
   }
 }
 
-const fetchCountryCodes = async () => {
-  axios.interceptors.response.use((res) => {
-    if (typeof res.data !== 'object') {
-      try {
-        const parsedData = JSON.parse(res.data.slice(1))
-        res.data = parsedData
-      } catch (e) {
-        console.log(e)
-      }
-    }
-    return res
-  })
-  const url =
-    'https://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=class&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
-  try {
-    const response = await axios.get(url)
-    const countryCodes = extractCountryCodes(response.data)
-    return countryCodes
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-const extractCountryCodes = (data) => {
-  const countryCodes = data.classification.filter((a) => a.id === 'D3')
-  return mapCountryCodes(countryCodes[0].class)
-}
-
-const mapCountryCodes = (data) => {
-  data = removeUnwantedCountryCodes(data)
-  const parenthesesRegex = / *\([^)]*\) */g
-  return data.map((a) => ({
-    code: a.code.toLowerCase(),
-    name: a.text.replace(parenthesesRegex, ''),
-  }))
-}
-
-// TODO: It might be better to exclude these already when fetching data
-const removeUnwantedCountryCodes = (data) => {
-  const unwantedCountryCodes = ['AA', 'QR', 'QS', 'QU', 'QV', 'QY', 'QZ']
-  return data.filter((a) => !unwantedCountryCodes.includes(a.code))
-}
-
-const mapData = (data) => {
+const mapTradeData = (data) => {
   return data
     .map((a) => ({
       id: a.keys[1].substring(0, 2),
@@ -89,7 +46,7 @@ const mapData = (data) => {
     )
 }
 
-const classifyData = (data) => {
+const classifyTradeData = (data) => {
   return data.map((a) => {
     let c = 1
     if (a.euros >= 5000000000) {
@@ -110,15 +67,15 @@ const classifyData = (data) => {
 }
 
 const getClassifiedTradeData = async (year, flow) => {
-  const data = await fetchData('SITC1', '0-9', '=ALL', year, flow)
-  const mappedData = mapData(data)
-  const classifiedData = classifyData(mappedData)
+  const data = await fetchTradeData('SITC1', '0-9', '=ALL', year, flow)
+  const mappedData = mapTradeData(data)
+  const classifiedData = classifyTradeData(mappedData)
   return classifiedData
 }
 
 const getTradeBalanceData = async () => {
-  const imports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
-  const exports = await fetchData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
+  const imports = await fetchTradeData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
+  const exports = await fetchTradeData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
   const mappedImports = imports.map((a) => ({
     year: parseInt(a.keys[2]),
     imports: a.vals[0],
@@ -140,8 +97,8 @@ const getTradeBalanceData = async () => {
 
 // I don't really need SITC1 data now...
 const getSITC1Data = async () => {
-  const imports = await fetchData('SITC1', '=ALL', 'AA', '2018', '1')
-  const exports = await fetchData('SITC1', '=ALL', 'AA', '2018', '2')
+  const imports = await fetchTradeData('SITC1', '=ALL', 'AA', '2018', '1')
+  const exports = await fetchTradeData('SITC1', '=ALL', 'AA', '2018', '2')
   const mappedImports = imports
     .sort((a, b) => b.vals - a.vals)
     .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
@@ -160,7 +117,7 @@ const getSITC1Data = async () => {
 
 const getSITC2Data = async (year, flow) => {
   const SITC2Array = utils.initializeSITC2Array()
-  let data = await fetchData('SITC2', '=ALL', 'AA', year, flow)
+  let data = await fetchTradeData('SITC2', '=ALL', 'AA', year, flow)
   data = mapDataForSITC2(data)
   data.forEach((a) => {
     SITC2Array[a.SITC1].children.push(a)
@@ -180,7 +137,7 @@ const mapDataForSITC2 = (data) => {
 }
 
 const getSITC2CountryData = async (country, year, flow) => {
-  let data = await fetchData('SITC2', '=ALL', country, year, flow)
+  let data = await fetchTradeData('SITC2', '=ALL', country, year, flow)
   data = removeAllGroupsItem(data)
   data = data
     .sort((a, b) => b.vals - a.vals)
@@ -196,12 +153,9 @@ const removeAllGroupsItem = (data) => {
 }
 
 module.exports = {
-  mapData,
-  classifyData,
   getTradeBalanceData,
   getClassifiedTradeData,
   getSITC1Data,
   getSITC2Data,
   getSITC2CountryData,
-  fetchCountryCodes,
 }
