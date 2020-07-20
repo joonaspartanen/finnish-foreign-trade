@@ -52,4 +52,5 @@
 | 15.7. | 1 | Uudelleenjärjestetty CSS-muotoilut pienemmiksi SCSS-tiedostoiksi, jotka käännetään skriptillä yhdeksi CSS-tiedostoksi.
 | 16.7. | 3 | Refaktoroitu oma d3.js-komponentti pienemmiksi funktioiksi ja lisätty resize-tapahtumankäsittelijä.
 | 18.7. | 3 | Refaktoroitu frontendin koodia ja päivitetty sovelluksen tyylejä.
-| Yhteensä | 103 | |
+| 19.7. | 3 | Muutettu repositorion kansiorakenne järkevämmäksi. Refaktoroitu backendin ylisuuria moduuleja pienemmiksi. Korjattu testejä.
+| Yhteensä | 106 | |
