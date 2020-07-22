@@ -2,7 +2,7 @@ const memorycache = require('memory-cache')
 
 const cache = duration => {
   return (req, res, next) => {
-    const key = '__express__' + req.originalUrl || req.originalUrl
+    const key = req.originalUrl
     const cacheContent = memorycache.get(key)
     if (cacheContent) {
       console.log('fetching from cache')
@@ -20,4 +20,4 @@ const cache = duration => {
   }
 }
 
-module.exports = { cache: cache }
+module.exports = { cache }
