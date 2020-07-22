@@ -21,6 +21,12 @@ tradeDataRouter.get('/tradebalance', cache(HOUR), async (req, res) => {
   res.json(tradeBalanceData)
 })
 
+tradeDataRouter.get('/tradepartners/:year?', cache(HOUR), async (req, res) => {
+  const year = req.params.year || LAST_YEAR
+  const tradePartnerRankings = await dataService.getTradePartnerRankings(year)
+  res.json(tradePartnerRankings)
+})
+
 tradeDataRouter.get('/SITC1', cache(HOUR), async (req, res) => {
   const SITC1Data = await dataService.getSITC1Data()
   res.json(SITC1Data)
