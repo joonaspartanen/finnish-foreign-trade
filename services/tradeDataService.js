@@ -1,4 +1,5 @@
 const axios = require('axios')
+const memorycache = require('memory-cache')
 const baseUrl =
   'https://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 const utils = require('../utils/utils')
