@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import dataService from '../../services/dataService'
 import { Grid, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 import './CountryData.scss'
+const ordinal = require('ordinal')
 
 const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => {
   const [countryImports, setCountryImports] = useState([])
   const [countryExports, setCountryExports] = useState([])
+
+  const tradeData = useSelector(state => state.tradeData)
+  const tradePartnerRank =
+    tradeData.importsData.findIndex(c => c.id === country?.code?.toUpperCase()) + 1
 
   const getTop10ProductCategories = data =>
     data.slice(0, 10).filter(product => product.value !== null)
@@ -48,6 +54,7 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
         className='flag'
         src={`https://www.countryflags.io/${country.code}/flat/64.png`}
         alt={`Flag of ${country.name}`}></img>
+      <h3>Finland's {ordinal(tradePartnerRank)} largest trade partner</h3>
       <Grid.Row columns={2}>
         <Grid.Column>
           <CountryDataTable
