@@ -53,4 +53,5 @@
 | 16.7. | 3 | Refaktoroitu oma d3.js-komponentti pienemmiksi funktioiksi ja lisätty resize-tapahtumankäsittelijä.
 | 18.7. | 3 | Refaktoroitu frontendin koodia ja päivitetty sovelluksen tyylejä.
 | 19.7. | 3 | Muutettu repositorion kansiorakenne järkevämmäksi. Refaktoroitu backendin ylisuuria moduuleja pienemmiksi. Korjattu testejä.
-| Yhteensä | 106 | |
+| 22.7. | 3 | Refaktoroitu backendiä ja lisätty kontrolleri vuotuisen kauppakumppanirankingin laskemiseksi ja hakemiseksi.
+| Yhteensä | 109 | |
