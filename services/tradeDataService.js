@@ -4,8 +4,15 @@ const baseUrl =
   'https://uljas.tulli.fi/uljas/graph/api.aspx?lang=en&atype=data&konv=json&ifile=/DATABASE/01%20ULKOMAANKAUPPATILASTOT/02%20SITC/ULJAS_SITC'
 const utils = require('../utils/utils')
 
+const getClassifiedTradeData = async (year, flow) => {
+  const data = await fetchTradeData('SITC1', '0-9', '=ALL', year, flow)
+  const mappedData = mapTradeData(data)
+  const classifiedData = classifyTradeData(mappedData)
+  return classifiedData
+}
+
 const fetchTradeData = async (SITC, classification, country, year, flow) => {
-  axios.interceptors.response.use((res) => {
+  axios.interceptors.response.use(res => {
     if (typeof res.data !== 'object') {
       try {
         const parsedData = JSON.parse(res.data.slice(1))
@@ -33,22 +40,24 @@ const fetchTradeData = async (SITC, classification, country, year, flow) => {
   }
 }
 
-const mapTradeData = (data) => {
+const mapTradeData = data => {
   return data
-    .map((a) => ({
+    .map(a => ({
       id: a.keys[1].substring(0, 2),
       year: parseInt(a.keys[2]),
-      euros: a.vals[0],
+      euros: a.vals[0] === null ? 0 : a.vals[0],
     }))
-    .filter((a) => a.id !== 'AA')
-    .map((a) =>
-      // Serbian country code must be changed
-      a.id === 'XS' ? { ...a, id: 'RS' } : a
-    )
+    .filter(a => a.id !== 'AA')
+    .map(a => updateSerbianCountryCode(a))
+    .sort((a, b) => b.euros - a.euros)
 }
 
-const classifyTradeData = (data) => {
-  return data.map((a) => {
+const updateSerbianCountryCode = a => {
+  return a.id === 'XS' ? { ...a, id: 'RS' } : a
+}
+
+const classifyTradeData = data => {
+  return data.map(a => {
     let c = 1
     if (a.euros >= 5000000000) {
       c = 6
@@ -67,21 +76,14 @@ const classifyTradeData = (data) => {
   })
 }
 
-const getClassifiedTradeData = async (year, flow) => {
-  const data = await fetchTradeData('SITC1', '0-9', '=ALL', year, flow)
-  const mappedData = mapTradeData(data)
-  const classifiedData = classifyTradeData(mappedData)
-  return classifiedData
-}
-
 const getTradeBalanceData = async () => {
   const imports = await fetchTradeData('SITC1', '0-9', 'AA', '=FIRST*;10', '1')
   const exports = await fetchTradeData('SITC1', '0-9', 'AA', '=FIRST*;10', '2')
-  const mappedImports = imports.map((a) => ({
+  const mappedImports = imports.map(a => ({
     year: parseInt(a.keys[2]),
     imports: a.vals[0],
   }))
-  const mappedExports = exports.map((a) => ({
+  const mappedExports = exports.map(a => ({
     year: parseInt(a.keys[2]),
     exports: a.vals[0],
   }))
@@ -89,7 +91,7 @@ const getTradeBalanceData = async () => {
     ...a,
     exports: mappedExports[i].exports,
   }))
-  const result = combinedData.map((a) => ({
+  const result = combinedData.map(a => ({
     ...a,
     tradeBalance: a.exports - a.imports,
   }))
@@ -102,12 +104,12 @@ const getSITC1Data = async () => {
   const exports = await fetchTradeData('SITC1', '=ALL', 'AA', '2018', '2')
   const mappedImports = imports
     .sort((a, b) => b.vals - a.vals)
-    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map((a) => ({ [a.keys[0].substring(12)]: a.vals[0] }))
+    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map(a => ({ [a.keys[0].substring(12)]: a.vals[0] }))
   const mappedExports = exports
     .sort((a, b) => b.vals - a.vals)
-    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map((a) => ({ [a.keys[0].substring(12)]: a.vals[0] }))
+    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map(a => ({ [a.keys[0].substring(12)]: a.vals[0] }))
   const finalImports = Object.assign({ flow: 'Imports' }, ...mappedImports)
   const finalExports = Object.assign({ flow: 'Exports' }, ...mappedExports)
 
@@ -120,16 +122,16 @@ const getSITC2Data = async (year, flow) => {
   const SITC2Array = utils.initializeSITC2Array()
   let data = await fetchTradeData('SITC2', '=ALL', 'AA', year, flow)
   data = mapDataForSITC2(data)
-  data.forEach((a) => {
+  data.forEach(a => {
     SITC2Array[a.SITC1].children.push(a)
   })
   return SITC2Array
 }
 
-const mapDataForSITC2 = (data) => {
+const mapDataForSITC2 = data => {
   return data
-    .filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
-    .map((a) => ({
+    .filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+    .map(a => ({
       group: a.keys[0].substring(13),
       value: a.vals[0],
       SITC1: parseInt(a.keys[0].substring(0, 1)),
