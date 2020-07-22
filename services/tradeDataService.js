@@ -144,7 +144,7 @@ const getSITC2CountryData = async (country, year, flow) => {
   data = removeAllGroupsItem(data)
   data = data
     .sort((a, b) => b.vals - a.vals)
-    .map((a) => ({
+    .map(a => ({
       group: a.keys[0].substring(13),
       value: a.vals[0],
     }))
