@@ -151,8 +151,27 @@ const getSITC2CountryData = async (country, year, flow) => {
   return data
 }
 
-const removeAllGroupsItem = (data) => {
-  return data.filter((a) => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+const removeAllGroupsItem = data => {
+  return data.filter(a => a.keys[0] !== '0-9 (2002--.) ALL GROUPS')
+}
+
+const getTradePartnerRankings = async year => {
+  const imports =
+    memorycache.get('/imports') || (await fetchTradeData('SITC1', '0-9', '=ALL', year, '1'))
+  const exports =
+    memorycache.get('/exports') || (await fetchTradeData('SITC1', '0-9', '=ALL', year, '2'))
+
+  const mappedImports = mapTradeData(imports)
+  const mappedExports = mapTradeData(exports)
+
+  const totalTrade = mappedImports
+    .map(exporter => ({
+      id: exporter.id,
+      euros: exporter.euros + mappedExports.find(importer => importer.id === exporter.id).euros,
+    }))
+    .sort((a, b) => b.euros - a.euros)
+    .map((country, index) => ({ rank: index + 1, ...country }))
+  return totalTrade
 }
 
 module.exports = {
@@ -163,4 +182,5 @@ module.exports = {
   getSITC1Data,
   getSITC2Data,
   getSITC2CountryData,
+  getTradePartnerRankings,
 }
