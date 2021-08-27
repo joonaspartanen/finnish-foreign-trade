@@ -12,4 +12,8 @@ app.use(bodyParser.json())
 app.use('/', tradeDataRouter)
 app.use('/countries', countryRouter)
 
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
 module.exports = app
