@@ -6,7 +6,7 @@ const tradeDataRouter = require('./routes/tradeData')
 const countryRouter = require('./routes/countries')
 
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static('client/build'))
 app.use(bodyParser.json())
 
 app.use('/', tradeDataRouter)
