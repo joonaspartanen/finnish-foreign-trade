@@ -1,5 +1,5 @@
 import getCountryCodes from '../services/countryService'
-import { finishLoading, startLoading } from './isLoadingReducer'
+import { startLoading } from './isLoadingReducer'
 
 const countryCodes = (state = [], action) => {
   switch (action.type) {
@@ -18,7 +18,6 @@ export const initializeCountryCodes = () => {
       type: 'INIT_COUNTRYCODES',
       payload: countryCodes,
     })
-    dispatch(finishLoading())
   }
 }
 

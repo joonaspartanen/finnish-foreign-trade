@@ -1,5 +1,5 @@
 import dataService from '../services/dataService'
-import { finishLoading, startLoading } from './isLoadingReducer'
+import { startLoading, finishLoading } from './isLoadingReducer'
 
 const tradeData = (state = {}, action) => {
   switch (action.type) {
@@ -9,6 +9,7 @@ const tradeData = (state = {}, action) => {
         exportsData: action.exportsData,
         importsData: action.importsData,
         sitc2Data: action.sitc2Data,
+        tradePartnerRankings: action.tradePartnerRankings,
       }
     case 'INIT_TRADE_BALANCE_DATA':
       return {
@@ -26,11 +27,13 @@ export const initializeTradeData = year => {
     const exportsData = await dataService.getExports(year)
     const importsData = await dataService.getImports(year)
     const sitc2Data = await dataService.getSitc2Data(year, 'total')
+    const tradePartnerRankings = await dataService.getTradePartnerRankings(year)
     dispatch({
       type: 'INIT_TRADEDATA',
       exportsData: exportsData,
       importsData: importsData,
       sitc2Data: sitc2Data,
+      tradePartnerRankings: tradePartnerRankings,
     })
     dispatch(finishLoading())
   }
@@ -44,7 +47,6 @@ export const initializeTradeBalanceData = () => {
       type: 'INIT_TRADE_BALANCE_DATA',
       tradeBalance: tradeBalance,
     })
-    dispatch(finishLoading())
   }
 }
 

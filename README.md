@@ -12,9 +12,9 @@ Finnish Foreign Trade Visualized is a web application that uses the [Finnish Cus
 
 ## Technologies
 
-The application backend uses Node.js and the frontend is built with React, though additional technologies may be introduced during the development.
+The application backend uses Node.js and the frontend is built with React.
 
-The JavaScript library used for data visualization is [amCharts](https://www.amcharts.com/).
+The data visualizations are mainly made with [amCharts](https://www.amcharts.com/) library. There are also some [D3.js](https://d3js.org/) implementations.
 
 ## Prerequisites
 
@@ -24,39 +24,21 @@ Make sure you have node and npm installed.
 
 First, clone the repository with `git clone https://github.com/joonaspartanen/finnish-foreign-trade.git`.
 
-To run the application in development mode, use the following commands to navigate to the backend folder and run the server:
+To start the application (both backend and frontend) in development mode, run the following command from the project root:
 
-```
-cd finnish-foreign-trade
-cd fft_backend
-npm install
-npm start
+```bash
+npm run dev
 ```
 
-The backend is now running on port 3003.
-
-Now, open another terminal window, head to the frontend folder, install the dependencies and start the client:
-
-```
-cd finnish-foreign-trade
-cd fft_frontend
-npm install
-npm start
-```
-
-The frontend is now running on port 3000 and you can head to http://localhost:3000/ to access it.
+The frontend is now running on port 3000 and you can access it on http://localhost:3000/. The backend is running on port 3003.
 
 ## Demo
 
-There is a demo version available on Heroku: https://finnish-foreign-trade.herokuapp.com/
+There is a demo available on Heroku: https://finnish-foreign-trade.herokuapp.com/
 
 ## Todos
 
-- Mobile view needs some work.
-
-- Add option to select year.
-
-- Implement Redux store?
+- Mobile view needs work.
 
 - Create own color scheme.
 

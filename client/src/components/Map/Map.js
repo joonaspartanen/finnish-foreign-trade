@@ -1,4 +1,4 @@
-//import am4themes_animated from '@amcharts/amcharts4/themes/animated'
+import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow'
 import * as am4core from '@amcharts/amcharts4/core'
 import * as am4maps from '@amcharts/amcharts4/maps'
@@ -9,6 +9,7 @@ const Map = ({ imports, exports, flow }) => {
   const chart = useRef(null)
 
   am4core.useTheme(am4themes_dark)
+  am4core.useTheme(am4themes_animated)
 
   useEffect(() => {
     const map = am4core.create('mapdiv', am4maps.MapChart)
@@ -103,6 +104,8 @@ const Map = ({ imports, exports, flow }) => {
 
     map.series.push(exportsSeries)
     map.series.push(importsSeries)
+
+    console.log('map ready')
 
     chart.current = map
 

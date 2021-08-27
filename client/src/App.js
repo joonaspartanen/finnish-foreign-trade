@@ -16,7 +16,6 @@ import './App.scss'
 const App = () => {
   const dispatch = useDispatch()
 
-  const [year, setYear] = useState(2019)
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
 
@@ -30,6 +29,7 @@ const App = () => {
   const tradeData = state.tradeData
   const tradeBalance = tradeData.tradeBalance
   const isLoading = state.isLoading
+  const year = state.year
 
   useEffect(() => {
     dispatch(initializeCountryCodes())
@@ -43,7 +43,7 @@ const App = () => {
   return (
     <div className={state.darkModeActive ? 'main-container dark-mode' : 'main-container'}>
       <Container fluid>
-        <NavBar year={year} setYear={setYear} darkModeActive={state.darkModeActive} />
+        <NavBar year={year} darkModeActive={state.darkModeActive} />
         {isLoading && (
           <div style={{ height: '100vh' }}>
             <Loader active />
@@ -98,6 +98,7 @@ const App = () => {
                     setCountry={setCountry}
                     setCountryFilter={setCountryFilter}
                     year={year}
+                    tradePartnerRankings={tradeData.tradePartnerRankings}
                   />
                 )}
               </section>

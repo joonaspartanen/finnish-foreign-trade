@@ -1,28 +1,35 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import dataService from '../../services/dataService'
-import { Grid, Button, Icon, Dimmer, Loader } from 'semantic-ui-react'
+import { Grid, Button, Icon, Dimmer, Loader, Header } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 import './CountryData.scss'
-const ordinal = require('ordinal')
+import TradePartnerRankDetails from './TradePartnerRankDetails'
 
-const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => {
+const CountryDataWrapper = ({
+  country,
+  setCountry,
+  setCountryFilter,
+  year,
+  tradePartnerRankings,
+}) => {
+  console.log(country)
+
   const [countryImports, setCountryImports] = useState([])
   const [countryExports, setCountryExports] = useState([])
 
-  const tradeData = useSelector(state => state.tradeData)
-  const tradePartnerRank =
-    tradeData.importsData.findIndex(c => c.id === country?.code?.toUpperCase()) + 1
+  const tradePartnerRanking = tradePartnerRankings?.find(c => c.id === country?.code?.toUpperCase())
 
-  const getTop10ProductCategories = data =>
-    data.slice(0, 10).filter(product => product.value !== null)
+  console.log(tradePartnerRanking)
+
+  const getTopProductCategories = (data, amount) =>
+    data.slice(0, amount).filter(product => product.value !== null)
 
   useEffect(() => {
     dataService.getSitc2CountryData('imports', year, country).then(res => {
-      setCountryImports(res.data)
+      setCountryImports(res)
     })
     dataService.getSitc2CountryData('exports', year, country).then(res => {
-      setCountryExports(res.data)
+      setCountryExports(res)
     })
   }, [country, year])
 
@@ -39,39 +46,44 @@ const CountryDataWrapper = ({ country, setCountry, setCountryFilter, year }) => 
   }
 
   return (
-    <Grid container stackable relaxed style={{ paddingTop: '3em' }}>
+    <>
       <Button
         icon
         circular
+        className='back-button'
         onClick={() => {
           setCountryFilter('')
           setCountry([])
-        }}
-        style={{ position: 'absolute', top: '1em', left: '1em' }}>
+        }}>
         <Icon name='angle left' size='large' />
       </Button>
-      <img
-        className='flag'
-        src={`https://www.countryflags.io/${country.code}/flat/64.png`}
-        alt={`Flag of ${country.name}`}></img>
-      <h3>Finland's {ordinal(tradePartnerRank)} largest trade partner</h3>
-      <Grid.Row columns={2}>
-        <Grid.Column>
+      <Header as='h2'>
+        Finland's trade with {country.name} ({year})
+        <span>
+          <img
+            className='flag'
+            src={`https://www.countryflags.io/${country.code}/flat/64.png`}
+            alt={`Flag of ${country.name}`}></img>
+        </span>
+      </Header>
+      <Grid container stackable celled='internally'>
+        <Grid.Column width={4}>
+          <TradePartnerRankDetails tradePartnerRanking={tradePartnerRanking} />
+        </Grid.Column>
+        <Grid.Column width={12}>
           <CountryDataTable
             country={country}
-            tradeData={getTop10ProductCategories(countryExports)}
+            tradeData={getTopProductCategories(countryExports, 5)}
             flow={'exports'}
           />
-        </Grid.Column>
-        <Grid.Column>
           <CountryDataTable
             country={country}
-            tradeData={getTop10ProductCategories(countryImports)}
+            tradeData={getTopProductCategories(countryImports, 5)}
             flow={'imports'}
           />
         </Grid.Column>
-      </Grid.Row>
-    </Grid>
+      </Grid>
+    </>
   )
 }
 

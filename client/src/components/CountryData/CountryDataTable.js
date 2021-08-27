@@ -1,32 +1,30 @@
 import React from 'react'
+import * as d3 from 'd3'
 import { Table, Header } from 'semantic-ui-react'
 
 const CountryDataTable = ({ country, tradeData, flow }) => {
-
   if (tradeData.length === 0) {
     return <div>No data available</div>
   }
 
   return (
-    <Table inverted basic compact celled selectable singleLine>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell colSpan='2' textAlign='center'>
-            <Header as='h3' style={{ color: '#fff' }}>
-              Finland {flow === 'exports' ? ' exported to ' : ' imported from '} {country.name}
-            </Header>
-          </Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>
-        {tradeData.map(product => (
-          <Table.Row key={product.group}>
-            <Table.Cell>{product.group}</Table.Cell>
-            <Table.Cell>{product.value} €</Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table>
+    <>
+      <Header as='h3' style={{ margin: 0 }}>
+        {flow === 'exports'
+          ? `Main exports from Finland to ${country.name}`
+          : `Main imports from ${country.name} to Finland`}
+      </Header>
+      <Table inverted basic='very' compact celled selectable singleLine className='table-compact'>
+        <Table.Body>
+          {tradeData.map(product => (
+            <Table.Row key={product.group}>
+              <Table.Cell>{product.group}</Table.Cell>
+              <Table.Cell>{d3.format(',')(product.value)} €</Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table>
+    </>
   )
 }
 

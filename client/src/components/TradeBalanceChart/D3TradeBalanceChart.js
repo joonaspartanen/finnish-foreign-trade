@@ -162,12 +162,11 @@ const D3TradeBalanceChart = ({ tradeBalance, darkModeActive }) => {
       svg
         .selectAll('.bar')
         .on('mouseover', function (d) {
-          d3.select(this).style('fill', d3.rgb(colors(d.key)).darker(1))
-        })
-        .on('mouseout', function (d) {
-          d3.select(this).style('fill', colors(d.key))
-        })
-        .on('mouseover', d => {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style('fill', d3.rgb(colors(d.key)).darker(1))
+
           const tooltipHtml = `
           <div>
             Total ${d.key === 'imports' ? 'imports to' : 'exports from'} Finland:
@@ -177,15 +176,20 @@ const D3TradeBalanceChart = ({ tradeBalance, darkModeActive }) => {
           `
           showTooltip(tooltip, tooltipHtml)
         })
-        .on('mousemove', () => moveTooltip(tooltip))
-        .on('mouseout', () => {
-          tooltip.style('display', 'none')
+        .on('mouseout', function (d) {
+          d3.select(this).transition().duration(200).style('fill', colors(d.key))
+          hideTooltip(tooltip)
         })
+        .on('mousemove', () => moveTooltip(tooltip))
     }
 
     const showTooltip = (tooltip, tooltipHtml) => {
       tooltip.style('display', 'block')
       tooltip.html(tooltipHtml)
+    }
+
+    const hideTooltip = tooltip => {
+      tooltip.style('display', 'none')
     }
 
     const moveTooltip = tooltip => {

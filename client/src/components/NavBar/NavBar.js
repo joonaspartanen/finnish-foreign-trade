@@ -2,9 +2,10 @@ import React from 'react'
 import { Menu, Dropdown, Checkbox, Icon } from 'semantic-ui-react'
 import { useDispatch } from 'react-redux'
 import { changeColorMode } from '../../reducers/colorModeReducer'
+import { setYear } from '../../reducers/yearReducer'
 import './NavBar.scss'
 
-const NavBar = ({ year, setYear, darkModeActive }) => {
+const NavBar = ({ year, darkModeActive }) => {
   const dispatch = useDispatch()
 
   const years = [
@@ -19,7 +20,11 @@ const NavBar = ({ year, setYear, darkModeActive }) => {
   ]
 
   return (
-    <Menu as='nav' stackable size='large' className={darkModeActive ? 'navbar dark-mode' : 'navbar'}>
+    <Menu
+      as='nav'
+      stackable
+      size='large'
+      className={darkModeActive ? 'navbar dark-mode' : 'navbar'}>
       <Menu.Item header>Finnish Foreign Trade Visualized</Menu.Item>
       <Menu.Item link as='a' href='#trade-map'>
         Trade Map
@@ -35,14 +40,14 @@ const NavBar = ({ year, setYear, darkModeActive }) => {
       </Menu.Item>
       <Menu.Item>
         <Dropdown
-          onChange={(event, { value }) => setYear(value)}
+          onChange={(event, { value }) => dispatch(setYear(value))}
           options={years}
           placeholder='Year'
           selection
           value={year}
         />
       </Menu.Item>
-      <Menu.Item className="color-mode-toggle">
+      <Menu.Item className='color-mode-toggle'>
         <Icon name='moon'></Icon>
         <Checkbox onChange={() => dispatch(changeColorMode())} toggle></Checkbox>
         <Icon name='sun'></Icon>
