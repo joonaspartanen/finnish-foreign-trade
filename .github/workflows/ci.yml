@@ -13,17 +13,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: npm install and test backend
+      - name: Backend / npm install
         run: |
           npm ci
-          npm test
+      - name: Backend / run tests
+        run: npm test
         env:
           CI: true
-      - name: npm install and test frontend
+      - name: Frontend / npm install
         run: |
           cd client
           npm ci
-          npm test
+      - name: Frontend / run tests
+        run: npm test
         env:
           CI: true
       - name: Build frontend
