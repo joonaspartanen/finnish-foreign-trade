@@ -1,6 +1,6 @@
 import {startLoading} from './isLoadingReducer'
 
-const year = (state = 2019, action) => {
+const year = (state = 2020, action) => {
   switch (action.type) {
     case 'SET_YEAR':
       return action.year
