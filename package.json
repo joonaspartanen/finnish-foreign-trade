@@ -4,7 +4,7 @@
   "description": "\"Backend for the Finnish Foreign Trade Visualized application\"",
   "main": "index.js",
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
