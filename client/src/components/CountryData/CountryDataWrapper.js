@@ -57,20 +57,16 @@ const CountryDataWrapper = ({
         }}>
         <Icon name='angle left' size='large' />
       </Button>
-      <Header as='h2'>
-        Finland's trade with {country.name} ({year})
-        <span>
+      <section className='country-data'>
+        <Header as='h2' className='country-data__heading'>
+          Finland's trade with {country.name} ({year})
           <img
             className='flag'
             src={`https://www.countryflags.io/${country.code}/flat/64.png`}
             alt={`Flag of ${country.name}`}></img>
-        </span>
-      </Header>
-      <Grid container stackable celled='internally'>
-        <Grid.Column width={4}>
-          <TradePartnerRankDetails tradePartnerRanking={tradePartnerRanking} />
-        </Grid.Column>
-        <Grid.Column width={12}>
+        </Header>
+        <TradePartnerRankDetails tradePartnerRanking={tradePartnerRanking} />
+        <div className='country-data__tables-wrapper'>
           <CountryDataTable
             country={country}
             tradeData={getTopProductCategories(countryExports, 5)}
@@ -81,8 +77,8 @@ const CountryDataWrapper = ({
             tradeData={getTopProductCategories(countryImports, 5)}
             flow={'imports'}
           />
-        </Grid.Column>
-      </Grid>
+        </div>
+      </section>
     </>
   )
 }
