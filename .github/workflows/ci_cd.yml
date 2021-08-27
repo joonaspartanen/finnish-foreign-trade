@@ -24,12 +24,21 @@ jobs:
         working-directory: ./client
         run: |
           npm ci
+      - name: Frontend / build
+        working-directory: ./client
+        run: |
+          npm run build --prod
       - name: Frontend / run tests
         working-directory: ./client
         run: npm test
         env:
           CI: true
-      - name: Build frontend
-        working-directory: ./client
-        run: |
-          npm run build --prod
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "finnish-foreign-trade"
+          heroku_email: "partanen.joonas@gmail.com"
+          healthcheck: "https://finnish-foreign-trade.herokuapp.com/health"
+          checkstring: "ok"
+          rollbackonhealthcheckfailed: true
