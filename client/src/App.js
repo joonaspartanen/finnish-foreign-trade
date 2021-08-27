@@ -19,17 +19,17 @@ const App = () => {
   const [country, setCountry] = useState([])
   const [countryFilter, setCountryFilter] = useState('')
 
-  const handleCountryFilterChange = countryName => {
-    setCountryFilter(countryName)
-    const country = state.countryCodes.filter(c => c.name === countryName)
-    setCountry(country)
-  }
-
   const state = useSelector(state => state)
   const tradeData = state.tradeData
   const tradeBalance = tradeData.tradeBalance
   const isLoading = state.isLoading
   const year = state.year
+
+  const handleCountryFilterChange = countryName => {
+    setCountryFilter(countryName)
+    const country = state.countryCodes.filter(c => c.name === countryName)
+    setCountry(country)
+  }
 
   useEffect(() => {
     dispatch(initializeCountryCodes())
