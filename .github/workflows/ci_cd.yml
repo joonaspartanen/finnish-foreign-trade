@@ -38,7 +38,8 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "finnish-foreign-trade"
-          heroku_email: "partanen.joonas@gmail.com"
+          heroku_email: ${{secrets.HEROKU_USERNAME}}
+          branch: master
           healthcheck: "https://finnish-foreign-trade.herokuapp.com/health"
           checkstring: "ok"
           rollbackonhealthcheckfailed: true
