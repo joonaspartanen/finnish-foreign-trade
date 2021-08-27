@@ -39,7 +39,7 @@ afterEach(() => {
 describe('<CountryDataTable />', () => {
   test('contains right elements', () => {
     renderWithData(tradeDataMock)
-    const header = component.getByText('Finland imported from Mexico')
+    const header = component.getByText('Main imports from Mexico to Finland')
     expect(header).toBeDefined()
     const table = component.container.querySelector('table')
     expect(table).toBeDefined()
@@ -57,9 +57,8 @@ describe('<CountryDataTable />', () => {
     renderWithData(tradeDataMock)
     const tableRows = component.getAllByRole('row')
     tradeDataMock.forEach((a, i) => {
-      // i+1 skips the table header row
-      expect(tableRows[i + 1]).toHaveTextContent(a.group)
-      expect(tableRows[i + 1]).toHaveTextContent(a.value)
+      expect(tableRows[i]).toHaveTextContent(a.group)
+      expect(tableRows[i]).toHaveTextContent(a.value)
     })
   })
 })
