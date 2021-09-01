@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import dataService from '../../services/dataService'
-import { Grid, Button, Icon, Dimmer, Loader, Header } from 'semantic-ui-react'
+import { Button, Icon, Dimmer, Loader, Header } from 'semantic-ui-react'
 import CountryDataTable from './CountryDataTable'
 import './CountryData.scss'
 import TradePartnerRankDetails from './TradePartnerRankDetails'
