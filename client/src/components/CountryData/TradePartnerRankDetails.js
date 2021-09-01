@@ -6,7 +6,7 @@ const TradePartnerRankDetails = ({ country, tradePartnerRanking }) => {
   const indicatorText = indicator(tradePartnerRanking.rank)
 
   return (
-    <Statistic inverted>
+    <Statistic inverted className="country-data__rank-details">
       <Statistic.Label>Finland's</Statistic.Label>
       <Statistic.Value>
         {tradePartnerRanking.rank}

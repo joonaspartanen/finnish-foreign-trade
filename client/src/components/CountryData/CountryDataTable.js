@@ -8,7 +8,7 @@ const CountryDataTable = ({ country, tradeData, flow }) => {
   }
 
   return (
-    <>
+    <div className="country-data__table">
       <Header as='h3' style={{ margin: 0 }}>
         {flow === 'exports'
           ? `Main exports from Finland to ${country.name}`
@@ -24,7 +24,7 @@ const CountryDataTable = ({ country, tradeData, flow }) => {
           ))}
         </Table.Body>
       </Table>
-    </>
+    </div>
   )
 }
 
