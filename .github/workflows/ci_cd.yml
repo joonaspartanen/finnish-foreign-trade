@@ -61,24 +61,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
+      - name: Generate dummy id
+        run: echo "123" > id.txt
       - name: Test artifact upload
         uses: actions/upload-artifact@v2
         with:
-          name: first-artifact
-          path: README.md
+          name: deployment-id
+          path: id.txt
 
   complete-deployment:
     name: Complete deployment
     runs-on: ubuntu-18.04
+    needs: ci-cd-pipeline
     environment:
       name: production
       url: https://finnish-foreign-trade.herokuapp.com/
     steps:
+      - uses: actions/checkout@v2
       - name: Print message
         run: echo "Finished deployment"
 
-      - name: Test artifact upload
-        uses: actions/upload-artifact@v2
+      - name: Test artifact download
+        uses: actions/download-artifact@v2
         with:
-          name: second-artifact
-          path: package.json
+          name: deployment-id
+      - name: Print the dummy deployment id
+        run: |
+          value=`cat id.txt`
+          echo The deployment id is $value
