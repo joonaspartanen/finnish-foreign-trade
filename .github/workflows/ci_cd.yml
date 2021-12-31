@@ -15,9 +15,14 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            client/package-lock.json
+
       - name: Backend / npm install
         run: |
           npm ci
@@ -56,6 +61,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
+      - name: Test artifact upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: first-artifact
+          path: README.md
 
   complete-deployment:
     name: Complete deployment
@@ -64,4 +74,11 @@ jobs:
       name: production
       url: https://finnish-foreign-trade.herokuapp.com/
     steps:
-      - run: echo "Finished deployment"
+      - name: Print message
+        run: echo "Finished deployment"
+
+      - name: Test artifact upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: second-artifact
+          path: package.json
