@@ -13,9 +13,6 @@ jobs:
   ci-cd-pipeline:
     name: CI/CD pipeline
     runs-on: ubuntu-18.04
-    environment:
-      name: production
-      url: https://finnish-foreign-trade.herokuapp.com/
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -60,3 +57,11 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
 
+  complete-deployment:
+    name: Complete deployment
+    runs-on: ubuntu-18.04
+    environment:
+      name: production
+      url: https://finnish-foreign-trade.herokuapp.com/
+    steps:
+      - run: echo "Finished deployment"
