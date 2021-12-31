@@ -1,6 +1,42 @@
-.flag {
-  margin-left: auto;
-  margin-right: auto;
+.country-data {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 6rem 2rem 0rem 2rem;
+
+  // TODO: Extract breakpoint variables.
+  @media (min-width: 768px) {
+    padding: 0;
+  }
+
+  &__heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 100%;
+    margin-bottom: 3rem;
+
+    img {
+      margin-left: 1rem;
+    }
+  }
+
+  &__rank-details.ui.statistic {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__tables-wrapper {
+    flex-basis: 50%;
+    margin-top: 4rem;
+  }
+
+  &__table {
+    flex-basis: 100%;
+  }
 }
 
 table.ui.table.compact.table-compact {
